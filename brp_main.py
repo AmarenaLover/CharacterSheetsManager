@@ -243,14 +243,14 @@ def display_sheet(character):
     # colors = ["red", "green", "blue", "orange", "purple", "yellow", "pink", "brown", "cyan"]
     colors = ["grey"] * 9
 
-    path = r'characterSheets\\'
+    path = r'characterSheets\.'
     path = "{}{}".format(path, character)
     slash = ' / '
     max_str = '(max)'
 
     def parse_yaml_to_class(yaml_file_path, class_type):
         with open(yaml_file_path, 'r') as file:
-            data = yaml.safe_load(file)
+            data = yaml.safe_load(path_for_apte(file))
             return class_type(**data)
             print("tes")
 
@@ -415,7 +415,7 @@ def path_for_apte(rel_path):
     return os.path.join(base_path,rel_path)
 
 def on_button_displayCS_click():
-    path = r'characterSheets\\'
+    path = r'characterSheets\.'
     files = []
     for f in os.listdir(path_for_apte(path)):
         if os.path.isfile(os.path.join(path, f)):
@@ -459,7 +459,7 @@ def check_yml_files():
 def save_to_yml():
     yaml_data = yaml.dump(postac.__dict__)
 
-    path = r'characterSheets\\'
+    path = r'characterSheets\.'
     yml = ".yaml"
 
     files = []
@@ -695,23 +695,17 @@ def on_button_createCS_click():
         button_prev.grid(row=0, column=0, padx=10, pady=10, sticky="e")
 
     elif postac.NS == 0:
-        result = messagebox.askyesno("Wyjście", "Czy na pewno chcesz przerwać tworzenie postaci?")
-        if result:
+        if messagebox.askyesno("Wyjście", "Czy na pewno chcesz przerwać tworzenie postaci?")==True:
             postac.NS = 1
-            print("Tak")
             menu()
         else:
             postac.NS = 1
-            print("Nie")
             on_button_createCS_click()
     elif postac.NS == 8:
-        result = messagebox.askyesno("Potwierdzenie", "Czy na pewno chcesz dodać utworzoną postać?")
-        if result:
-            print("Tak")
+        if messagebox.askyesno("Potwierdzenie", "Czy na pewno chcesz dodać utworzoną postać?")==True:
             save_to_yml()
         else:
             postac.NS = 7
-            print("Nie")
             on_button_createCS_click()
 
 
