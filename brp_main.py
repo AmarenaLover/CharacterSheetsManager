@@ -1,6 +1,6 @@
 import random
 import yaml
-import os
+import os, sys
 import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
@@ -407,10 +407,17 @@ def roll_dice():
     tk.Label(header, text="RZUT KOŚCIĄ").grid(row=0, column=0)
     tk.Button(footer, text="Zamknij okno",  command=roll_window.destroy, width=15).grid(row=0, column=0, padx=10, pady=10)
     roll_window.mainloop()
+def path_for_apte(rel_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path,rel_path)
+
 def on_button_displayCS_click():
     path = r'characterSheets\\'
     files = []
-    for f in os.listdir(path):
+    for f in os.listdir(path_for_apte(path)):
         if os.path.isfile(os.path.join(path, f)):
             files.append(f)
     numb = len(files)
@@ -442,9 +449,9 @@ def on_button_createCS_click_S():
     else:
         messagebox.showinfo("Uwaga", "Za dużo kart postaci, należy jakąś usunąć!")
 def check_yml_files():
-    path = r'characterSheets\\'
+    path = r'characterSheets\.'
     files = []
-    for f in os.listdir(path):
+    for f in os.listdir(path_for_apte(path)):
         if os.path.isfile(os.path.join(path, f)):
             files.append(f)
     return len(files)
