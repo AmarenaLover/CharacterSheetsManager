@@ -1,0 +1,128 @@
+version: "2"
+
+defaultSheet:
+  IdentityV:
+    - "Brak informacji"
+    - "Brak informacji"
+    - "Brak informacji"
+    - "Brak informacji"
+    - "Brak informacji"
+    - "Brak informacji"
+    - "Brak informacji"
+    - "Brak informacji"
+    - "Brak informacji"
+  CharacteristicsV:
+    - 3
+    - 3
+    - 8
+    - 8
+    - 3
+    - 3
+    - 3
+  HitpointsV:
+    - 0 #ruch ogólny
+    - 0 #ruch aktualny
+    - 0 #punkty zdrowia ogólne
+    - 0 #punkty zdrowia aktualne
+    - 0 #punkty mocy ogólne
+    - 0 #punkty mocy aktualne
+    - 0 #bonus do bicia
+  SkillsV:
+    - 15 #appraise
+    - 5
+    - 0
+    - 5 #bargain
+    - 25
+    - 40 #climb
+    - 5
+    - 5
+    - 1 #demolition
+    - 1
+    - DEX+2%
+    - zalezy
+    - 0 #energy weapon
+    - 5
+    - 5 #fast talk
+    - 5
+    - 0
+    - zalezy
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+  WeaponsV:
+    1:
+      - "Brak nazwy"
+      - "Brak umiej."
+      - "Brak kat."
+      - "Brak bazy"
+      - "Brak Obrażeń"
+      - "Brak ilości ataków"
+      - "Brak zasięgu"
+    2:
+      - "Brak nazwy"
+      - "Brak umiej."
+      - "Brak kat."
+      - "Brak bazy"
+      - "Brak Obrażeń"
+      - "Brak ilości ataków"
+      - "Brak zasięgu"
+    3:
+      - "Brak nazwy"
+      - "Brak umiej."
+      - "Brak kat."
+      - "Brak bazy"
+      - "Brak Obrażeń"
+      - "Brak ilości ataków"
+      - "Brak zasięgu"
+    4:
+      - "Brak nazwy"
+      - "Brak umiej."
+      - "Brak kat."
+      - "Brak bazy"
+      - "Brak Obrażeń"
+      - "Brak ilości ataków"
+      - "Brak zasięgu"
+    5:
+      - "Brak nazwy"
+      - "Brak umiej."
+      - "Brak kat."
+      - "Brak bazy"
+      - "Brak Obrażeń"
+      - "Brak ilości ataków"
+      - "Brak zasięgu"
+  ArmorV:
+  Equipment:

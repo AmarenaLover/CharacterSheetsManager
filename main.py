@@ -1,0 +1,774 @@
+import random
+import yaml
+import os
+import tkinter as tk
+from tkinter import *
+from tkinter import messagebox
+from PIL import Image, ImageTk
+
+class Rekord:
+    def __init__(self, NS=None, IdentityV=None, CharacteristicsV=None, HitpointsV=None, SkillsV=None, WeaponsV=None, ArmorV=None):
+        if IdentityV==None:
+            self.NS = 1
+            self.IdentityV = [""] * 9
+            self.CharacteristicsV = [""] * 8
+            self.HitpointsV = [""] * 8
+            self.SkillsV = [""] * 55
+            self.WeaponsV = [["" for _ in range(8)] for _ in range(5)]
+            self.ArmorV = [""] * 3
+        else:
+            self.NS = NS
+            self.IdentityV = IdentityV
+            self.CharacteristicsV = CharacteristicsV
+            self.HitpointsV = HitpointsV
+            self.SkillsV = SkillsV
+            self.WeaponsV = WeaponsV
+            self.ArmorV = ArmorV
+
+    IdentityL = ["Imię i nazwisko: ",
+                 "Rasa: ",
+                 "Płeć: ",
+                 "Wiek: ",
+                 "Sylwetka: ",
+                 "Zawód: ",
+                 "Dominująca ręka: ",
+                 "Cechy charakterystyczne: ",
+                 "Opis: "]
+    CharacteristicsL = ["Siła: ",
+                        "Kondycja: ",
+                        "Budowa Ciała: ",
+                        "Zręczność: ",
+                        "Wygląd: ",
+                        "Intelekt: ",
+                        "Moc: ",
+                        "Wykształcenie: "]
+    HitpointsL = ["Punkty Ruchu: ",
+                  "Punkty życia: ",
+                  "Punkty magii: ",
+                  "Modyfikator Obrażeń: "]
+    SkillsL = [
+        "Wycena: ",
+        "Sztuka: ",
+        "Artyleria: ",
+        "Targowanie: ",
+        "Bójka: ",
+        "Broń energetyczna: ",
+        "Broń palna: ",
+        "Chwytak: ",
+        "Ciężka broń: ",
+        "Ciężka maszyneria: ",
+        "Dowodzenie: ",
+        "Etykieta: ",
+        "Gry: ",
+        "Jazda: ",
+        "Język: ",
+        "Latanie: ",
+        "Medycyna: ",
+        "Napęd: ",
+        "Naprawa: ",
+        "Nauczanie: ",
+        "Nauka: ",
+        "Nawigacja: ",
+        "Ocena: ",
+        "Perswazja: ",
+        "Pierwsza pomoc: ",
+        "Pilot: ",
+        "Pływanie: ",
+        "Precyzyjna manipulacja: ",
+        "Projekcja: ",
+        "Przebranie: ",
+        "Psychoterapia: ",
+        "Punkt: ",
+        "Rozbiórka: ",
+        "Rzemiosło: ",
+        "Rzucanie: ",
+        "Rzut: ",
+        "Skok: ",
+        "Skradanie: ",
+        "Słuchanie: ",
+        "Status: ",
+        "Strategia: ",
+        "Sztuka: ",
+        "Sztuki walki: ",
+        "Szybka rozmowa: ",
+        "Śledzenie: ",
+        "Targowanie: ",
+        "Ukrycie: ",
+        "Umiejętności techniczne: ",
+        "Czytanie i pisanie: ",
+        "Unik: ",
+        "Walka wręcz: ",
+        "Wgląd: ",
+        "Wiedza: ",
+        "Wspinaczka: ",
+        "Wykonanie: ",
+        "Zmysł: ",
+        "Zręczność"]
+    WeaponsL = [
+        "Broń 1: ",
+        "Broń 2: ",
+        "Broń 3: ",
+        "Broń 4: ",
+        "Broń 5: ", ]
+    WeaponL = ["ID",
+        "Broń",
+        "Zdolność",
+        "Spacjalność",
+        "Baza %",
+        "Obrażenia",
+        "Ręce",
+        "Penetracja",
+        "Zasięg (metry)"]
+    ArmorL = [
+        "Pancerz",
+        "Klasa pancerza",
+        "Modyfikator"]
+
+    def save_identity(self):
+
+        error = 0
+        for x in range(9):
+            self.IdentityV[x] = self.validate_entry_text(create_entry[x].get())
+            if self.IdentityV[x] == "":
+                error += 1
+        if error == 0:
+            self.next_step()
+        else:
+            messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
+            on_button_createCS_click()
+    def save_characteristics(self):
+        error = 0
+        for x in range(8):
+            self.CharacteristicsV[x] = self.validate_entry_int(create_entry[x].get(), 3, 18)
+            if self.CharacteristicsV[x] == "":
+                error += 1
+        if error == 0:
+            self.next_step()
+        else:
+            messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
+            on_button_createCS_click()
+    def save_hitpoints(self):
+        error = 0
+        for x in range(4):
+            self.HitpointsV[x] = self.validate_entry_int(create_entry[x].get(), 2, 56)
+            if self.HitpointsV[x] == "":
+                error += 1
+            else:
+                self.HitpointsV[x+4] = self.HitpointsV[x]
+
+        if error == 0:
+            self.next_step()
+        else:
+            messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
+            on_button_createCS_click()
+    def save_skills(self):
+        error = 0
+        for x in range(55):
+            self.SkillsV[x] = self.validate_entry_int(create_entry[x].get(), 1, 100)
+            if self.SkillsV[x] == "":
+                error += 1
+        if error == 0:
+            self.next_step()
+        else:
+            messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
+            on_button_createCS_click()
+    def save_weapons(self):
+        error = 0
+        for x in range(5):
+            self.WeaponsV[x][0] = self.validate_entry_text(create_entry_w[x][0].get())
+            self.WeaponsV[x][1] = self.validate_entry_text(create_entry_w[x][1].get())
+            self.WeaponsV[x][2] = self.validate_entry_text(create_entry_w[x][2].get())
+            self.WeaponsV[x][3] = self.validate_entry_int(create_entry_w[x][3].get(), 1, 100)
+            self.WeaponsV[x][4] = self.validate_entry_text(create_entry_w[x][4].get())
+            self.WeaponsV[x][5] = self.validate_entry_int(create_entry_w[x][5].get(), 1, 2)
+            self.WeaponsV[x][6] = self.validate_entry_int(create_entry_w[x][6].get(), 0, 20)
+            self.WeaponsV[x][7] = self.validate_entry_int(create_entry_w[x][7].get(), 1, 100)
+
+            for y in range(8):
+                if self.WeaponsV[x][y] == "":
+                    error += 1
+        if error == 0:
+            self.next_step()
+        else:
+            messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
+            on_button_createCS_click()
+    def save_armor(self):
+        error = 0
+        self.ArmorV[0] = self.validate_entry_text(create_entry[0].get())
+        self.ArmorV[1] = self.validate_entry_int(create_entry[1].get(), 0, 12)
+        self.ArmorV[2] = self.validate_entry_text(create_entry[2].get())
+        if self.ArmorV[0] == "" or self.ArmorV[1] == "" or self.ArmorV[2] == "":
+            error += 1;
+        if error == 0:
+            self.next_step()
+        else:
+            messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
+            on_button_createCS_click()
+    def save_equipment(self):
+        error = 0
+
+        if error == 0:
+            self.next_step()
+        else:
+            messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
+            on_button_createCS_click()
+    def next_step(self):
+        self.NS += 1
+        on_button_createCS_click()
+    def prev_step(self):
+        self.NS -= 1
+        on_button_createCS_click()
+    def validate_entry_text(self, text):
+        try:
+            if len(text) > 0:
+                return text
+            else:
+                return "Brak danych"
+        except ValueError:
+            return ""
+    def validate_entry_int(self, number, front_end, back_end):
+        try:
+            if number == "":
+                return front_end
+            else:
+                number = int(number)
+                if front_end <= number and number <= back_end:
+                    return number
+                else:
+                    return ""
+        except ValueError:
+            return ""
+def display_sheet(character):
+    # colors = ["red", "green", "blue", "orange", "purple", "yellow", "pink", "brown", "cyan"]
+    colors = ["grey"] * 9
+
+    path = r'characterSheets\\'
+    path = "{}{}".format(path, character)
+    slash = ' / '
+    max_str = '(max)'
+
+    def parse_yaml_to_class(yaml_file_path, class_type):
+        with open(yaml_file_path, 'r') as file:
+            data = yaml.safe_load(file)
+            return class_type(**data)
+            print("tes")
+
+    postac = parse_yaml_to_class(path, Rekord)
+
+    print(postac.IdentityV)
+
+    clear_main_window()
+    # window.state('zoomed')
+    x = 480
+    y = 190
+
+    titleFrame = tk.Frame().pack()
+    header     = tk.Label(titleFrame, text=postac.IdentityV[0]).pack()
+    body = tk.Frame(window)
+    body.pack(fill=tk.BOTH, expand=True)
+
+    def on_configure(event):
+        content.update_idletasks()
+        content_scrollbar.configure(scrollregion=content.bbox("all"))
+        content_scrollbar.create_window((0, 0), window=content, width=window.winfo_width(), anchor=tk.NW)
+    content_scrollbar = tk.Canvas(body)
+    content_scrollbar.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+    scrollbar = tk.Scrollbar(body, command=content_scrollbar.yview)
+    scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+    content_scrollbar.configure(yscrollcommand=scrollbar.set)
+    content = tk.Frame(content_scrollbar)
+    content.columnconfigure(0, weight=1)
+    content.columnconfigure(1, weight=0)
+    content.columnconfigure(2, weight=1)
+
+    content_scrollbar.bind("<Configure>", on_configure)
+
+    uP = 2
+    uFP = 20
+
+    buttonsFrame = tk.Frame(window, background=colors[8])
+    buttonsFrame.pack(side=BOTTOM)
+    tk.Button(buttonsFrame, text="Wyjście", command=on_button_displayCS_click, width=15).grid(row=0, column=0, padx=10, pady=10)
+    tk.Button(buttonsFrame, text="Rzut kośćmi", command=roll_dice, width=15).grid(row=0, column=1, padx=10, pady=10)
+    tk.Button(buttonsFrame, text="Edycja", width=15).grid(row=0, column=2, padx=10, pady=10)
+    tk.Button(buttonsFrame, text="Usuń", command= lambda name_d=path:delete_character(name=name_d), width=15).grid(row=0, column=3, padx=10, pady=10)
+
+    identityFrame        = tk.Frame(content)
+    identityFrame.grid(row=0, column=1, pady=uFP)
+    characteristicsFrame = tk.Frame(content)
+    characteristicsFrame.grid(row=1, column=1, pady=uFP)
+    hitpointsFrame       = tk.Frame(content)
+    hitpointsFrame.grid(row=2, column=1, pady=uFP)
+    skillsFrame          = tk.Frame(content)
+    skillsFrame.grid(row=3, column=1, pady=uFP)
+    weaponFrame          = tk.Frame(content)
+    weaponFrame.grid(row=4, column=1, pady=uFP)
+    armorFrame           = tk.Frame(content)
+    armorFrame.grid(row=5, column=1, pady=uFP)
+    # equipmentFrame       = tk.Frame(content, background=colors[6]).grid(row=6, column=1, pady=10)
+
+
+    def get_roll_V(first_V):
+        roll_V = "{}{}{}{}{}".format(str(first_V), slash, str(int((first_V+2)/5)), slash, str(int((first_V+10)/20)))
+        return roll_V
+
+    header1 = tk.Label(content, text="DANE BADACZA")
+    header1.grid(row=0, column=0, padx=10, pady=10, sticky="NE")
+    header2 = tk.Label(content, text="CECHY")
+    header2.grid(row=1, column=0, padx=10, pady=10, sticky="NE")
+    header3 = tk.Label(content, text="PUNKTY TRAFIEŃ")
+    header3.grid(row=2, column=0, padx=10, pady=10, sticky="NE")
+    header4 = tk.Label(content, text="UMIEJĘTNOŚCI")
+    header4.grid(row=3, column=0, padx=10, pady=10, sticky="NE")
+    header5 = tk.Label(content, text="BROŃ")
+    header5.grid(row=4, column=0, padx=10, pady=10, sticky="NE")
+    header6 = tk.Label(content, text="PANCERZ")
+    header6.grid(row=5, column=0, padx=10, pady=10, sticky="NE")
+    header7 = tk.Label(content, text="EKWIPUNEK")
+    header7.grid(row=6, column=0, padx=10, pady=10, sticky="NE")
+
+    for x in range(9):
+        tk.Label(identityFrame, text=postac.IdentityL[x]).grid(row=x, column=0, padx=uP, pady=uP, sticky="e")
+        tk.Label(identityFrame, text=postac.IdentityV[x]).grid(row=x, column=1, padx=uP, pady=uP, sticky="w")
+    for x in range(8):
+        tk.Label(characteristicsFrame, text=postac.CharacteristicsL[x]).grid(row=x, column=0, padx=uP, pady=uP, sticky="e")
+        roll_CH_V = get_roll_V(postac.CharacteristicsV[x]*5)
+        tk.Label(characteristicsFrame, text=roll_CH_V).grid(row=x, column=1, padx=uP, pady=uP, sticky="e")
+    for x in range(4):
+        tk.Label(hitpointsFrame, text=postac.HitpointsL[x]).grid(row=x, column=0, padx=uP, pady=uP, sticky="e")
+        displayed_hp = "{}{}{}{}".format(postac.HitpointsV[x], slash, postac.HitpointsV[x+4], max_str)
+        tk.Label(hitpointsFrame, text=displayed_hp).grid(row=x, column=1, padx=uP, pady=uP, sticky="w")
+    tk.Label(skillsFrame, width=20).grid(row=0, column=2)
+    for x in range(28):
+        tk.Label(skillsFrame, text=postac.SkillsL[(x*2)]).grid(row=x, column=0, padx=uP, pady=uP, sticky="e")
+        roll_S_V = get_roll_V(postac.SkillsV[(x*2)])
+        tk.Label(skillsFrame, text=roll_S_V).grid(row=x, column=1, padx=uP, pady=uP, sticky="e")
+        if x == 27:
+            continue
+        else:
+            tk.Label(skillsFrame, text=postac.SkillsL[(x * 2)+1]).grid(row=x, column=3, padx=uP, pady=uP, sticky="e")
+            roll_S_V = get_roll_V(postac.SkillsV[(x * 2)+1])
+            tk.Label(skillsFrame, text=roll_S_V).grid(row=x, column=4, padx=uP, pady=uP, sticky="e")
+    for y in range(9):
+        tk.Label(weaponFrame, text=postac.WeaponL[y]).grid(row=0, column=y, padx=uP, pady=uP)
+    for x in range(5):
+        for y in range(8):
+            tk.Label(weaponFrame, text=postac.WeaponsL[x]).grid(row=x+1, column=0, padx=uP, pady=uP)
+            tk.Label(weaponFrame, text=postac.WeaponsV[x][y]).grid(row=x+1, column=y+1, padx=uP, pady=uP)
+    for x in range(3):
+        tk.Label(armorFrame, text=postac.ArmorL[x]).grid(row=0, column=x, padx=uP, pady=uP)
+        tk.Label(armorFrame, text=postac.ArmorV[x]).grid(row=1, column=x, padx=uP, pady=uP)
+
+
+# titleFrame.grid(row=0, column=0, columnspan=4, rowspan=1)
+    # identityFrame.grid(row=1, column=0, columnspan=1, rowspan=2)
+    # characteristicsFrame.grid(row=1, column=1, columnspan=1, rowspan=2)
+    # hitpointsFrame.grid(row=1, column=2, columnspan=1, rowspan=1)
+    # armorFrame.grid(row=2, column=2, columnspan=1, rowspan=1)
+    # skillsFrame.grid(row=1, column=3, columnspan=1, rowspan=4)
+    # weaponFrame.grid(row=3, column=0, columnspan=3, rowspan=1)
+    # equipmentFrame.grid(row=4, column=0, columnspan=3, rowspan=1)
+    # buttonsFrame.grid(row=5, column=0, columnspan=4, rowspan=1)
+
+def delete_character(name):
+    if messagebox.askyesno("Uwaga",    "Czy chcesz usunąć aktualną postać?") == True:
+        if messagebox.askyesno("Uwaga",    "Czy NA PEWNO chcesz usunąć aktualną postać?")==True:
+            if os.path.isfile(name):
+                os.remove(name)
+                messagebox.showinfo("Potwierdzenie",    "Postać usunięto pomyślnie!")
+                on_button_displayCS_click()
+def roll_dice():
+    roll_window = tk.Tk()
+    roll_window.minsize(400, 200)
+    window.geometry("400x200")
+    window.title("Rzut kośćmi")
+    randomizer = random.Random()
+
+    header = tk.Frame(roll_window)
+    header.pack(side=tk.TOP)
+    body = tk.Frame(roll_window)
+    body.pack(side=tk.TOP)
+    footer = tk.Frame(roll_window)
+    footer.pack(side=tk.BOTTOM)
+
+    def get_randomizer(upper):
+        res = "Wynik rzutu: " + str(randomizer.randint(1, upper))
+        tk.Label(body, text=res).grid(row=2, column=0,padx=10, pady=10, columnspan=4)
+    tk.Button(body, text="1k2",  command= lambda up=2: get_randomizer(up), width=15).grid(row=0, column=0, padx=10, pady=10)
+    tk.Button(body, text="1k4", command= lambda up=4: get_randomizer(up), width=15).grid(row=0, column=1, padx=10, pady=10)
+    tk.Button(body, text="1k6", command= lambda up=6: get_randomizer(up), width=15).grid(row=0, column=2, padx=10, pady=10)
+    tk.Button(body, text="1k8", command= lambda up=8: get_randomizer(up), width=15).grid(row=0, column=3, padx=10, pady=10)
+    tk.Button(body, text="1k10",  command= lambda up=10: get_randomizer(up), width=15).grid(row=1, column=0, padx=10, pady=10)
+    tk.Button(body, text="1k12", command= lambda up=12: get_randomizer(up), width=15).grid(row=1, column=1, padx=10, pady=10)
+    tk.Button(body, text="1k20", command= lambda up=20: get_randomizer(up), width=15).grid(row=1, column=2, padx=10, pady=10)
+    tk.Button(body, text="1k100", command= lambda up=100: get_randomizer(up), width=15).grid(row=1, column=3, padx=10, pady=10)
+
+    tk.Label(header, text="RZUT KOŚCIĄ").grid(row=0, column=0)
+    tk.Button(footer, text="Zamknij okno",  command=roll_window.destroy, width=15).grid(row=0, column=0, padx=10, pady=10)
+    roll_window.mainloop()
+def on_button_displayCS_click():
+    path = r'characterSheets\\'
+    files = []
+    for f in os.listdir(path):
+        if os.path.isfile(os.path.join(path, f)):
+            files.append(f)
+    numb = len(files)
+    if numb==0:
+        messagebox.showinfo("Uwaga", "Nie ma żadnych dostępnych kart postaci!")
+    else:
+        if numb> 10:
+            messagebox.showinfo("Uwaga", "W bazie jest za dużo postaci, nie wszystkie zostaną wyświetlone, skontaktuj się z producentem!")
+        clear_main_window()
+        header1 = tk.Label(window, text="DOSTĘPNE POSTACIE")
+        header1.pack()
+        table = tk.Frame()
+        table.pack()
+        footer1 = tk.Frame()
+        footer1.pack(side=BOTTOM)
+        for x in enumerate(files):
+            if x[0] < 10:
+                label_id     = tk.Label(table, text=x[0]+1).grid(row=x[0], column=0, padx=10, pady=10, sticky="e")
+                character_id = tk.Label(table, text=x[1]).grid(row=x[0], column=1, padx=10, pady=10, sticky="e")
+                tk.Button(table, text="Otwórz", command=lambda name=x[1]: display_sheet(name), width=15).grid(row=x[0], column=2, padx=10, pady=10, sticky="w")
+        button_prev = tk.Button(footer1, text="Cofnij", command=menu, width=15)
+        button_prev.grid(row=0, column=0, padx=10, pady=10, sticky="e")
+
+def on_button_createCS_click_S():
+    global postac
+    if check_yml_files() <= 10:
+        postac = Rekord()
+        on_button_createCS_click()
+    else:
+        messagebox.showinfo("Uwaga", "Za dużo kart postaci, należy jakąś usunąć!")
+def check_yml_files():
+    path = r'characterSheets\\'
+    files = []
+    for f in os.listdir(path):
+        if os.path.isfile(os.path.join(path, f)):
+            files.append(f)
+    return len(files)
+
+def save_to_yml():
+    yaml_data = yaml.dump(postac.__dict__)
+
+    path = r'characterSheets\\'
+    yml = ".yaml"
+
+    files = []
+    for f in os.listdir(path):
+        if os.path.isfile(os.path.join(path, f)):
+            files.append(f)
+
+    file_path = "{}{}".format(postac.IdentityV[0], yml)
+    if file_path in files:
+        result = messagebox.askyesno("Potwierdzenie", "Już istnieje postać o takiej nazwie, czy chcesz ją nadpisać?")
+        if result:
+            file_path = "{}{}".format(path, file_path)
+            with open(file_path, "w") as file:
+                file.write(yaml_data)
+            postac.NS = 1
+            menu()
+        else:
+            postac.NS = 7
+            on_button_createCS_click()
+    else:
+        file_path = "{}{}".format(path, file_path)
+        with open(file_path, "w") as file:
+            file.write(yaml_data)
+        menu()
+
+
+def on_button_createCS_click():
+    def on_configure(event):
+        table.update_idletasks()
+        tableM.configure(scrollregion=table.bbox("all"))
+        tableM.create_window((0, 0), window=table, width=window.winfo_width(), anchor=tk.NW)
+
+    print("Button NP clicked!", postac.NS)
+    window.title("Interaktywna karta postaci w systemie BRP - Tworzenie postaci")
+    uW = 15 # Universal Width
+    global create_entry
+    global create_entry_w
+    create_entry = [None] * 55
+    create_entry_w = [['0' for _ in range(8)] for _ in range(5)]
+    create_label = [None] * 55
+
+    if postac.NS == 1:
+
+        clear_main_window()
+        header1 = tk.Label(window, text="DANE BADACZA")
+        header1.pack()
+        table = tk.Frame()
+        table.pack()
+        footer1 = tk.Frame()
+        footer1.pack(side=BOTTOM)
+        for x in range(9):
+            create_entry[x] = tk.Entry(table, width=30)
+            create_entry[x].insert(0, postac.IdentityV[x])
+            create_label[x] = tk.Label(table, text=postac.IdentityL[x])
+            create_label[x].grid(row=x, column=0, padx=10, pady=10, sticky="e")
+            create_entry[x].grid(row=x, column=1, padx=10, pady=10, sticky="w")
+        button_next = tk.Button(footer1, text="Dalej", command=postac.save_identity, width=uW)
+        button_prev = tk.Button(footer1, text="Cofnij", command=postac.prev_step, width=uW)
+        button_next.grid(row=0, column=1, padx=10, pady=10, sticky="w")
+        button_prev.grid(row=0, column=0, padx=10, pady=10, sticky="e")
+    elif postac.NS == 2:
+
+        clear_main_window()
+        header1 = tk.Label(window, text="CECHY")
+        header1.pack()
+        table = tk.Frame()
+        table.pack()
+        footer1 = tk.Frame()
+        footer1.pack(side=BOTTOM)
+        for x in range(8):
+            create_entry[x] = tk.Entry(table, width=30)
+            create_entry[x].insert(0, postac.CharacteristicsV[x])
+            create_label[x] = tk.Label(table, text=postac.CharacteristicsL[x])
+            create_label[x].grid(row=x, column=0, padx=10, pady=10, sticky="e")
+            create_entry[x].grid(row=x, column=1, padx=10, pady=10, sticky="e")
+        button_next = tk.Button(footer1, text="Dalej", command=postac.save_characteristics, width=uW)
+        button_prev = tk.Button(footer1, text="Cofnij", command=postac.prev_step, width=uW)
+        button_next.grid(row=0, column=1, padx=10, pady=10, sticky="w")
+        button_prev.grid(row=0, column=0, padx=10, pady=10, sticky="e")
+    elif postac.NS == 3:
+
+        clear_main_window()
+        header1 = tk.Label(window, text="PUNKTY TRAFIEŃ")
+        header1.pack()
+        table = tk.Frame()
+        table.pack()
+        footer1 = tk.Frame()
+        footer1.pack(side=BOTTOM)
+        for x in range(4):
+            create_entry[x] = tk.Entry(table, width=30)
+            create_entry[x].insert(0, postac.HitpointsV[x])
+            create_label[x] = tk.Label(table, text=postac.HitpointsL[x])
+            create_label[x].grid(row=x, column=0, padx=10, pady=10, sticky="e")
+            create_entry[x].grid(row=x, column=1, padx=10, pady=10, sticky="e")
+
+        button_next = tk.Button(footer1, text="Dalej", command=postac.save_hitpoints, width=uW)
+        button_prev = tk.Button(footer1, text="Cofnij", command=postac.prev_step, width=uW)
+        button_next.grid(row=0, column=1, padx=10, pady=10, sticky="w")
+        button_prev.grid(row=0, column=0, padx=10, pady=10, sticky="e")
+    elif postac.NS == 4:
+
+        clear_main_window()
+        header1 = tk.Label(text="UMIEJĘTNOŚCI")
+        header1.pack()
+
+        body1 = tk.Frame()
+        body1.pack(fill=tk.BOTH, expand=True)
+        tableM = tk.Canvas(body1)
+        tableM.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        scrollbar = tk.Scrollbar(body1, command=tableM.yview)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        tableM.configure(yscrollcommand=scrollbar.set)
+
+        table = tk.Frame(tableM)
+        table.columnconfigure(0, weight=1)
+        table.columnconfigure(1, weight=0)
+        table.columnconfigure(2, weight=0)
+        table.columnconfigure(3, weight=0)
+        table.columnconfigure(4, weight=0)
+        table.columnconfigure(5, weight=1)
+
+        footer1 = tk.Frame()
+        footer1.pack(side=BOTTOM)
+        for x in range(28):
+            create_entry[(x * 2)] = tk.Entry(table, width=30)
+            create_entry[(x * 2)].insert(0, postac.SkillsV[(x * 2)])
+            create_label[(x * 2)] = tk.Label(table, text=postac.SkillsL[x * 2])
+            create_label[(x * 2)].grid(row=x, column=1, padx=10, pady=10, sticky="e")
+            create_entry[(x * 2)].grid(row=x, column=2, padx=10, pady=10, sticky="e")
+            if x == 27:
+                continue
+            else:
+                create_entry[(x * 2) + 1] = tk.Entry(table, width=30)
+                create_entry[(x * 2) + 1].insert(0, postac.SkillsV[(x * 2) + 1])
+                create_label[(x * 2) + 1] = tk.Label(table, text=postac.SkillsL[(x * 2) + 1])
+                create_label[(x * 2) + 1].grid(row=x, column=3, padx=10, pady=10, sticky="e")
+                create_entry[(x * 2) + 1].grid(row=x, column=4, padx=10, pady=10, sticky="e")
+
+        tableM.bind("<Configure>", on_configure)
+
+        button_next = tk.Button(footer1, text="Dalej", command=postac.save_skills, width=uW)
+        button_prev = tk.Button(footer1, text="Cofnij", command=postac.prev_step, width=uW)
+        button_next.grid(row=0, column=1, padx=10, pady=10, sticky="w")
+        button_prev.grid(row=0, column=0, padx=10, pady=10, sticky="e")
+
+    elif postac.NS == 5:
+        clear_main_window()
+        header1 = tk.Label(text="BROŃ")
+        header1.pack()
+        body1 = tk.Frame()
+        body1.pack()
+        footer1 = tk.Frame()
+        footer1.pack(side=BOTTOM)
+
+        create_label[0] = tk.Label(body1, text="ID").grid(row=0, column=0, padx=10, pady=10)
+        create_label[0] = tk.Label(body1, text="Broń").grid(row=0, column=1, padx=10, pady=10)
+        create_label[0] = tk.Label(body1, text="Zdolność").grid(row=0, column=2, padx=10, pady=10)
+        create_label[0] = tk.Label(body1, text="Spacjalność").grid(row=0, column=3, padx=10, pady=10)
+        create_label[0] = tk.Label(body1, text="Baza %").grid(row=0, column=4, padx=10, pady=10)
+        create_label[0] = tk.Label(body1, text="Obrażenia").grid(row=0, column=5, padx=10, pady=10)
+        create_label[0] = tk.Label(body1, text="Ręce").grid(row=0, column=6, padx=10, pady=10)
+        create_label[0] = tk.Label(body1, text="Penetracja").grid(row=0, column=7, padx=10, pady=10)
+        create_label[0] = tk.Label(body1, text="Zasięg (metry)").grid(row=0, column=8, padx=10, pady=10)
+
+        for x in range(1, 6):
+            create_label[x] = tk.Label(body1, text=postac.WeaponsL[x - 1])
+            create_entry_w[x - 1][0] = tk.Entry(body1, width=10)
+            create_entry_w[x - 1][1] = tk.Entry(body1, width=10)
+            create_entry_w[x - 1][2] = tk.Entry(body1, width=15)
+            create_entry_w[x - 1][3] = tk.Entry(body1, width=8)
+            create_entry_w[x - 1][4] = tk.Entry(body1, width=15)
+            create_entry_w[x - 1][5] = tk.Entry(body1, width=4)
+            create_entry_w[x - 1][6] = tk.Entry(body1, width=4)
+            create_entry_w[x - 1][7] = tk.Entry(body1, width=4)
+
+            create_entry_w[x-1][0].insert(0, postac.WeaponsV[x-1][0])
+            create_entry_w[x-1][1].insert(0, postac.WeaponsV[x-1][1])
+            create_entry_w[x-1][2].insert(0, postac.WeaponsV[x-1][2])
+            create_entry_w[x-1][3].insert(0, postac.WeaponsV[x-1][3])
+            create_entry_w[x-1][4].insert(0, postac.WeaponsV[x-1][4])
+            create_entry_w[x-1][5].insert(0, postac.WeaponsV[x-1][5])
+            create_entry_w[x-1][6].insert(0, postac.WeaponsV[x-1][6])
+            create_entry_w[x-1][7].insert(0, postac.WeaponsV[x-1][7])
+
+            create_label[x].grid(row=x, column=0, padx=10, pady=10)
+            create_entry_w[x - 1][0].grid(row=x, column=1, padx=10, pady=10)
+            create_entry_w[x - 1][1].grid(row=x, column=2, padx=10, pady=10)
+            create_entry_w[x - 1][2].grid(row=x, column=3, padx=10, pady=10)
+            create_entry_w[x - 1][3].grid(row=x, column=4, padx=10, pady=10)
+            create_entry_w[x - 1][4].grid(row=x, column=5, padx=10, pady=10)
+            create_entry_w[x - 1][5].grid(row=x, column=6, padx=10, pady=10)
+            create_entry_w[x - 1][6].grid(row=x, column=7, padx=10, pady=10)
+            create_entry_w[x - 1][7].grid(row=x, column=8, padx=10, pady=10)
+
+
+
+        button_next = tk.Button(footer1, text="Dalej", command=postac.save_weapons, width=uW)
+        button_prev = tk.Button(footer1, text="Cofnij", command=postac.prev_step, width=uW)
+        button_next.grid(row=0, column=1, padx=10, pady=10, sticky="w")
+        button_prev.grid(row=0, column=0, padx=10, pady=10, sticky="e")
+    elif postac.NS == 6:
+        clear_main_window()
+        header1 = tk.Label(text="PANCERZ")
+        header1.pack()
+        body1 = tk.Frame()
+        body1.pack()
+        footer1 = tk.Frame()
+        footer1.pack(side=BOTTOM)
+
+        for x in range(3):
+            create_entry[x] = tk.Entry(body1, width=30)
+            create_entry[x].insert(0, postac.ArmorV[x])
+            create_label[x] = tk.Label(body1, text=postac.ArmorL[x])
+            create_label[x].grid(row=0, column=x, padx=10, pady=10)
+            create_entry[x].grid(row=1, column=x, padx=10, pady=10)
+
+        button_next = tk.Button(footer1, text="Dalej", command=postac.save_armor, width=uW)
+        button_prev = tk.Button(footer1, text="Cofnij", command=postac.prev_step, width=uW)
+        button_next.grid(row=0, column=1, padx=10, pady=10, sticky="w")
+        button_prev.grid(row=0, column=0, padx=10, pady=10, sticky="e")
+    elif postac.NS == 7:
+        clear_main_window()
+        header1 = tk.Label(text="EKWIPUNEK")
+        header1.pack()
+        body1 = tk.Frame()
+        body1.pack()
+        footer1 = tk.Frame()
+        footer1.pack(side=BOTTOM)
+
+        button_next = tk.Button(footer1, text="Dalej", command=postac.save_equipment, width=uW)
+        button_prev = tk.Button(footer1, text="Cofnij", command=postac.prev_step, width=uW)
+        button_next.grid(row=0, column=1, padx=10, pady=10, sticky="w")
+        button_prev.grid(row=0, column=0, padx=10, pady=10, sticky="e")
+
+    elif postac.NS == 0:
+        result = messagebox.askyesno("Wyjście", "Czy na pewno chcesz przerwać tworzenie postaci?")
+        if result:
+            postac.NS = 1
+            print("Tak")
+            menu()
+        else:
+            postac.NS = 1
+            print("Nie")
+            on_button_createCS_click()
+    elif postac.NS == 8:
+        result = messagebox.askyesno("Potwierdzenie", "Czy na pewno chcesz dodać utworzoną postać?")
+        if result:
+            print("Tak")
+            save_to_yml()
+        else:
+            postac.NS = 7
+            print("Nie")
+            on_button_createCS_click()
+
+
+
+def on_button_option_click():
+    print("Button O clicked!")
+
+
+def on_button_exit_click():
+    print("Button W clicked!")
+    result = messagebox.askyesno("Wyjście", "Czy na pewno chcesz wyjść?")
+    if result:
+        print("Tak")
+        window.destroy()
+    else:
+        print("Nie")
+
+
+def clear_main_window():
+    for widget in window.winfo_children():
+        widget.destroy()
+
+def menu():
+    window.title("Interaktywna karta postaci w systemie BRP")
+    clear_main_window()
+    uW = 20  # Universal Width - Szerokość dla wszystkich guzików menu
+    button_displayCS = tk.Button(window, text="Wyświetl kartę postaci", command=on_button_displayCS_click, width=uW)
+    button_createCS = tk.Button(window, text="Utwórz nową postać", command=on_button_createCS_click_S, width=uW)
+    button_options = tk.Button(window, text="Opcje", command=on_button_option_click, width=uW)
+    button_exit = tk.Button(window, text="Wyjście", command=on_button_exit_click, width=uW)
+
+    button_displayCS.pack(pady=20)
+    button_createCS.pack(pady=20)
+    button_options.pack(pady=20)
+    button_exit.pack(pady=20)
+
+    frame_image_and_label = tk.Frame()
+
+    global tk_image
+    try:
+        path = r"BRP_logo_t.png"
+        original_image = Image.open(path)
+        resized_image = original_image.resize((100, 100))
+        tk_image = ImageTk.PhotoImage(resized_image)
+        image_label = tk.Label(frame_image_and_label, image=tk_image)
+        image_label.grid(row=0, column=0, padx=10)
+    except:
+        print("error")
+    bottom_label = tk.Label(frame_image_and_label,
+                            text="To oprogramowanie opiera się na zasadach gry udostępnionych\nprzez Chaosium Inc. zgodnie z licencją BRP Open Game License, Version 1.0.",
+                            font=("Arial", 10))
+    bottom_label.grid(row=0, column=1, padx=10)
+    frame_image_and_label.pack(side=tk.BOTTOM, anchor=tk.S, pady=10)
+
+
+def main():
+    global window
+
+    window = tk.Tk()
+    window.geometry("800x600")
+    window.minsize(800, 600)
+
+    menu()
+    window.mainloop()
+
+
+if __name__ == "__main__":
+    main()
