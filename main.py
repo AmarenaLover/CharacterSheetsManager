@@ -6,6 +6,7 @@ from tkinter import *
 from tkinter import messagebox
 from PIL import Image, ImageTk
 
+# test
 class Rekord:
     def __init__(self, NS=None, IdentityV=None, CharacteristicsV=None, HitpointsV=None, SkillsV=None, WeaponsV=None, ArmorV=None):
         if IdentityV==None:
