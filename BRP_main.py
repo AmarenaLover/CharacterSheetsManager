@@ -118,12 +118,15 @@ def display_sheet(character):
             tk.Label(skillsFrame, text=postac.SkillsL[(x * 2)+1]).grid(row=x, column=3, padx=uP, pady=uP, sticky="e")
             roll_S_V = get_roll_V(postac.SkillsV[(x * 2)+1])
             tk.Label(skillsFrame, text=roll_S_V).grid(row=x, column=4, padx=uP, pady=uP, sticky="e")
-    for y in range(9):
-        tk.Label(weaponFrame, text=postac.WeaponL[y]).grid(row=0, column=y, padx=uP, pady=uP)
-    for x in range(5):
-        for y in range(8):
-            tk.Label(weaponFrame, text=postac.WeaponsL[x]).grid(row=x+1, column=0, padx=uP, pady=uP)
-            tk.Label(weaponFrame, text=postac.WeaponsV[x][y]).grid(row=x+1, column=y+1, padx=uP, pady=uP)
+    if(postac.WeaponsNb)==0:
+        tk.Label(weaponFrame, text="Brak broni").grid(row=0, column=y, padx=uP, pady=uP)
+    else:
+        for y in range(9):
+            tk.Label(weaponFrame, text=postac.WeaponL[y]).grid(row=0, column=y, padx=uP, pady=uP)
+        for x in range(postac.WeaponsNb):
+            for y in range(8):
+                tk.Label(weaponFrame, text=postac.WeaponsL[x]).grid(row=x+1, column=0, padx=uP, pady=uP)
+                tk.Label(weaponFrame, text=postac.WeaponsV[x][y]).grid(row=x+1, column=y+1, padx=uP, pady=uP)
     for x in range(3):
         tk.Label(armorFrame, text=postac.ArmorL[x]).grid(row=0, column=x, padx=uP, pady=uP)
         tk.Label(armorFrame, text=postac.ArmorV[x]).grid(row=1, column=x, padx=uP, pady=uP)
