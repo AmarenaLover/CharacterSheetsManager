@@ -212,7 +212,7 @@ def on_button_displayCS_click():
 def on_button_createCS_click_S():
     if check_yml_files() <= 10:
         global postac
-        postac = character.Rekord()
+        postac = Character.Rekord()
         on_button_createCS_click()
     else:
         messagebox.showinfo("Uwaga", "Za dużo kart postaci, należy jakąś usunąć!")
