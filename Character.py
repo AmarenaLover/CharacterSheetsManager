@@ -7,6 +7,7 @@ class Rekord:
             self.HitpointsV = [""] * 8
             self.SkillsV = [""] * 55
             self.WeaponsV = [["" for _ in range(8)] for _ in range(5)]
+            self.WeaponsNb=0
             self.ArmorV = [""] * 3
         else:
             self.NS = NS

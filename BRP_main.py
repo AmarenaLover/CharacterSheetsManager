@@ -392,17 +392,9 @@ def on_button_createCS_click():
             footer1 = tk.Frame()
             footer1.pack(side=BOTTOM)
 
-            create_label[0] = tk.Label(body1, text="ID").grid(row=0, column=0, padx=10, pady=10)
-            create_label[0] = tk.Label(body1, text="Broń").grid(row=0, column=1, padx=10, pady=10)
-            create_label[0] = tk.Label(body1, text="Zdolność").grid(row=0, column=2, padx=10, pady=10)
-            create_label[0] = tk.Label(body1, text="Spacjalność").grid(row=0, column=3, padx=10, pady=10)
-            create_label[0] = tk.Label(body1, text="Baza %").grid(row=0, column=4, padx=10, pady=10)
-            create_label[0] = tk.Label(body1, text="Obrażenia").grid(row=0, column=5, padx=10, pady=10)
-            create_label[0] = tk.Label(body1, text="Ręce").grid(row=0, column=6, padx=10, pady=10)
-            create_label[0] = tk.Label(body1, text="Penetracja").grid(row=0, column=7, padx=10, pady=10)
-            create_label[0] = tk.Label(body1, text="Zasięg (metry)").grid(row=0, column=8, padx=10, pady=10)
-
-            for x in range(1, 6):
+            for x in range(9):
+                tk.Label(body1, text=postac.WeaponL[x]).grid(row=0, column=x, padx=10, pady=10)
+            for x in range(1, 1+postac.WeaponsNb):
                 create_label[x] = tk.Label(body1, text=postac.WeaponsL[x - 1])
                 create_entry_w[x - 1][0] = tk.Entry(body1, width=10)
                 create_entry_w[x - 1][1] = tk.Entry(body1, width=10)
