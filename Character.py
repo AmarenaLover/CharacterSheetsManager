@@ -161,7 +161,6 @@ class Rekord:
         if error==0: self.WeaponsNb+=1
         return error
     def del_weapon(self, data):
-        error = 0
         self.WeaponsV[data][0] = "-"
         self.WeaponsV[data][1] = "-"
         self.WeaponsV[data][2] = "-"
@@ -172,7 +171,6 @@ class Rekord:
         self.WeaponsV[data][7] = "-"
         self.WeaponsV[data]=self.WeaponsV[self.WeaponsNb-1]
         self.WeaponsNb-=1
-        return error
     def save_armor(self, data):
         error = 0
         self.ArmorV[0] = self.validate_entry_text(data[0].get())

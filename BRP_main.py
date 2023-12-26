@@ -379,8 +379,7 @@ def on_button_createCS_click():
         display_skills()
     elif postac.NS == 5:
         def del_weapon(id):
-            if postac.del_weapon(id)!=0:
-                messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
+            postac.del_weapon(id)
             on_button_createCS_click()
         def save_weapon():
             if postac.save_weapon(create_entry)!=0:
