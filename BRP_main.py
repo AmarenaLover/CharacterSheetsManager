@@ -5,7 +5,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
 from PIL import Image, ImageTk
-import character
+import Character
 # test
 
 def display_sheet(character):
@@ -22,7 +22,7 @@ def display_sheet(character):
             data = yaml.safe_load(file)
             return class_type(**data)
 
-    postac = parse_yaml_to_class(path, Rekord)
+    postac = parse_yaml_to_class(path, Character.Rekord)
 
     print(postac.IdentityV)
 
