@@ -21,7 +21,6 @@ def display_sheet(character):
         with open(yaml_file_path, 'r') as file:
             data = yaml.safe_load(file)
             return class_type(**data)
-            print("tes")
 
     postac = parse_yaml_to_class(path, Rekord)
 
@@ -225,34 +224,12 @@ def check_yml_files():
             files.append(f)
     return len(files)
 
-def save_to_yml():
-    yaml_data = yaml.dump(postac.__dict__)
-
-    path = r'characterSheets\.'
-    yml = ".yaml"
-
-    files = []
-    for f in os.listdir(path):
-        if os.path.isfile(os.path.join(path, f)):
-            files.append(f)
-
-    file_path = "{}{}".format(postac.IdentityV[0], yml)
-    if file_path in files:
-        result = messagebox.askyesno("Potwierdzenie", "Już istnieje postać o takiej nazwie, czy chcesz ją nadpisać?")
-        if result:
-            file_path = "{}{}".format(path, file_path)
-            with open(file_path, "w") as file:
-                file.write(yaml_data)
-            postac.NS = 1
-            menu()
-        else:
-            postac.NS = 7
-            on_button_createCS_click()
-    else:
-        file_path = "{}{}".format(path, file_path)
-        with open(file_path, "w") as file:
-            file.write(yaml_data)
-        menu()
+def save_to_yml(file):
+    character_data = yaml.dump(postac.__dict__)
+    with open(file, "w") as file:
+        file.write(character_data)
+    postac.NS = 1
+    menu()
 
 def on_button_createCS_click():
     window.title("Interaktywna karta postaci w systemie BRP - Tworzenie postaci")
@@ -517,7 +494,22 @@ def on_button_createCS_click():
             on_button_createCS_click()
     elif postac.NS == 8:
         if messagebox.askyesno("Potwierdzenie", "Czy na pewno chcesz dodać utworzoną postać?")==True:
-            save_to_yml()
+            path = r'characterSheets'
+            file_name = "{}{}".format(postac.IdentityV[0], ".yaml")
+            files = []
+            for f in os.listdir(path):
+                if os.path.isfile(os.path.join(path, f)):
+                    files.append(f)
+            if file_name in files:
+                if messagebox.askyesno("Potwierdzenie", "Już istnieje postać o takiej nazwie, czy chcesz ją nadpisać?") == True:
+                    file_name = "{}{}{}".format(path, "\\", file_name)
+                    save_to_yml(file_name)
+                else:
+                    postac.NS = 7
+                    on_button_createCS_click()
+            else:
+                file_name = "{}{}{}".format(path, "\\", file_name)
+                save_to_yml(file_name)
         else:
             postac.NS = 7
             on_button_createCS_click()
