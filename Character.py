@@ -145,20 +145,33 @@ class Rekord:
             if self.SkillsV[x] == "":
                 error += 1
         return error
-    def save_weapons(self, data):
+    def save_weapon(self, data):
         error = 0
-        for x in range(5):
-            self.WeaponsV[x][0] = self.validate_entry_text(data[x][0].get())
-            self.WeaponsV[x][1] = self.validate_entry_text(data[x][1].get())
-            self.WeaponsV[x][2] = self.validate_entry_text(data[x][2].get())
-            self.WeaponsV[x][3] = self.validate_entry_int(data[x][3].get(), 1, 100)
-            self.WeaponsV[x][4] = self.validate_entry_text(data[x][4].get())
-            self.WeaponsV[x][5] = self.validate_entry_int(data[x][5].get(), 1, 2)
-            self.WeaponsV[x][6] = self.validate_entry_int(data[x][6].get(), 0, 20)
-            self.WeaponsV[x][7] = self.validate_entry_int(data[x][7].get(), 1, 100)
-            for y in range(8):
-                if self.WeaponsV[x][y] == "":
-                    error += 1
+        self.WeaponsV[self.WeaponsNb][0] = self.validate_entry_text(data[0].get())
+        self.WeaponsV[self.WeaponsNb][1] = self.validate_entry_text(data[1].get())
+        self.WeaponsV[self.WeaponsNb][2] = self.validate_entry_text(data[2].get())
+        self.WeaponsV[self.WeaponsNb][3] = self.validate_entry_int(data[3].get(), 1, 100)
+        self.WeaponsV[self.WeaponsNb][4] = self.validate_entry_text(data[4].get())
+        self.WeaponsV[self.WeaponsNb][5] = self.validate_entry_int(data[5].get(), 1, 2)
+        self.WeaponsV[self.WeaponsNb][6] = self.validate_entry_int(data[6].get(), 0, 20)
+        self.WeaponsV[self.WeaponsNb][7] = self.validate_entry_int(data[7].get(), 1, 100)
+        for y in range(8):
+            if self.WeaponsV[self.WeaponsNb][y] == "":
+                error += 1
+        if error==0: self.WeaponsNb+=1
+        return error
+    def del_weapon(self, data):
+        error = 0
+        self.WeaponsV[data][0] = "-"
+        self.WeaponsV[data][1] = "-"
+        self.WeaponsV[data][2] = "-"
+        self.WeaponsV[data][3] = "-"
+        self.WeaponsV[data][4] = "-"
+        self.WeaponsV[data][5] = "-"
+        self.WeaponsV[data][6] = "-"
+        self.WeaponsV[data][7] = "-"
+        self.WeaponsV[data]=self.WeaponsV[self.WeaponsNb-1]
+        self.WeaponsNb-=1
         return error
     def save_armor(self, data):
         error = 0

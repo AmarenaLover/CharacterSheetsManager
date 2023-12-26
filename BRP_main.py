@@ -378,11 +378,16 @@ def on_button_createCS_click():
         clear_main_window()
         display_skills()
     elif postac.NS == 5:
-        def save_weapons():
-            if postac.save_weapons(create_entry_w)==0:
-                postac.next_step()
-            else:
+        def del_weapon(id):
+            if postac.del_weapon(id)!=0:
                 messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
+            on_button_createCS_click()
+        def save_weapon():
+            if postac.save_weapon(create_entry)!=0:
+                messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
+            on_button_createCS_click()
+        def save_weapons():
+            postac.next_step()
             on_button_createCS_click()
         def display_weapons():
             header1 = tk.Label(text="BROŃ")
@@ -391,38 +396,38 @@ def on_button_createCS_click():
             body1.pack()
             footer1 = tk.Frame()
             footer1.pack(side=BOTTOM)
-
             for x in range(9):
                 tk.Label(body1, text=postac.WeaponL[x]).grid(row=0, column=x, padx=10, pady=10)
-            for x in range(1, 6):
-                create_label[x] = tk.Label(body1, text=postac.WeaponsL[x - 1])
-                create_entry_w[x - 1][0] = tk.Entry(body1, width=10)
-                create_entry_w[x - 1][1] = tk.Entry(body1, width=10)
-                create_entry_w[x - 1][2] = tk.Entry(body1, width=15)
-                create_entry_w[x - 1][3] = tk.Entry(body1, width=8)
-                create_entry_w[x - 1][4] = tk.Entry(body1, width=15)
-                create_entry_w[x - 1][5] = tk.Entry(body1, width=4)
-                create_entry_w[x - 1][6] = tk.Entry(body1, width=4)
-                create_entry_w[x - 1][7] = tk.Entry(body1, width=4)
-
-                create_entry_w[x-1][0].insert(0, postac.WeaponsV[x-1][0])
-                create_entry_w[x-1][1].insert(0, postac.WeaponsV[x-1][1])
-                create_entry_w[x-1][2].insert(0, postac.WeaponsV[x-1][2])
-                create_entry_w[x-1][3].insert(0, postac.WeaponsV[x-1][3])
-                create_entry_w[x-1][4].insert(0, postac.WeaponsV[x-1][4])
-                create_entry_w[x-1][5].insert(0, postac.WeaponsV[x-1][5])
-                create_entry_w[x-1][6].insert(0, postac.WeaponsV[x-1][6])
-                create_entry_w[x-1][7].insert(0, postac.WeaponsV[x-1][7])
-
-                create_label[x].grid(row=x, column=0, padx=10, pady=10)
-                create_entry_w[x - 1][0].grid(row=x, column=1, padx=10, pady=10)
-                create_entry_w[x - 1][1].grid(row=x, column=2, padx=10, pady=10)
-                create_entry_w[x - 1][2].grid(row=x, column=3, padx=10, pady=10)
-                create_entry_w[x - 1][3].grid(row=x, column=4, padx=10, pady=10)
-                create_entry_w[x - 1][4].grid(row=x, column=5, padx=10, pady=10)
-                create_entry_w[x - 1][5].grid(row=x, column=6, padx=10, pady=10)
-                create_entry_w[x - 1][6].grid(row=x, column=7, padx=10, pady=10)
-                create_entry_w[x - 1][7].grid(row=x, column=8, padx=10, pady=10)
+            for x in range(0, postac.WeaponsNb):
+                tk.Label(body1, text=postac.WeaponsL[x]).grid(row=x+1, column=0, padx=10, pady=10)
+                tk.Label(body1, text=postac.WeaponsV[x][0]).grid(row=x+1, column=1, padx=10, pady=10)
+                tk.Label(body1, text=postac.WeaponsV[x][1]).grid(row=x+1, column=2, padx=10, pady=10)
+                tk.Label(body1, text=postac.WeaponsV[x][2]).grid(row=x+1, column=3, padx=10, pady=10)
+                tk.Label(body1, text=postac.WeaponsV[x][3]).grid(row=x+1, column=4, padx=10, pady=10)
+                tk.Label(body1, text=postac.WeaponsV[x][4]).grid(row=x+1, column=5, padx=10, pady=10)
+                tk.Label(body1, text=postac.WeaponsV[x][5]).grid(row=x+1, column=6, padx=10, pady=10)
+                tk.Label(body1, text=postac.WeaponsV[x][6]).grid(row=x+1, column=7, padx=10, pady=10)
+                tk.Label(body1, text=postac.WeaponsV[x][7]).grid(row=x+1, column=8, padx=10, pady=10)
+                tk.Button(body1, text="-", command = lambda id=x: del_weapon(id),width=3).grid(row=x+1, column=9, padx=10, pady=10, sticky="w")
+            if postac.WeaponsNb<5:
+                tk.Label(body1, text=postac.WeaponsL[postac.WeaponsNb]).grid(row=x+2, column=0, padx=10, pady=10)
+                create_entry[0] = tk.Entry(body1, width=5)
+                create_entry[1] = tk.Entry(body1, width=5)
+                create_entry[2] = tk.Entry(body1, width=5)
+                create_entry[3] = tk.Entry(body1, width=5)
+                create_entry[4] = tk.Entry(body1, width=5)
+                create_entry[5] = tk.Entry(body1, width=5)
+                create_entry[6] = tk.Entry(body1, width=5)
+                create_entry[7] = tk.Entry(body1, width=5)
+                create_entry[0].grid(row=x + 2, column=1, padx=10, pady=10)
+                create_entry[1].grid(row=x + 2, column=2, padx=10, pady=10)
+                create_entry[2].grid(row=x + 2, column=3, padx=10, pady=10)
+                create_entry[3].grid(row=x + 2, column=4, padx=10, pady=10)
+                create_entry[4].grid(row=x + 2, column=5, padx=10, pady=10)
+                create_entry[5].grid(row=x + 2, column=6, padx=10, pady=10)
+                create_entry[6].grid(row=x + 2, column=7, padx=10, pady=10)
+                create_entry[7].grid(row=x + 2, column=8, padx=10, pady=10)
+                tk.Button(body1, text="+", command=save_weapon, width=3).grid(row=x + 2, column=9, padx=10, pady=10, sticky="w")
 
             button_next = tk.Button(footer1, text="Dalej", command=save_weapons, width=uW)
             button_prev = tk.Button(footer1, text="Cofnij", command=back, width=uW)
