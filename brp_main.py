@@ -713,64 +713,48 @@ def on_button_createCS_click():
 def on_button_option_click():
     print("Button O clicked!")
 
-
 def on_button_exit_click():
-    print("Button W clicked!")
-    result = messagebox.askyesno("Wyjście", "Czy na pewno chcesz wyjść?")
-    if result:
-        print("Tak")
+    if messagebox.askyesno("Wyjście", "Czy na pewno chcesz wyjść?")==True:
         window.destroy()
-    else:
-        print("Nie")
-
-
 def clear_main_window():
     for widget in window.winfo_children():
         widget.destroy()
-
 def menu():
     window.title("Interaktywna karta postaci w systemie BRP")
     clear_main_window()
+
     uW = 20  # Universal Width - Szerokość dla wszystkich guzików menu
-    button_displayCS = tk.Button(window, text="Wyświetl kartę postaci", command=on_button_displayCS_click, width=uW)
-    button_createCS = tk.Button(window, text="Utwórz nową postać", command=on_button_createCS_click_S, width=uW)
-    button_options = tk.Button(window, text="Opcje", command=on_button_option_click, width=uW)
-    button_exit = tk.Button(window, text="Wyjście", command=on_button_exit_click, width=uW)
 
-    button_displayCS.pack(pady=20)
-    button_createCS.pack(pady=20)
-    button_options.pack(pady=20)
-    button_exit.pack(pady=20)
+    body = tk.Frame()
+    body.pack()
+    tk.Button(body, text="Wyświetl kartę postaci", command=on_button_displayCS_click, width=uW).grid(row=1, column=0, pady=20)
+    tk.Button(body, text="Utwórz nową postać", command=on_button_createCS_click_S, width=uW).grid(row=2, column=0, pady=20)
+    tk.Button(body, text="Opcje", command=on_button_option_click, width=uW).grid(row=3, column=0, pady=20)
+    tk.Button(body, text="Wyjście", command=on_button_exit_click, width=uW).grid(row=4, column=0, pady=20)
 
-    frame_image_and_label = tk.Frame()
+    footer = tk.Frame()
+    footer.pack(side=tk.BOTTOM, pady=10)
 
     global tk_image
     try:
         path = r"BRP_logo_t.png"
-        original_image = Image.open(path)
+        original_image = Image.open(path_for_apte(path))
         resized_image = original_image.resize((100, 100))
         tk_image = ImageTk.PhotoImage(resized_image)
-        image_label = tk.Label(frame_image_and_label, image=tk_image)
+        image_label = tk.Label(footer, image=tk_image)
         image_label.grid(row=0, column=0, padx=10)
+        bottom_label = tk.Label(footer,
+        text="To oprogramowanie opiera się na zasadach gry udostępnionych\nprzez Chaosium Inc. zgodnie z licencją BRP Open Game License, Version 1.0.",
+        font=("Arial", 10))
+        bottom_label.grid(row=0, column=1, padx=10)
     except:
-        print("error")
-    bottom_label = tk.Label(frame_image_and_label,
-                            text="To oprogramowanie opiera się na zasadach gry udostępnionych\nprzez Chaosium Inc. zgodnie z licencją BRP Open Game License, Version 1.0.",
-                            font=("Arial", 10))
-    bottom_label.grid(row=0, column=1, padx=10)
-    frame_image_and_label.pack(side=tk.BOTTOM, anchor=tk.S, pady=10)
-
-
+        print("error during printing image")
 def main():
     global window
-
     window = tk.Tk()
     window.geometry("800x600")
     window.minsize(800, 600)
-
     menu()
     window.mainloop()
-
-
 if __name__ == "__main__":
     main()
