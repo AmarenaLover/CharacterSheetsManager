@@ -16,7 +16,6 @@ class Rekord:
             self.SkillsV = SkillsV
             self.WeaponsV = WeaponsV
             self.ArmorV = ArmorV
-
     IdentityL = ["Imię i nazwisko: ",
                  "Rasa: ",
                  "Płeć: ",

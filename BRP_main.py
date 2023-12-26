@@ -24,7 +24,7 @@ def display_sheet(character):
 
     postac = parse_yaml_to_class(path, Character.Rekord)
 
-    print(postac.IdentityV)
+    print(postac)
 
     clear_main_window()
     # window.state('zoomed')
@@ -32,7 +32,7 @@ def display_sheet(character):
     y = 190
 
     titleFrame = tk.Frame().pack()
-    header     = tk.Label(titleFrame, text=postac.IdentityV[0]).pack()
+    tk.Label(titleFrame, text=postac.IdentityV[0]).pack()
     body = tk.Frame(window)
     body.pack(fill=tk.BOTH, expand=True)
 
