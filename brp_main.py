@@ -5,240 +5,9 @@ import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
 from PIL import Image, ImageTk
-
+import character
 # test
-class Rekord:
-    def __init__(self, NS=None, IdentityV=None, CharacteristicsV=None, HitpointsV=None, SkillsV=None, WeaponsV=None, ArmorV=None):
-        if IdentityV==None:
-            self.NS = 1
-            self.IdentityV = [""] * 9
-            self.CharacteristicsV = [""] * 8
-            self.HitpointsV = [""] * 8
-            self.SkillsV = [""] * 55
-            self.WeaponsV = [["" for _ in range(8)] for _ in range(5)]
-            self.ArmorV = [""] * 3
-        else:
-            self.NS = NS
-            self.IdentityV = IdentityV
-            self.CharacteristicsV = CharacteristicsV
-            self.HitpointsV = HitpointsV
-            self.SkillsV = SkillsV
-            self.WeaponsV = WeaponsV
-            self.ArmorV = ArmorV
 
-    IdentityL = ["Imię i nazwisko: ",
-                 "Rasa: ",
-                 "Płeć: ",
-                 "Wiek: ",
-                 "Sylwetka: ",
-                 "Zawód: ",
-                 "Dominująca ręka: ",
-                 "Cechy charakterystyczne: ",
-                 "Opis: "]
-    CharacteristicsL = ["Siła: ",
-                        "Kondycja: ",
-                        "Budowa Ciała: ",
-                        "Zręczność: ",
-                        "Wygląd: ",
-                        "Intelekt: ",
-                        "Moc: ",
-                        "Wykształcenie: "]
-    HitpointsL = ["Punkty Ruchu: ",
-                  "Punkty życia: ",
-                  "Punkty magii: ",
-                  "Modyfikator Obrażeń: "]
-    SkillsL = [
-        "Wycena: ",
-        "Sztuka: ",
-        "Artyleria: ",
-        "Targowanie: ",
-        "Bójka: ",
-        "Broń energetyczna: ",
-        "Broń palna: ",
-        "Chwytak: ",
-        "Ciężka broń: ",
-        "Ciężka maszyneria: ",
-        "Dowodzenie: ",
-        "Etykieta: ",
-        "Gry: ",
-        "Jazda: ",
-        "Język: ",
-        "Latanie: ",
-        "Medycyna: ",
-        "Napęd: ",
-        "Naprawa: ",
-        "Nauczanie: ",
-        "Nauka: ",
-        "Nawigacja: ",
-        "Ocena: ",
-        "Perswazja: ",
-        "Pierwsza pomoc: ",
-        "Pilot: ",
-        "Pływanie: ",
-        "Precyzyjna manipulacja: ",
-        "Projekcja: ",
-        "Przebranie: ",
-        "Psychoterapia: ",
-        "Punkt: ",
-        "Rozbiórka: ",
-        "Rzemiosło: ",
-        "Rzucanie: ",
-        "Rzut: ",
-        "Skok: ",
-        "Skradanie: ",
-        "Słuchanie: ",
-        "Status: ",
-        "Strategia: ",
-        "Sztuka: ",
-        "Sztuki walki: ",
-        "Szybka rozmowa: ",
-        "Śledzenie: ",
-        "Targowanie: ",
-        "Ukrycie: ",
-        "Umiejętności techniczne: ",
-        "Czytanie i pisanie: ",
-        "Unik: ",
-        "Walka wręcz: ",
-        "Wgląd: ",
-        "Wiedza: ",
-        "Wspinaczka: ",
-        "Wykonanie: ",
-        "Zmysł: ",
-        "Zręczność"]
-    WeaponsL = [
-        "Broń 1: ",
-        "Broń 2: ",
-        "Broń 3: ",
-        "Broń 4: ",
-        "Broń 5: ", ]
-    WeaponL = ["ID",
-        "Broń",
-        "Zdolność",
-        "Spacjalność",
-        "Baza %",
-        "Obrażenia",
-        "Ręce",
-        "Penetracja",
-        "Zasięg (metry)"]
-    ArmorL = [
-        "Pancerz",
-        "Klasa pancerza",
-        "Modyfikator"]
-
-    def save_identity(self):
-
-        error = 0
-        for x in range(9):
-            self.IdentityV[x] = self.validate_entry_text(create_entry[x].get())
-            if self.IdentityV[x] == "":
-                error += 1
-        if error == 0:
-            self.next_step()
-        else:
-            messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
-            on_button_createCS_click()
-    def save_characteristics(self):
-        error = 0
-        for x in range(8):
-            self.CharacteristicsV[x] = self.validate_entry_int(create_entry[x].get(), 3, 18)
-            if self.CharacteristicsV[x] == "":
-                error += 1
-        if error == 0:
-            self.next_step()
-        else:
-            messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
-            on_button_createCS_click()
-    def save_hitpoints(self):
-        error = 0
-        for x in range(4):
-            self.HitpointsV[x] = self.validate_entry_int(create_entry[x].get(), 2, 56)
-            if self.HitpointsV[x] == "":
-                error += 1
-            else:
-                self.HitpointsV[x+4] = self.HitpointsV[x]
-
-        if error == 0:
-            self.next_step()
-        else:
-            messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
-            on_button_createCS_click()
-    def save_skills(self):
-        error = 0
-        for x in range(55):
-            self.SkillsV[x] = self.validate_entry_int(create_entry[x].get(), 1, 100)
-            if self.SkillsV[x] == "":
-                error += 1
-        if error == 0:
-            self.next_step()
-        else:
-            messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
-            on_button_createCS_click()
-    def save_weapons(self):
-        error = 0
-        for x in range(5):
-            self.WeaponsV[x][0] = self.validate_entry_text(create_entry_w[x][0].get())
-            self.WeaponsV[x][1] = self.validate_entry_text(create_entry_w[x][1].get())
-            self.WeaponsV[x][2] = self.validate_entry_text(create_entry_w[x][2].get())
-            self.WeaponsV[x][3] = self.validate_entry_int(create_entry_w[x][3].get(), 1, 100)
-            self.WeaponsV[x][4] = self.validate_entry_text(create_entry_w[x][4].get())
-            self.WeaponsV[x][5] = self.validate_entry_int(create_entry_w[x][5].get(), 1, 2)
-            self.WeaponsV[x][6] = self.validate_entry_int(create_entry_w[x][6].get(), 0, 20)
-            self.WeaponsV[x][7] = self.validate_entry_int(create_entry_w[x][7].get(), 1, 100)
-
-            for y in range(8):
-                if self.WeaponsV[x][y] == "":
-                    error += 1
-        if error == 0:
-            self.next_step()
-        else:
-            messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
-            on_button_createCS_click()
-    def save_armor(self):
-        error = 0
-        self.ArmorV[0] = self.validate_entry_text(create_entry[0].get())
-        self.ArmorV[1] = self.validate_entry_int(create_entry[1].get(), 0, 12)
-        self.ArmorV[2] = self.validate_entry_text(create_entry[2].get())
-        if self.ArmorV[0] == "" or self.ArmorV[1] == "" or self.ArmorV[2] == "":
-            error += 1;
-        if error == 0:
-            self.next_step()
-        else:
-            messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
-            on_button_createCS_click()
-    def save_equipment(self):
-        error = 0
-
-        if error == 0:
-            self.next_step()
-        else:
-            messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
-            on_button_createCS_click()
-    def next_step(self):
-        self.NS += 1
-        on_button_createCS_click()
-    def prev_step(self):
-        self.NS -= 1
-        on_button_createCS_click()
-    def validate_entry_text(self, text):
-        try:
-            if len(text) > 0:
-                return text
-            else:
-                return "Brak danych"
-        except ValueError:
-            return ""
-    def validate_entry_int(self, number, front_end, back_end):
-        try:
-            if number == "":
-                return front_end
-            else:
-                number = int(number)
-                if front_end <= number and number <= back_end:
-                    return number
-                else:
-                    return ""
-        except ValueError:
-            return ""
 def display_sheet(character):
     # colors = ["red", "green", "blue", "orange", "purple", "yellow", "pink", "brown", "cyan"]
     colors = ["grey"] * 9
@@ -444,7 +213,7 @@ def on_button_displayCS_click():
 def on_button_createCS_click_S():
     if check_yml_files() <= 10:
         global postac
-        postac = Rekord()
+        postac = character.Rekord()
         on_button_createCS_click()
     else:
         messagebox.showinfo("Uwaga", "Za dużo kart postaci, należy jakąś usunąć!")
@@ -493,30 +262,42 @@ def on_button_createCS_click():
     create_entry = [None] * 55
     create_entry_w = [['0' for _ in range(8)] for _ in range(5)]
     create_label = [None] * 55
+    print(postac.NS)
     def on_configure(event):
         table.update_idletasks()
         tableM.configure(scrollregion=table.bbox("all"))
         tableM.create_window((0, 0), window=table, width=window.winfo_width(), anchor=tk.NW)
+    def back():
+        postac.prev_step()
+        on_button_createCS_click()
 
     if postac.NS == 1:
-
+        def save_i():
+            if postac.save_identity(create_entry)==0:
+                postac.next_step()
+            else:
+                messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
+            on_button_createCS_click()
+        def display_i():
+            header1 = tk.Label(window, text="DANE BADACZA")
+            header1.pack()
+            table = tk.Frame()
+            table.pack()
+            footer1 = tk.Frame()
+            footer1.pack(side=BOTTOM)
+            for x in range(9):
+                create_entry[x] = tk.Entry(table, width=30)
+                create_entry[x].insert(0, postac.IdentityV[x])
+                create_label[x] = tk.Label(table, text=postac.IdentityL[x])
+                create_label[x].grid(row=x, column=0, padx=10, pady=10, sticky="e")
+                create_entry[x].grid(row=x, column=1, padx=10, pady=10, sticky="w")
+            button_next = tk.Button(footer1, text="Dalej", command=save_i, width=uW)
+            button_prev = tk.Button(footer1, text="Cofnij", command=back, width=uW)
+            button_next.grid(row=0, column=1, padx=10, pady=10, sticky="w")
+            button_prev.grid(row=0, column=0, padx=10, pady=10, sticky="e")
         clear_main_window()
-        header1 = tk.Label(window, text="DANE BADACZA")
-        header1.pack()
-        table = tk.Frame()
-        table.pack()
-        footer1 = tk.Frame()
-        footer1.pack(side=BOTTOM)
-        for x in range(9):
-            create_entry[x] = tk.Entry(table, width=30)
-            create_entry[x].insert(0, postac.IdentityV[x])
-            create_label[x] = tk.Label(table, text=postac.IdentityL[x])
-            create_label[x].grid(row=x, column=0, padx=10, pady=10, sticky="e")
-            create_entry[x].grid(row=x, column=1, padx=10, pady=10, sticky="w")
-        button_next = tk.Button(footer1, text="Dalej", command=postac.save_identity, width=uW)
-        button_prev = tk.Button(footer1, text="Cofnij", command=postac.prev_step, width=uW)
-        button_next.grid(row=0, column=1, padx=10, pady=10, sticky="w")
-        button_prev.grid(row=0, column=0, padx=10, pady=10, sticky="e")
+        display_i()
+
     elif postac.NS == 2:
 
         clear_main_window()
