@@ -243,14 +243,14 @@ def display_sheet(character):
     # colors = ["red", "green", "blue", "orange", "purple", "yellow", "pink", "brown", "cyan"]
     colors = ["grey"] * 9
 
-    path = r'characterSheets\.'
-    path = "{}{}".format(path, character)
+    path = r'characterSheets'
+    path = "{}{}{}".format(path, "\\",character)
     slash = ' / '
     max_str = '(max)'
 
     def parse_yaml_to_class(yaml_file_path, class_type):
         with open(yaml_file_path, 'r') as file:
-            data = yaml.safe_load(path_for_apte(file))
+            data = yaml.safe_load(file)
             return class_type(**data)
             print("tes")
 
@@ -417,7 +417,7 @@ def path_for_apte(rel_path):
 def on_button_displayCS_click():
     path = r'characterSheets\.'
     files = []
-    for f in os.listdir(path_for_apte(path)):
+    for f in os.listdir(path):
         if os.path.isfile(os.path.join(path, f)):
             files.append(f)
     numb = len(files)
