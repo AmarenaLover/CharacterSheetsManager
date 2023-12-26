@@ -442,8 +442,8 @@ def on_button_displayCS_click():
         button_prev.grid(row=0, column=0, padx=10, pady=10, sticky="e")
 
 def on_button_createCS_click_S():
-    global postac
     if check_yml_files() <= 10:
+        global postac
         postac = Rekord()
         on_button_createCS_click()
     else:
@@ -485,21 +485,18 @@ def save_to_yml():
             file.write(yaml_data)
         menu()
 
-
 def on_button_createCS_click():
-    def on_configure(event):
-        table.update_idletasks()
-        tableM.configure(scrollregion=table.bbox("all"))
-        tableM.create_window((0, 0), window=table, width=window.winfo_width(), anchor=tk.NW)
-
-    print("Button NP clicked!", postac.NS)
     window.title("Interaktywna karta postaci w systemie BRP - Tworzenie postaci")
-    uW = 15 # Universal Width
+    uW = 15  # Universal Width
     global create_entry
     global create_entry_w
     create_entry = [None] * 55
     create_entry_w = [['0' for _ in range(8)] for _ in range(5)]
     create_label = [None] * 55
+    def on_configure(event):
+        table.update_idletasks()
+        tableM.configure(scrollregion=table.bbox("all"))
+        tableM.create_window((0, 0), window=table, width=window.winfo_width(), anchor=tk.NW)
 
     if postac.NS == 1:
 
