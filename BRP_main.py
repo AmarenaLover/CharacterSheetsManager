@@ -394,7 +394,7 @@ def on_button_createCS_click():
 
             for x in range(9):
                 tk.Label(body1, text=postac.WeaponL[x]).grid(row=0, column=x, padx=10, pady=10)
-            for x in range(1, 1+postac.WeaponsNb):
+            for x in range(1, 6):
                 create_label[x] = tk.Label(body1, text=postac.WeaponsL[x - 1])
                 create_entry_w[x - 1][0] = tk.Entry(body1, width=10)
                 create_entry_w[x - 1][1] = tk.Entry(body1, width=10)

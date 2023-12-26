@@ -1,7 +1,6 @@
 class Rekord:
-    def __init__(self, NS=None, IdentityV=None, CharacteristicsV=None, HitpointsV=None, SkillsV=None, WeaponsV=None, ArmorV=None):
+    def __init__(self, IdentityV=None, CharacteristicsV=None, HitpointsV=None, SkillsV=None, WeaponsV=None, ArmorV=None):
         if IdentityV==None:
-            self.NS = 1
             self.IdentityV = [""] * 9
             self.CharacteristicsV = [""] * 8
             self.HitpointsV = [""] * 8
@@ -10,13 +9,13 @@ class Rekord:
             self.WeaponsNb=0
             self.ArmorV = [""] * 3
         else:
-            self.NS = NS
             self.IdentityV = IdentityV
             self.CharacteristicsV = CharacteristicsV
             self.HitpointsV = HitpointsV
             self.SkillsV = SkillsV
             self.WeaponsV = WeaponsV
             self.ArmorV = ArmorV
+    NS=1
     IdentityL = ["Imię i nazwisko: ",
                  "Rasa: ",
                  "Płeć: ",
