@@ -1,13 +1,14 @@
 class Rekord:
-    def __init__(self, NS=None, IdentityV=None, CharacteristicsV=None, HitpointsV=None, SkillsV=None, WeaponsV=None, WeaponsNb=None, ArmorV=None):
-        if IdentityV==None:
+    def __init__(self, NS=None, IdentityV=None, CharacteristicsV=None, HitpointsV=None, SkillsV=None, WeaponsV=None,
+                 WeaponsNb=None, ArmorV=None):
+        if IdentityV == None:
             self.NS = 1
             self.IdentityV = [""] * 9
             self.CharacteristicsV = [""] * 8
             self.HitpointsV = [""] * 8
             self.SkillsV = [""] * 55
             self.WeaponsV = [["" for _ in range(8)] for _ in range(5)]
-            self.WeaponsNb=0
+            self.WeaponsNb = 0
             self.ArmorV = [""] * 3
         else:
             self.NS = NS
@@ -16,8 +17,9 @@ class Rekord:
             self.HitpointsV = HitpointsV
             self.SkillsV = SkillsV
             self.WeaponsV = WeaponsV
-            self.WeaponsNb=WeaponsNb
+            self.WeaponsNb = WeaponsNb
             self.ArmorV = ArmorV
+
     IdentityL = ["Imię i nazwisko: ",
                  "Rasa: ",
                  "Płeć: ",
@@ -104,14 +106,14 @@ class Rekord:
         "Broń 4: ",
         "Broń 5: ", ]
     WeaponL = ["ID",
-        "Broń",
-        "Zdolność",
-        "Spacjalność",
-        "Baza %",
-        "Obrażenia",
-        "Ręce",
-        "Penetracja",
-        "Zasięg (metry)"]
+               "Broń",
+               "Zdolność",
+               "Spacjalność",
+               "Baza %",
+               "Obrażenia",
+               "Ręce",
+               "Penetracja",
+               "Zasięg (metry)"]
     ArmorL = [
         "Pancerz",
         "Klasa pancerza",
@@ -124,6 +126,7 @@ class Rekord:
             if self.IdentityV[x] == "":
                 error += 1
         return error
+
     def save_characteristics(self, data):
         error = 0
         for x in range(8):
@@ -131,6 +134,7 @@ class Rekord:
             if self.CharacteristicsV[x] == "":
                 error += 1
         return error
+
     def save_hitpoints(self, data):
         error = 0
         for x in range(4):
@@ -138,8 +142,9 @@ class Rekord:
             if self.HitpointsV[x] == "":
                 error += 1
             else:
-                self.HitpointsV[x+4] = self.HitpointsV[x]
+                self.HitpointsV[x + 4] = self.HitpointsV[x]
         return error
+
     def save_skills(self, data):
         error = 0
         for x in range(55):
@@ -147,6 +152,7 @@ class Rekord:
             if self.SkillsV[x] == "":
                 error += 1
         return error
+
     def save_weapon(self, data):
         error = 0
         self.WeaponsV[self.WeaponsNb][0] = self.validate_entry_text(data[0].get())
@@ -160,8 +166,9 @@ class Rekord:
         for y in range(8):
             if self.WeaponsV[self.WeaponsNb][y] == "":
                 error += 1
-        if error==0: self.WeaponsNb+=1
+        if error == 0: self.WeaponsNb += 1
         return error
+
     def del_weapon(self, data):
         self.WeaponsV[data][0] = "-"
         self.WeaponsV[data][1] = "-"
@@ -171,24 +178,29 @@ class Rekord:
         self.WeaponsV[data][5] = "-"
         self.WeaponsV[data][6] = "-"
         self.WeaponsV[data][7] = "-"
-        self.WeaponsV[data]=self.WeaponsV[self.WeaponsNb-1]
-        self.WeaponsNb-=1
+        self.WeaponsV[data] = self.WeaponsV[self.WeaponsNb - 1]
+        self.WeaponsNb -= 1
+
     def save_armor(self, data):
         error = 0
         self.ArmorV[0] = self.validate_entry_text(data[0].get())
         self.ArmorV[1] = self.validate_entry_int(data[1].get(), 0, 12)
         self.ArmorV[2] = self.validate_entry_text(data[2].get())
         if self.ArmorV[0] == "" or self.ArmorV[1] == "" or self.ArmorV[2] == "":
-            error += 1;
+            error += 1
         return error
+
     def save_equipment(self):
         error = 0
 
         return error
+
     def next_step(self):
         self.NS += 1
+
     def prev_step(self):
         self.NS -= 1
+
     def validate_entry_text(self, text):
         try:
             if len(text) > 0:
@@ -197,6 +209,7 @@ class Rekord:
                 return "Brak danych"
         except ValueError:
             return ""
+
     def validate_entry_int(self, number, front_end, back_end):
         try:
             if number == "":

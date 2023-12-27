@@ -1,0 +1,4 @@
+.idea
+libs
+.venv
+__pycache__
