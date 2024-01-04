@@ -27,7 +27,7 @@ def display_sheet(character):
             data = yaml.safe_load(file)
             return class_type(**data)
 
-    postac = parse_yaml_to_class(path, Character.Rekord)
+    postac = parse_yaml_to_class(path, Character.Record)
 
     print(postac)
 
@@ -163,8 +163,8 @@ def delete_character(name):
 
 def roll_dice():
     roll_window = tk.Tk()
-    roll_window.minsize(400, 200)
-    window.geometry("400x200")
+    roll_window.minsize(600, 200)
+    roll_window.maxsize(600, 200)
     window.title("Rzut kośćmi")
     randomizer = random.Random()
 
@@ -245,9 +245,8 @@ def on_button_displayCS_click():
 
 def on_button_createCS_click_S():
     if check_yml_files() <= 10:
-        global postac
-        postac = Character.Rekord()
-        on_button_createCS_click()
+        postac = Character.Record()
+        on_button_createCS_click(postac)
     else:
         messagebox.showinfo("Uwaga", "Za dużo kart postaci, należy jakąś usunąć!")
 
@@ -261,7 +260,7 @@ def check_yml_files():
     return len(files)
 
 
-def save_to_yml(file):
+def save_to_yml(file, postac):
     character_data = yaml.dump(postac.__dict__)
     with open(file, "w") as file:
         file.write(character_data)
@@ -269,24 +268,27 @@ def save_to_yml(file):
     menu()
 
 
-def on_button_createCS_click():
+def on_button_createCS_click(postac):
     window.title("Interaktywna karta postaci w systemie BRP - Tworzenie postaci")
     uW = 15  # Universal Width
-    global create_entry
-    global create_entry_w
     create_entry = [None] * 55
     create_entry_w = [['0' for _ in range(8)] for _ in range(5)]
     create_label = [None] * 55
 
     def back():
         postac.prev_step()
-        on_button_createCS_click()
+        on_button_createCS_click(postac)
 
     # dict = {1: displayIdentity,
     #         2: dispalyCharacteristics}
     # dict[postac.NS]()
     if postac.NS == 1:
-
+        def save_identity():
+            if postac.save_identity(create_entry) == 0:
+                postac.next_step()
+            else:
+                messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
+            on_button_createCS_click(postac)
         def display_identity():
             header1 = tk.Label(window, text="DANE BADACZA")
             header1.pack()
@@ -313,7 +315,7 @@ def on_button_createCS_click():
                 postac.next_step()
             else:
                 messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
-            on_button_createCS_click()
+            on_button_createCS_click(postac)
 
         def display_characteristics():
             header1 = tk.Label(window, text="CECHY")
@@ -341,7 +343,7 @@ def on_button_createCS_click():
                 postac.next_step()
             else:
                 messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
-            on_button_createCS_click()
+            on_button_createCS_click(postac)
 
         def display_hitpoints():
             header1 = tk.Label(window, text="PUNKTY TRAFIEŃ")
@@ -369,7 +371,7 @@ def on_button_createCS_click():
                 postac.next_step()
             else:
                 messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
-            on_button_createCS_click()
+            on_button_createCS_click(postac)
 
         def display_skills():
             def on_configure(event):
@@ -433,7 +435,7 @@ def on_button_createCS_click():
 
         def save_weapons():
             postac.next_step()
-            on_button_createCS_click()
+            on_button_createCS_click(postac)
 
         def display_weapons():
             header1 = tk.Label(text="BROŃ")
@@ -491,7 +493,7 @@ def on_button_createCS_click():
                 postac.next_step()
             else:
                 messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
-            on_button_createCS_click()
+            on_button_createCS_click(postac)
 
         def display_armor():
             header1 = tk.Label(text="PANCERZ")
@@ -519,7 +521,7 @@ def on_button_createCS_click():
                 postac.next_step()
             else:
                 messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
-            on_button_createCS_click()
+            on_button_createCS_click(postac)
 
         def display_equipment():
             header1 = tk.Label(text="EKWIPUNEK")
@@ -542,7 +544,7 @@ def on_button_createCS_click():
             menu()
         else:
             postac.NS = 1
-            on_button_createCS_click()
+            on_button_createCS_click(postac)
     elif postac.NS == 8:
         if messagebox.askyesno("Potwierdzenie", "Czy na pewno chcesz dodać utworzoną postać?") == True:
             path = r'characterSheets'
@@ -555,24 +557,17 @@ def on_button_createCS_click():
                 if messagebox.askyesno("Potwierdzenie",
                                        "Już istnieje postać o takiej nazwie, czy chcesz ją nadpisać?") == True:
                     file_name = "{}{}{}".format(path, "\\", file_name)
-                    save_to_yml(file_name)
+                    save_to_yml(file_name, postac)
                 else:
                     postac.NS = 7
-                    on_button_createCS_click()
+                    on_button_createCS_click(postac)
             else:
                 file_name = "{}{}{}".format(path, "\\", file_name)
-                save_to_yml(file_name)
+                save_to_yml(file_name, postac)
         else:
             postac.NS = 7
-            on_button_createCS_click()
+            on_button_createCS_click(postac)
 
-
-def save_identity():
-    if postac.save_identity(create_entry) == 0:
-        postac.next_step()
-    else:
-        messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
-    on_button_createCS_click()
 
 
 def on_button_option_click():
@@ -610,12 +605,9 @@ def menu():
 
     global tk_image
     try:
-        path = r"BRP_logo_t.png"
-        original_image = Image.open(path_for_apte(path))
-        resized_image = original_image.resize((100, 100))
-        tk_image = ImageTk.PhotoImage(resized_image)
-        image_label = tk.Label(footer, image=tk_image)
-        image_label.grid(row=0, column=0, padx=10)
+        tk_image = ImageTk.PhotoImage(Image.open(os.path.join("BRP_logo_t.png")).resize((100, 100)))
+        tk.Label(footer, image=tk_image).grid(row=0, column=0, padx=10)
+
         bottom_label = tk.Label(footer,
                                 text="To oprogramowanie opiera się na zasadach gry udostępnionych\nprzez Chaosium Inc. zgodnie z licencją BRP Open Game License, Version 1.0.",
                                 font=("Arial", 10))

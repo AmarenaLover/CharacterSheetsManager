@@ -1,4 +1,4 @@
-class Rekord:
+class Record:
     def __init__(self, NS=None, IdentityV=None, CharacteristicsV=None, HitpointsV=None, SkillsV=None, WeaponsV=None,
                  WeaponsNb=None, ArmorV=None):
         if IdentityV == None:
@@ -197,6 +197,7 @@ class Rekord:
 
     def next_step(self):
         self.NS += 1
+        print(self.NS)
 
     def prev_step(self):
         self.NS -= 1
