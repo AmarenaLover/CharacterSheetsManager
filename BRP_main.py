@@ -166,7 +166,7 @@ def roll_dice():
     roll_window.minsize(600, 200)
     roll_window.maxsize(600, 200)
     window.title("Rzut kośćmi")
-    randomizer = random.Random()
+
 
     header = tk.Frame(roll_window)
     header.pack(side=tk.TOP)
@@ -176,7 +176,7 @@ def roll_dice():
     footer.pack(side=tk.BOTTOM)
 
     def get_randomizer(upper):
-        res = "Wynik rzutu: " + str(randomizer.randint(1, upper))
+        res = "Wynik rzutu: " + str(random.randint(1, upper))
         tk.Label(body, text=res).grid(row=2, column=0, padx=10, pady=10, columnspan=4)
 
     tk.Button(body, text="1k2", command=lambda up=2: get_randomizer(up), width=15).grid(row=0, column=0, padx=10,
@@ -252,12 +252,13 @@ def on_button_createCS_click_S():
 
 
 def check_yml_files():
-    path = r'characterSheets\.'
-    files = []
-    for f in os.listdir(path_for_apte(path)):
-        if os.path.isfile(os.path.join(path, f)):
-            files.append(f)
-    return len(files)
+    # files = []
+    # path = os.path.join(r'characterSheets')
+    # for f in os.listdir(path):
+    #     if os.path.isfile(os.path.join(path, f)):
+    #         files.append(f)
+    # return len(files)
+    return len([f for f in os.listdir(os.path.join(r'characterSheets')) if os.path.isfile(os.path.join(r'characterSheets', f))])
 
 
 def save_to_yml(file, postac):
