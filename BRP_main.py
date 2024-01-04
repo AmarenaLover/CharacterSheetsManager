@@ -539,15 +539,14 @@ def on_button_createCS_click(postac):
         clear_main_window()
         display_equipment()
     elif postac.NS == 0:
+        postac.NS = 1
         if messagebox.askyesno("Wyjście", "Czy na pewno chcesz przerwać tworzenie postaci?"):
-            postac.NS = 1
             menu()
         else:
-            postac.NS = 1
             on_button_createCS_click(postac)
     elif postac.NS == 8:
         if messagebox.askyesno("Potwierdzenie", "Czy na pewno chcesz dodać utworzoną postać?") == True:
-            path = r'characterSheets'
+            path = os.path.join(r'characterSheets')
             file_name = "{}{}".format(postac.IdentityV[0], ".yaml")
             files = []
             for f in os.listdir(path):
@@ -556,14 +555,12 @@ def on_button_createCS_click(postac):
             if file_name in files:
                 if messagebox.askyesno("Potwierdzenie",
                                        "Już istnieje postać o takiej nazwie, czy chcesz ją nadpisać?") == True:
-                    file_name = "{}{}{}".format(path, "\\", file_name)
-                    save_to_yml(file_name, postac)
+                    save_to_yml(os.path.join(path, file_name), postac)
                 else:
                     postac.NS = 7
                     on_button_createCS_click(postac)
             else:
-                file_name = "{}{}{}".format(path, "\\", file_name)
-                save_to_yml(file_name, postac)
+                save_to_yml(os.path.join(path, file_name), postac)
         else:
             postac.NS = 7
             on_button_createCS_click(postac)
@@ -603,16 +600,15 @@ def menu():
     footer = tk.Frame()
     footer.pack(side=tk.BOTTOM, pady=10)
 
-    global tk_image
+    global brp_logo
     try:
-        tk_image = ImageTk.PhotoImage(Image.open(os.path.join("BRP_logo_t.png")).resize((100, 100)))
-        tk.Label(footer, image=tk_image).grid(row=0, column=0, padx=10)
-
+        brp_logo = ImageTk.PhotoImage(Image.open(os.path.join("BRP_logo.png")).resize((100, 100)))
+        tk.Label(footer, image=brp_logo).grid(row=0, column=0, padx=10)
         bottom_label = tk.Label(footer,
                                 text="To oprogramowanie opiera się na zasadach gry udostępnionych\nprzez Chaosium Inc. zgodnie z licencją BRP Open Game License, Version 1.0.",
                                 font=("Arial", 10))
         bottom_label.grid(row=0, column=1, padx=10)
-    except:
+    except Exception:
         print("error during printing image")
 
 
