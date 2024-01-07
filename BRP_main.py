@@ -1,6 +1,6 @@
 import random
 import yaml
-import os, sys
+import os
 import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
@@ -202,15 +202,6 @@ def roll_dice():
     tk.Button(footer, text="Zamknij okno", command=roll_window.destroy, width=15).grid(row=0, column=0, padx=10,
                                                                                        pady=10)
     roll_window.mainloop()
-
-
-def path_for_apte(rel_path):
-    try:
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
-    return os.path.join(base_path, rel_path)
-
 
 def on_button_displayCS_click():
     path = r'characterSheets\.'
@@ -571,10 +562,23 @@ def on_button_createCS_click(postac):
 
 
 def on_button_option_click():
-    # pass
-    print("Button O clicked!")
+    window.title("Interaktywna karta postaci w systemie BRP - Opcje")
 
+    clear_main_window()
+    header = tk.Frame()
+    header.pack()
+    body = tk.Frame()
+    body.pack()
+    footer = tk.Frame()
+    footer.pack(side=BOTTOM)
 
+    tk.Label(header, text="OPCJE").pack()
+    tk.Button(body, text="Zmień motyw", command=lambda: change_color(), width=15).grid(row=0, column=0, padx=10, pady=10, sticky="e")
+
+    tk.Button(footer, text="Cofnij", command=menu, width=15).grid(row=0, column=0, padx=10, pady=10, sticky="e")
+
+def change_color():
+    pass
 def on_button_exit_click():
     if messagebox.askyesno("Wyjście", "Czy na pewno chcesz wyjść?") == True:
         window.destroy()
@@ -593,10 +597,10 @@ def menu():
 
     body = tk.Frame()
     body.pack()
-    tk.Button(body, text="Wyświetl kartę postaci", command=on_button_displayCS_click, width=uW).grid(row=1, column=0,
-                                                                                                     pady=20)
-    tk.Button(body, text="Utwórz nową postać", command=on_button_createCS_click_S, width=uW).grid(row=2, column=0,
-                                                                                                  pady=20)
+    tk.Label(body, text="Interaktywna karta postaci do gier w systemie BRP", font=("", 13, 'bold')).grid(row=0, column=0,pady=20)
+
+    tk.Button(body, text="Wyświetl kartę postaci", command=on_button_displayCS_click, width=uW).grid(row=1, column=0,pady=20)
+    tk.Button(body, text="Utwórz nową postać", command=on_button_createCS_click_S, width=uW).grid(row=2, column=0, pady=20)
     tk.Button(body, text="Opcje", command=on_button_option_click, width=uW).grid(row=3, column=0, pady=20)
     tk.Button(body, text="Wyjście", command=on_button_exit_click, width=uW).grid(row=4, column=0, pady=20)
 
