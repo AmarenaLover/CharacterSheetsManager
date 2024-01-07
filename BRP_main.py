@@ -15,6 +15,7 @@ def display_sheet(character):
     # colors = ["red", "green", "blue", "orange", "purple", "yellow", "pink", "brown", "cyan"]
     colors = ["grey"] * 9
 
+
     path = r'characterSheets'
     path = "{}{}".format("characterSheets\\", character)
     slash = ' / '
@@ -28,6 +29,7 @@ def display_sheet(character):
             return class_type(**data)
 
     postac = parse_yaml_to_class(path, Character.Record)
+    postac.NS = 1
 
     print(postac)
 
@@ -66,7 +68,7 @@ def display_sheet(character):
     tk.Button(buttonsFrame, text="Wyjście", command=on_button_displayCS_click, width=15).grid(row=0, column=0, padx=10,
                                                                                               pady=10)
     tk.Button(buttonsFrame, text="Rzut kośćmi", command=roll_dice, width=15).grid(row=0, column=1, padx=10, pady=10)
-    tk.Button(buttonsFrame, text="Edycja", width=15).grid(row=0, column=2, padx=10, pady=10)
+    tk.Button(buttonsFrame, text="Edycja", command=lambda p=postac:on_button_createCS_click(p), width=15).grid(row=0, column=2, padx=10, pady=10)
     tk.Button(buttonsFrame, text="Usuń", command=lambda name_d=path: delete_character(name=name_d), width=15).grid(
         row=0, column=3, padx=10, pady=10)
 
@@ -427,12 +429,12 @@ def on_button_createCS_click(postac):
     elif postac.NS == 5:
         def del_weapon(id):
             postac.del_weapon(id)
-            on_button_createCS_click()
+            on_button_createCS_click(postac)
 
         def save_weapon():
             if postac.save_weapon(create_entry) != 0:
                 messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
-            on_button_createCS_click()
+            on_button_createCS_click(postac)
 
         def save_weapons():
             postac.next_step()
