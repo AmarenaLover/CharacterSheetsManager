@@ -80,6 +80,8 @@ def display_sheet(character):
     weaponFrame.grid(row=4, column=1, pady=uFP)
     armorFrame = tk.Frame(content)
     armorFrame.grid(row=5, column=1, pady=uFP)
+    equipmentFrame = tk.Frame(content)
+    equipmentFrame.grid(row=6, column=1, pady=uFP)
 
     # equipmentFrame       = tk.Frame(content, background=colors[6]).grid(row=6, column=1, pady=10)
 
@@ -135,9 +137,23 @@ def display_sheet(character):
             for y in range(8):
                 tk.Label(weaponFrame, text=postac.WeaponsL[x]).grid(row=x + 1, column=0, padx=uP, pady=uP)
                 tk.Label(weaponFrame, text=postac.WeaponsV[x][y]).grid(row=x + 1, column=y + 1, padx=uP, pady=uP)
-    for x in range(3):
-        tk.Label(armorFrame, text=postac.ArmorL[x]).grid(row=0, column=x, padx=uP, pady=uP)
-        tk.Label(armorFrame, text=postac.ArmorV[x]).grid(row=1, column=x, padx=uP, pady=uP)
+    if (postac.ArmorV[1]) == 0:
+        tk.Label(armorFrame, text="Brak pancerza").grid(row=0, column=y, padx=uP, pady=uP)
+    else:
+        for x in range(3):
+            tk.Label(armorFrame, text=postac.ArmorL[x]).grid(row=0, column=x, padx=uP, pady=uP)
+            tk.Label(armorFrame, text=postac.ArmorV[x]).grid(row=1, column=x, padx=uP, pady=uP)
+    if (postac.EquipmentNb) == 0:
+        tk.Label(equipmentFrame, text="Brak wyposażenia").grid(row=0, column=y, padx=uP, pady=uP)
+    else:
+        tk.Label(equipmentFrame, text="ID").grid(row=0, column=0, padx=uP, pady=uP)
+        tk.Label(equipmentFrame, text="Nazwa").grid(row=0, column=1, padx=uP, pady=uP)
+        tk.Label(equipmentFrame, text="Ilość").grid(row=0, column=2, padx=uP, pady=uP)
+        tk.Label(equipmentFrame, text="Opis").grid(row=0, column=3, padx=uP, pady=uP)
+        for x in range(postac.EquipmentNb):
+            for y in range(3):
+                tk.Label(equipmentFrame, text=x+1).grid(row=x + 1, column=0, padx=uP, pady=uP)
+                tk.Label(equipmentFrame, text=postac.EquipmentV[x][y]).grid(row=x + 1, column=y + 1, padx=uP, pady=uP)
 
 
 # titleFrame.grid(row=0, column=0, columnspan=4, rowspan=1)
@@ -164,7 +180,7 @@ def delete_character(name):
 
 
 def roll_dice():
-    roll_window = tk.Tk()
+    roll_window = tk.Toplevel()
     roll_window.minsize(600, 200)
     roll_window.maxsize(600, 200)
     window.title("Rzut kośćmi")
@@ -551,11 +567,11 @@ def on_button_createCS_click(character, mode):
             body1.pack()
             footer1 = tk.Frame()
             footer1.pack(side=BOTTOM)
-
             tk.Label(body1, text="ID").grid(row=0, column=0, padx=10, pady=10)
             tk.Label(body1, text="Nazwa").grid(row=0, column=1, padx=10, pady=10)
             tk.Label(body1, text="Ilość").grid(row=0, column=2, padx=10, pady=10)
             tk.Label(body1, text="Opis").grid(row=0, column=3, padx=10, pady=10)
+
             for x in range(0, character.EquipmentNb):
                 tk.Label(body1, text=x+1).grid(row=x + 1, column=0, padx=10, pady=10)
                 tk.Label(body1, text=character.EquipmentV[x][0]).grid(row=x + 1, column=1, padx=10, pady=10)
