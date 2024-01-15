@@ -431,13 +431,20 @@ def on_button_createCS_click(character, mode):
         def save_weapon():
             if character.save_weapon(create_entry) != 0:
                 messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
-            on_button_createCS_click(character)
+            on_button_createCS_click(character, mode)
 
         def save_weapons():
             character.next_step()
             on_button_createCS_click(character, mode)
 
         def display_weapons():
+            print(character.WeaponsV[0])
+            print(character.WeaponsV[1])
+            print(character.WeaponsV[2])
+            print(character.WeaponsV[3])
+            print(character.WeaponsV[4])
+            print(character.WeaponsNb)
+
             header1 = tk.Label(text="BROŃ")
             header1.pack()
             body1 = tk.Frame()
@@ -456,7 +463,7 @@ def on_button_createCS_click(character, mode):
                 tk.Label(body1, text=character.WeaponsV[x][5]).grid(row=x + 1, column=6, padx=10, pady=10)
                 tk.Label(body1, text=character.WeaponsV[x][6]).grid(row=x + 1, column=7, padx=10, pady=10)
                 tk.Label(body1, text=character.WeaponsV[x][7]).grid(row=x + 1, column=8, padx=10, pady=10)
-                tk.Button(body1, text="-", command=lambda id=x: del_weapon(id), width=3).grid(row=x + 1, column=9,
+                tk.Button(body1, text=x, command=lambda id=x: del_weapon(id), width=3).grid(row=x + 1, column=9,
                                                                                               padx=10, pady=10,
                                                                                               sticky="w")
             if character.WeaponsNb < 5:
@@ -478,7 +485,7 @@ def on_button_createCS_click(character, mode):
                 create_entry[5].grid(row=x + 2, column=6, padx=10, pady=10)
                 create_entry[6].grid(row=x + 2, column=7, padx=10, pady=10)
                 create_entry[7].grid(row=x + 2, column=8, padx=10, pady=10)
-                tk.Button(body1, text="+", command=save_weapon, width=3).grid(row=x + 2, column=9, padx=10, pady=10,
+                tk.Button(body1, text="+", command=lambda: save_weapon(), width=3).grid(row=x + 2, column=9, padx=10, pady=10,
                                                                               sticky="w")
 
             button_next = tk.Button(footer1, text="Dalej", command=save_weapons, width=uW)
@@ -517,12 +524,25 @@ def on_button_createCS_click(character, mode):
         clear_main_window()
         display_armor()
     elif character.NS == 7:
-        def save_equipment():
-            if character.save_equipment() == 0:
-                character.next_step()
-            else:
+        def del_equipment(id):
+            character.del_equipment(id)
+            on_button_createCS_click(character, mode)
+
+        def save_eq():
+            if character.save_eq(create_entry) != 0:
                 messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
             on_button_createCS_click(character, mode)
+
+        def save_equipment():
+            character.next_step()
+            on_button_createCS_click(character, mode)
+
+        # def save_equipment():
+        #     if character.save_equipment() == 0:
+        #         character.next_step()
+        #     else:
+        #         messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
+        #     on_button_createCS_click(character, mode)
 
         def display_equipment():
             header1 = tk.Label(text="EKWIPUNEK")
@@ -531,8 +551,28 @@ def on_button_createCS_click(character, mode):
             body1.pack()
             footer1 = tk.Frame()
             footer1.pack(side=BOTTOM)
-            button_next = tk.Button(footer1, text=["Zapisz" if mode == 1 else "Dodaj"], command=save_equipment,
-                                    width=uW)
+
+            tk.Label(body1, text="ID").grid(row=0, column=0, padx=10, pady=10)
+            tk.Label(body1, text="Nazwa").grid(row=0, column=1, padx=10, pady=10)
+            tk.Label(body1, text="Ilość").grid(row=0, column=2, padx=10, pady=10)
+            tk.Label(body1, text="Opis").grid(row=0, column=3, padx=10, pady=10)
+            for x in range(0, character.EquipmentNb):
+                tk.Label(body1, text=x+1).grid(row=x + 1, column=0, padx=10, pady=10)
+                tk.Label(body1, text=character.EquipmentV[x][0]).grid(row=x + 1, column=1, padx=10, pady=10)
+                tk.Label(body1, text=character.EquipmentV[x][1]).grid(row=x + 1, column=2, padx=10, pady=10)
+                tk.Label(body1, text=character.EquipmentV[x][2]).grid(row=x + 1, column=3, padx=10, pady=10)
+                tk.Button(body1, text="-", command=lambda id=x: del_equipment(id), width=3).grid(row=x + 1, column=9,padx=10, pady=10,sticky="w")
+            if character.EquipmentNb < 20:
+                tk.Label(body1, text=character.EquipmentNb+1).grid(row=character.EquipmentNb+1, column=0, padx=10,pady=10)
+                create_entry[0] = tk.Entry(body1, width=5)
+                create_entry[1] = tk.Entry(body1, width=5)
+                create_entry[2] = tk.Entry(body1, width=50)
+                create_entry[0].grid(row=character.EquipmentNb+1, column=1, padx=10, pady=10)
+                create_entry[1].grid(row=character.EquipmentNb+1, column=2, padx=10, pady=10)
+                create_entry[2].grid(row=character.EquipmentNb+1, column=3, padx=10, pady=10)
+                tk.Button(body1, text="+", command=save_eq, width=3).grid(row=character.EquipmentNb+1, column=9, padx=10, pady=10, sticky="w")
+
+            button_next = tk.Button(footer1, text=["Zapisz" if mode == 1 else "Dodaj"], command=save_equipment,width=uW)
             button_prev = tk.Button(footer1, text="Cofnij", command=back, width=uW)
             button_next.grid(row=0, column=1, padx=10, pady=10, sticky="w")
             button_prev.grid(row=0, column=0, padx=10, pady=10, sticky="e")

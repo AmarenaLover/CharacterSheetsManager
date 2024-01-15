@@ -1,5 +1,5 @@
 class Record:
-    def __init__(self, NS=None, IdentityV=None, CharacteristicsV=None, HitpointsV=None, SkillsV=None, WeaponsV=None,
+    def __init__(self, NS=None, IdentityV=None, CharacteristicsV=None, HitpointsV=None, SkillsV=None, WeaponsV=None, EquipmentNb=None, EquipmentV=None,
                  WeaponsNb=None, ArmorV=None):
         if IdentityV == None:
             self.NS = 1
@@ -9,6 +9,8 @@ class Record:
             self.SkillsV = [""] * 55
             self.WeaponsV = [["" for _ in range(8)] for _ in range(5)]
             self.WeaponsNb = 0
+            self.EquipmentV = [["" for _ in range(3)] for _ in range(20)]
+            self.EquipmentNb = 0
             self.ArmorV = [""] * 3
         else:
             self.NS = NS
@@ -18,6 +20,8 @@ class Record:
             self.SkillsV = SkillsV
             self.WeaponsV = WeaponsV
             self.WeaponsNb = WeaponsNb
+            self.EquipmentV = EquipmentV
+            self.EquipmentNb = EquipmentNb
             self.ArmorV = ArmorV
 
     IdentityL = ["Imię i nazwisko: ",
@@ -171,16 +175,16 @@ class Record:
         return error
 
     def del_weapon(self, data):
-        self.WeaponsV[data][0] = "-"
-        self.WeaponsV[data][1] = "-"
-        self.WeaponsV[data][2] = "-"
-        self.WeaponsV[data][3] = "-"
-        self.WeaponsV[data][4] = "-"
-        self.WeaponsV[data][5] = "-"
-        self.WeaponsV[data][6] = "-"
-        self.WeaponsV[data][7] = "-"
-        self.WeaponsV[data] = self.WeaponsV[self.WeaponsNb - 1]
         self.WeaponsNb -= 1
+        self.WeaponsV[data] = self.WeaponsV[self.WeaponsNb]
+        # self.WeaponsV[self.WeaponsNb-1][0] = "-"
+        # self.WeaponsV[self.WeaponsNb-1][1] = "-"
+        # self.WeaponsV[self.WeaponsNb-1][2] = "-"
+        # self.WeaponsV[self.WeaponsNb-1][3] = "-"
+        # self.WeaponsV[self.WeaponsNb-1][4] = "-"
+        # self.WeaponsV[self.WeaponsNb-1][5] = "-"
+        # self.WeaponsV[self.WeaponsNb-1][6] = "-"
+        # self.WeaponsV[self.WeaponsNb-1][7] = "-"
 
     def save_armor(self, data):
         error = 0
@@ -191,10 +195,23 @@ class Record:
             error += 1
         return error
 
-    def save_equipment(self):
+    def save_eq(self, data):
         error = 0
-
+        self.EquipmentV[self.EquipmentNb][0] = self.validate_entry_text(data[0].get())
+        self.EquipmentV[self.EquipmentNb][1] = self.validate_entry_int(data[1].get(), 1, 100)
+        self.EquipmentV[self.EquipmentNb][2] = self.validate_entry_text(data[2].get())
+        for y in range(3):
+            if self.EquipmentV[self.EquipmentNb][y] == "":
+                error += 1
+        if error == 0: self.EquipmentNb += 1
         return error
+
+    def del_equipment(self, id):
+        self.EquipmentV[id][0] = "-"
+        self.EquipmentV[id][1] = "-"
+        self.EquipmentV[id][2] = "-"
+        self.EquipmentV[id] = self.EquipmentV[self.EquipmentNb - 1]
+        self.EquipmentNb -= 1
 
     def next_step(self):
         self.NS += 1
