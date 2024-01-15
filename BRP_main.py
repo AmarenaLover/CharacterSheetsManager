@@ -17,8 +17,7 @@ def display_sheet(character):
     colors = ["grey"] * 9
 
 
-    path = r'characterSheets'
-    path = "{}{}".format("characterSheets\\", character)
+    path = os.path.join(r'characterSheets', character)
     slash = ' / '
     max_str = '(max)'
 
