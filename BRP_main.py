@@ -302,7 +302,7 @@ def on_button_createCS_click(character, mode):
                 create_label[x].grid(row=x, column=0, padx=10, pady=10, sticky="e")
                 create_entry[x].grid(row=x, column=1, padx=10, pady=10, sticky="w")
             button_next = tk.Button(footer1, text="Dalej", command=save_identity, width=uW)
-            button_prev = tk.Button(footer1, text="Cofnij", command=back, width=uW)
+            button_prev = tk.Button(footer1, text=["Powrót" if mode==1 else "Cofnij"], command=back, width=uW)
             button_next.grid(row=0, column=1, padx=10, pady=10, sticky="w")
             button_prev.grid(row=0, column=0, padx=10, pady=10, sticky="e")
 
@@ -545,7 +545,7 @@ def on_button_createCS_click(character, mode):
                 on_button_createCS_click(character, mode)
         else:
             character.NS = 1
-            if messagebox.askyesno("Wyjście", "Czy na pewno chcesz przerwać tworzenie postaci?"):
+            if messagebox.askyesno("Wyjście", "Czy na pewno chcesz przerwać edycje postaci?"):
                 old_name = "{}{}".format(old_name, ".yaml")
                 display_sheet(old_name)
             else:
@@ -572,7 +572,7 @@ def on_button_createCS_click(character, mode):
                 character.NS = 7
                 on_button_createCS_click(character, mode)
         elif mode==1:
-            if messagebox.askyesno("Potwierdzenie", "Czy na pewno chcesz zapisać zmiany") == True:
+            if messagebox.askyesno("Potwierdzenie", "Czy na pewno chcesz zapisać zmiany?") == True:
                 save_to_yml(os.path.join(path, file_name), character)
                 if old_name != character.IdentityV[0]:
                     old_name = "{}{}".format(old_name, ".yaml")
