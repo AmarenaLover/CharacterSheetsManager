@@ -11,6 +11,7 @@ import Character
 # from Character import Rekord
 # dawid
 
+
 def display_sheet(character):
     # colors = ["red", "green", "blue", "orange", "purple", "yellow", "pink", "brown", "cyan"]
     colors = ["grey"] * 9
@@ -31,6 +32,8 @@ def display_sheet(character):
     postac = parse_yaml_to_class(path, Character.Record)
     postac.NS = 1
 
+    global old_name
+    old_name = postac.IdentityV[0]
     print(postac)
 
     clear_main_window()
@@ -68,7 +71,7 @@ def display_sheet(character):
     tk.Button(buttonsFrame, text="Wyjście", command=on_button_displayCS_click, width=15).grid(row=0, column=0, padx=10,
                                                                                               pady=10)
     tk.Button(buttonsFrame, text="Rzut kośćmi", command=roll_dice, width=15).grid(row=0, column=1, padx=10, pady=10)
-    tk.Button(buttonsFrame, text="Edycja", command=lambda:on_button_createCS_click(postac), width=15).grid(row=0, column=2, padx=10, pady=10)
+    tk.Button(buttonsFrame, text="Edycja", command=lambda:on_button_createCS_click(postac, mode=1), width=15).grid(row=0, column=2, padx=10, pady=10)
     tk.Button(buttonsFrame, text="Usuń", command=lambda name_d=path: delete_character(name=name_d), width=15).grid(row=0, column=3, padx=10, pady=10)
 
     identityFrame = tk.Frame(content)
@@ -153,13 +156,16 @@ def display_sheet(character):
 # equipmentFrame.grid(row=4, column=0, columnspan=3, rowspan=1)
 # buttonsFrame.grid(row=5, column=0, columnspan=4, rowspan=1)
 
+def delete(name):
+    if os.path.isfile(name):
+        os.remove(name)
+
 def delete_character(name):
     if messagebox.askyesno("Uwaga", "Czy chcesz usunąć aktualną postać?") == True:
         if messagebox.askyesno("Uwaga", "Czy NA PEWNO chcesz usunąć aktualną postać?") == True:
-            if os.path.isfile(name):
-                os.remove(name)
-                messagebox.showinfo("Potwierdzenie", "Postać usunięto pomyślnie!")
-                on_button_displayCS_click()
+            delete(name)
+            messagebox.showinfo("Potwierdzenie", "Postać usunięto pomyślnie!")
+            on_button_displayCS_click()
 
 
 def roll_dice():
@@ -238,7 +244,7 @@ def on_button_displayCS_click():
 def on_button_createCS_click_S():
     if check_yml_files() <= 10:
         postac = Character.Record()
-        on_button_createCS_click(postac)
+        on_button_createCS_click(postac, mode=0)
     else:
         messagebox.showinfo("Uwaga", "Za dużo kart postaci, należy jakąś usunąć!")
 
@@ -261,7 +267,7 @@ def save_to_yml(file, postac):
     menu()
 
 
-def on_button_createCS_click(character):
+def on_button_createCS_click(character, mode):
     window.title("Interaktywna karta postaci w systemie BRP - Tworzenie postaci")
     uW = 15  # Universal Width
     create_entry = [None] * 55
@@ -270,7 +276,7 @@ def on_button_createCS_click(character):
 
     def back():
         character.prev_step()
-        on_button_createCS_click(character)
+        on_button_createCS_click(character, mode)
 
     # dict = {1: displayIdentity,
     #         2: dispalyCharacteristics}
@@ -281,7 +287,7 @@ def on_button_createCS_click(character):
                 character.next_step()
             else:
                 messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
-            on_button_createCS_click(character)
+            on_button_createCS_click(character, mode)
         def display_identity():
             header1 = tk.Label(window, text="DANE BADACZA")
             header1.pack()
@@ -308,7 +314,7 @@ def on_button_createCS_click(character):
                 character.next_step()
             else:
                 messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
-            on_button_createCS_click(character)
+            on_button_createCS_click(character, mode)
 
         def display_characteristics():
             header1 = tk.Label(window, text="CECHY")
@@ -336,7 +342,7 @@ def on_button_createCS_click(character):
                 character.next_step()
             else:
                 messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
-            on_button_createCS_click(character)
+            on_button_createCS_click(character, mode)
 
         def display_hitpoints():
             header1 = tk.Label(window, text="PUNKTY TRAFIEŃ")
@@ -364,7 +370,7 @@ def on_button_createCS_click(character):
                 character.next_step()
             else:
                 messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
-            on_button_createCS_click(character)
+            on_button_createCS_click(character, mode)
 
         def display_skills():
             def on_configure(event):
@@ -419,7 +425,7 @@ def on_button_createCS_click(character):
     elif character.NS == 5:
         def del_weapon(id):
             character.del_weapon(id)
-            on_button_createCS_click(character)
+            on_button_createCS_click(character, mode)
 
         def save_weapon():
             if character.save_weapon(create_entry) != 0:
@@ -428,7 +434,7 @@ def on_button_createCS_click(character):
 
         def save_weapons():
             character.next_step()
-            on_button_createCS_click(character)
+            on_button_createCS_click(character, mode)
 
         def display_weapons():
             header1 = tk.Label(text="BROŃ")
@@ -486,7 +492,7 @@ def on_button_createCS_click(character):
                 character.next_step()
             else:
                 messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
-            on_button_createCS_click(character)
+            on_button_createCS_click(character, mode)
 
         def display_armor():
             header1 = tk.Label(text="PANCERZ")
@@ -514,7 +520,7 @@ def on_button_createCS_click(character):
                 character.next_step()
             else:
                 messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
-            on_button_createCS_click(character)
+            on_button_createCS_click(character, mode)
 
         def display_equipment():
             header1 = tk.Label(text="EKWIPUNEK")
@@ -523,8 +529,7 @@ def on_button_createCS_click(character):
             body1.pack()
             footer1 = tk.Frame()
             footer1.pack(side=BOTTOM)
-
-            button_next = tk.Button(footer1, text="Dalej", command=save_equipment, width=uW)
+            button_next = tk.Button(footer1, text=["Zapisz" if mode==1 else "Dodaj"], command=save_equipment, width=uW)
             button_prev = tk.Button(footer1, text="Cofnij", command=back, width=uW)
             button_next.grid(row=0, column=1, padx=10, pady=10, sticky="w")
             button_prev.grid(row=0, column=0, padx=10, pady=10, sticky="e")
@@ -536,29 +541,40 @@ def on_button_createCS_click(character):
         if messagebox.askyesno("Wyjście", "Czy na pewno chcesz przerwać tworzenie postaci?"):
             menu()
         else:
-            on_button_createCS_click(character)
+            on_button_createCS_click(character, mode)
     elif character.NS == 8:
-        if messagebox.askyesno("Potwierdzenie", "Czy na pewno chcesz dodać utworzoną postać?") == True:
-            path = os.path.join(r'characterSheets')
-            file_name = "{}{}".format(character.IdentityV[0], ".yaml")
-            files = []
-            for f in os.listdir(path):
-                if os.path.isfile(os.path.join(path, f)):
-                    files.append(f)
-            if file_name in files:
-                if messagebox.askyesno("Potwierdzenie",
-                                       "Już istnieje postać o takiej nazwie, czy chcesz ją nadpisać?") == True:
-                    save_to_yml(os.path.join(path, file_name), character)
+        file_name = "{}{}".format(character.IdentityV[0], ".yaml")
+        path = os.path.join(r'characterSheets')
+        if mode==0:
+            if messagebox.askyesno("Potwierdzenie", "Czy na pewno chcesz dodać utworzoną postać?") == True:
+                files = []
+                for f in os.listdir(path):
+                    if os.path.isfile(os.path.join(path, f)):
+                        files.append(f)
+                if file_name in files:
+                    if messagebox.askyesno("Potwierdzenie",
+                                           "Już istnieje postać o takiej nazwie, czy chcesz ją nadpisać?") == True:
+                        save_to_yml(os.path.join(path, file_name), character)
+                    else:
+                        character.NS = 7
+                        on_button_createCS_click(character, mode)
                 else:
-                    character.NS = 7
-                    on_button_createCS_click(character)
+                    save_to_yml(os.path.join(path, file_name), character)
             else:
+                character.NS = 7
+                on_button_createCS_click(character, mode)
+        elif mode==1:
+            character.NS = 1
+            global old_name
+            print(old_name)
+            if messagebox.askyesno("Potwierdzenie", "Czy na pewno chcesz zapisać zmiany") == True:
                 save_to_yml(os.path.join(path, file_name), character)
-        else:
-            character.NS = 7
-            on_button_createCS_click(character)
-
-
+                old_name = "{}{}".format(old_name, ".yaml")
+                print(old_name)
+                delete(os.path.join(r'characterSheets', old_name))
+                display_sheet(file_name)
+            else:
+                display_sheet(file_name)
 
 def on_button_option_click():
     window.title("Interaktywna karta postaci w systemie BRP - Opcje")
