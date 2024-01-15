@@ -267,7 +267,6 @@ def on_button_createCS_click(character, mode):
     window.title("Interaktywna karta postaci w systemie BRP - Tworzenie postaci")
     uW = 15  # Universal Width
     create_entry = [None] * 55
-    create_entry_w = [['0' for _ in range(8)] for _ in range(5)]
     create_label = [None] * 55
     global old_name
 
@@ -280,8 +279,12 @@ def on_button_createCS_click(character, mode):
     # dict[postac.NS]()
     if character.NS == 1:
         def save_identity():
-            if character.save_identity(create_entry) == 0:
+            sv = character.save_identity(create_entry)
+            if sv == 0:
                 character.next_step()
+            elif sv == -1:
+                messagebox.showinfo("Uwaga", "Należy podać imię!")
+                on_button_createCS_click(character, mode)
             else:
                 messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
             on_button_createCS_click(character, mode)

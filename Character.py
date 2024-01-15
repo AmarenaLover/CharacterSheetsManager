@@ -125,6 +125,7 @@ class Record:
             self.IdentityV[x] = self.validate_entry_text(data[x].get())
             if self.IdentityV[x] == "":
                 error += 1
+        if self.IdentityV[0]=="Brak danych": error=-1
         return error
 
     def save_characteristics(self, data):
