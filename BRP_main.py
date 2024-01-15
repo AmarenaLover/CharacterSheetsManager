@@ -273,7 +273,7 @@ def on_button_createCS_click(character, mode):
     create_entry = [None] * 55
     create_entry_w = [['0' for _ in range(8)] for _ in range(5)]
     create_label = [None] * 55
-
+    global old_name
     def back():
         character.prev_step()
         on_button_createCS_click(character, mode)
@@ -537,11 +537,19 @@ def on_button_createCS_click(character, mode):
         clear_main_window()
         display_equipment()
     elif character.NS == 0:
-        character.NS = 1
-        if messagebox.askyesno("Wyjście", "Czy na pewno chcesz przerwać tworzenie postaci?"):
-            menu()
+        if mode==0:
+            character.NS = 1
+            if messagebox.askyesno("Wyjście", "Czy na pewno chcesz przerwać tworzenie postaci?"):
+                menu()
+            else:
+                on_button_createCS_click(character, mode)
         else:
-            on_button_createCS_click(character, mode)
+            character.NS = 1
+            if messagebox.askyesno("Wyjście", "Czy na pewno chcesz przerwać tworzenie postaci?"):
+                old_name = "{}{}".format(old_name, ".yaml")
+                display_sheet(old_name)
+            else:
+                on_button_createCS_click(character, mode)
     elif character.NS == 8:
         file_name = "{}{}".format(character.IdentityV[0], ".yaml")
         path = os.path.join(r'characterSheets')
@@ -564,17 +572,17 @@ def on_button_createCS_click(character, mode):
                 character.NS = 7
                 on_button_createCS_click(character, mode)
         elif mode==1:
-            character.NS = 1
-            global old_name
-            print(old_name)
             if messagebox.askyesno("Potwierdzenie", "Czy na pewno chcesz zapisać zmiany") == True:
                 save_to_yml(os.path.join(path, file_name), character)
-                old_name = "{}{}".format(old_name, ".yaml")
-                print(old_name)
-                delete(os.path.join(r'characterSheets', old_name))
+                if old_name != character.IdentityV[0]:
+                    old_name = "{}{}".format(old_name, ".yaml")
+                    delete(os.path.join(r'characterSheets', old_name))
+                character.NS = 1
                 display_sheet(file_name)
             else:
+                character.NS = 7
                 display_sheet(file_name)
+
 
 def on_button_option_click():
     window.title("Interaktywna karta postaci w systemie BRP - Opcje")
