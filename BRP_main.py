@@ -15,14 +15,7 @@ import Character
 def display_sheet(character):
     # colors = ["red", "green", "blue", "orange", "purple", "yellow", "pink", "brown", "cyan"]
     colors = ["grey"] * 9
-
-
     path = os.path.join(r'characterSheets', character)
-    slash = ' / '
-    max_str = '(max)'
-
-    # os.path.join("characterSheets\\", character)
-
     def parse_yaml_to_class(yaml_file_path, class_type):
         with open(yaml_file_path, 'r') as file:
             data = yaml.safe_load(file)
@@ -70,8 +63,10 @@ def display_sheet(character):
     tk.Button(buttonsFrame, text="Wyjście", command=on_button_displayCS_click, width=15).grid(row=0, column=0, padx=10,
                                                                                               pady=10)
     tk.Button(buttonsFrame, text="Rzut kośćmi", command=roll_dice, width=15).grid(row=0, column=1, padx=10, pady=10)
-    tk.Button(buttonsFrame, text="Edycja", command=lambda:on_button_createCS_click(postac, mode=1), width=15).grid(row=0, column=2, padx=10, pady=10)
-    tk.Button(buttonsFrame, text="Usuń", command=lambda name_d=path: delete_character(name=name_d), width=15).grid(row=0, column=3, padx=10, pady=10)
+    tk.Button(buttonsFrame, text="Edycja", command=lambda: on_button_createCS_click(postac, mode=1), width=15).grid(
+        row=0, column=2, padx=10, pady=10)
+    tk.Button(buttonsFrame, text="Usuń", command=lambda name_d=path: delete_character(name=name_d), width=15).grid(
+        row=0, column=3, padx=10, pady=10)
 
     identityFrame = tk.Frame(content)
     identityFrame.grid(row=0, column=1, pady=uFP)
@@ -89,7 +84,7 @@ def display_sheet(character):
     # equipmentFrame       = tk.Frame(content, background=colors[6]).grid(row=6, column=1, pady=10)
 
     def get_roll_V(first_V):
-        roll_V = "{}{}{}{}{}".format(str(first_V), slash, str(int((first_V + 2) / 5)), slash,
+        roll_V = "{}{}{}{}{}".format(str(first_V), ' / ', str(int((first_V + 2) / 5)), ' / ',
                                      str(int((first_V + 10) / 20)))
         return roll_V
 
@@ -118,7 +113,7 @@ def display_sheet(character):
         tk.Label(characteristicsFrame, text=roll_CH_V).grid(row=x, column=1, padx=uP, pady=uP, sticky="e")
     for x in range(4):
         tk.Label(hitpointsFrame, text=postac.HitpointsL[x]).grid(row=x, column=0, padx=uP, pady=uP, sticky="e")
-        displayed_hp = "{}{}{}{}".format(postac.HitpointsV[x], slash, postac.HitpointsV[x + 4], max_str)
+        displayed_hp = "{}{}{}{}".format(postac.HitpointsV[x], ' / ', postac.HitpointsV[x + 4], '(max)')
         tk.Label(hitpointsFrame, text=displayed_hp).grid(row=x, column=1, padx=uP, pady=uP, sticky="w")
     tk.Label(skillsFrame, width=20).grid(row=0, column=2)
     for x in range(28):
@@ -159,6 +154,7 @@ def delete(name):
     if os.path.isfile(name):
         os.remove(name)
 
+
 def delete_character(name):
     if messagebox.askyesno("Uwaga", "Czy chcesz usunąć aktualną postać?") == True:
         if messagebox.askyesno("Uwaga", "Czy NA PEWNO chcesz usunąć aktualną postać?") == True:
@@ -172,7 +168,6 @@ def roll_dice():
     roll_window.minsize(600, 200)
     roll_window.maxsize(600, 200)
     window.title("Rzut kośćmi")
-
 
     header = tk.Frame(roll_window)
     header.pack(side=tk.TOP)
@@ -206,6 +201,7 @@ def roll_dice():
     tk.Button(footer, text="Zamknij okno", command=roll_window.destroy, width=15).grid(row=0, column=0, padx=10,
                                                                                        pady=10)
     roll_window.mainloop()
+
 
 def on_button_displayCS_click():
     path = r'characterSheets\.'
@@ -255,7 +251,8 @@ def check_yml_files():
     #     if os.path.isfile(os.path.join(path, f)):
     #         files.append(f)
     # return len(files)
-    return len([f for f in os.listdir(os.path.join(r'characterSheets')) if os.path.isfile(os.path.join(r'characterSheets', f))])
+    return len([f for f in os.listdir(os.path.join(r'characterSheets')) if
+                os.path.isfile(os.path.join(r'characterSheets', f))])
 
 
 def save_to_yml(file, postac):
@@ -273,6 +270,7 @@ def on_button_createCS_click(character, mode):
     create_entry_w = [['0' for _ in range(8)] for _ in range(5)]
     create_label = [None] * 55
     global old_name
+
     def back():
         character.prev_step()
         on_button_createCS_click(character, mode)
@@ -287,6 +285,7 @@ def on_button_createCS_click(character, mode):
             else:
                 messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
             on_button_createCS_click(character, mode)
+
         def display_identity():
             header1 = tk.Label(window, text="DANE BADACZA")
             header1.pack()
@@ -301,7 +300,7 @@ def on_button_createCS_click(character, mode):
                 create_label[x].grid(row=x, column=0, padx=10, pady=10, sticky="e")
                 create_entry[x].grid(row=x, column=1, padx=10, pady=10, sticky="w")
             button_next = tk.Button(footer1, text="Dalej", command=save_identity, width=uW)
-            button_prev = tk.Button(footer1, text=["Powrót" if mode==1 else "Cofnij"], command=back, width=uW)
+            button_prev = tk.Button(footer1, text=["Powrót" if mode == 1 else "Cofnij"], command=back, width=uW)
             button_next.grid(row=0, column=1, padx=10, pady=10, sticky="w")
             button_prev.grid(row=0, column=0, padx=10, pady=10, sticky="e")
 
@@ -458,7 +457,8 @@ def on_button_createCS_click(character, mode):
                                                                                               padx=10, pady=10,
                                                                                               sticky="w")
             if character.WeaponsNb < 5:
-                tk.Label(body1, text=character.WeaponsL[character.WeaponsNb]).grid(row=x + 2, column=0, padx=10, pady=10)
+                tk.Label(body1, text=character.WeaponsL[character.WeaponsNb]).grid(row=x + 2, column=0, padx=10,
+                                                                                   pady=10)
                 create_entry[0] = tk.Entry(body1, width=5)
                 create_entry[1] = tk.Entry(body1, width=5)
                 create_entry[2] = tk.Entry(body1, width=5)
@@ -528,7 +528,8 @@ def on_button_createCS_click(character, mode):
             body1.pack()
             footer1 = tk.Frame()
             footer1.pack(side=BOTTOM)
-            button_next = tk.Button(footer1, text=["Zapisz" if mode==1 else "Dodaj"], command=save_equipment, width=uW)
+            button_next = tk.Button(footer1, text=["Zapisz" if mode == 1 else "Dodaj"], command=save_equipment,
+                                    width=uW)
             button_prev = tk.Button(footer1, text="Cofnij", command=back, width=uW)
             button_next.grid(row=0, column=1, padx=10, pady=10, sticky="w")
             button_prev.grid(row=0, column=0, padx=10, pady=10, sticky="e")
@@ -536,7 +537,7 @@ def on_button_createCS_click(character, mode):
         clear_main_window()
         display_equipment()
     elif character.NS == 0:
-        if mode==0:
+        if mode == 0:
             character.NS = 1
             if messagebox.askyesno("Wyjście", "Czy na pewno chcesz przerwać tworzenie postaci?"):
                 menu()
@@ -552,7 +553,7 @@ def on_button_createCS_click(character, mode):
     elif character.NS == 8:
         file_name = "{}{}".format(character.IdentityV[0], ".yaml")
         path = os.path.join(r'characterSheets')
-        if mode==0:
+        if mode == 0:
             if messagebox.askyesno("Potwierdzenie", "Czy na pewno chcesz dodać utworzoną postać?") == True:
                 files = []
                 for f in os.listdir(path):
@@ -570,7 +571,7 @@ def on_button_createCS_click(character, mode):
             else:
                 character.NS = 7
                 on_button_createCS_click(character, mode)
-        elif mode==1:
+        elif mode == 1:
             if messagebox.askyesno("Potwierdzenie", "Czy na pewno chcesz zapisać zmiany?") == True:
                 save_to_yml(os.path.join(path, file_name), character)
                 if old_name != character.IdentityV[0]:
@@ -597,12 +598,16 @@ def on_button_option_click():
     footer.pack(side=BOTTOM)
 
     tk.Label(header, text="OPCJE").pack()
-    tk.Button(body, text="Zmień motyw", command=lambda: change_color(), width=15).grid(row=0, column=0, padx=10, pady=10, sticky="e")
+    tk.Button(body, text="Zmień motyw", command=lambda: change_color(), width=15).grid(row=0, column=0, padx=10,
+                                                                                       pady=10, sticky="e")
 
     tk.Button(footer, text="Cofnij", command=menu, width=15).grid(row=0, column=0, padx=10, pady=10, sticky="e")
 
+
 def change_color():
     pass
+
+
 def on_button_exit_click():
     if messagebox.askyesno("Wyjście", "Czy na pewno chcesz wyjść?") == True:
         window.destroy()
@@ -621,10 +626,14 @@ def menu():
 
     body = tk.Frame()
     body.pack()
-    tk.Label(body, text="Interaktywna karta postaci do gier w systemie BRP", font=("", 13, 'bold')).grid(row=0, column=0,pady=20)
+    tk.Label(body, text="Interaktywna karta postaci do gier w systemie BRP", font=("", 13, 'bold')).grid(row=0,
+                                                                                                         column=0,
+                                                                                                         pady=20)
 
-    tk.Button(body, text="Wyświetl kartę postaci", command=on_button_displayCS_click, width=uW).grid(row=1, column=0,pady=20)
-    tk.Button(body, text="Utwórz nową postać", command=on_button_createCS_click_S, width=uW).grid(row=2, column=0, pady=20)
+    tk.Button(body, text="Wyświetl kartę postaci", command=on_button_displayCS_click, width=uW).grid(row=1, column=0,
+                                                                                                     pady=20)
+    tk.Button(body, text="Utwórz nową postać", command=on_button_createCS_click_S, width=uW).grid(row=2, column=0,
+                                                                                                  pady=20)
     tk.Button(body, text="Opcje", command=on_button_option_click, width=uW).grid(row=3, column=0, pady=20)
     tk.Button(body, text="Wyjście", command=on_button_exit_click, width=uW).grid(row=4, column=0, pady=20)
 
