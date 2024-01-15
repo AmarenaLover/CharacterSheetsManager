@@ -68,9 +68,8 @@ def display_sheet(character):
     tk.Button(buttonsFrame, text="Wyjście", command=on_button_displayCS_click, width=15).grid(row=0, column=0, padx=10,
                                                                                               pady=10)
     tk.Button(buttonsFrame, text="Rzut kośćmi", command=roll_dice, width=15).grid(row=0, column=1, padx=10, pady=10)
-    tk.Button(buttonsFrame, text="Edycja", command=lambda p=postac:on_button_createCS_click(p), width=15).grid(row=0, column=2, padx=10, pady=10)
-    tk.Button(buttonsFrame, text="Usuń", command=lambda name_d=path: delete_character(name=name_d), width=15).grid(
-        row=0, column=3, padx=10, pady=10)
+    tk.Button(buttonsFrame, text="Edycja", command=lambda:on_button_createCS_click(postac), width=15).grid(row=0, column=2, padx=10, pady=10)
+    tk.Button(buttonsFrame, text="Usuń", command=lambda name_d=path: delete_character(name=name_d), width=15).grid(row=0, column=3, padx=10, pady=10)
 
     identityFrame = tk.Frame(content)
     identityFrame.grid(row=0, column=1, pady=uFP)
@@ -262,7 +261,7 @@ def save_to_yml(file, postac):
     menu()
 
 
-def on_button_createCS_click(postac):
+def on_button_createCS_click(character):
     window.title("Interaktywna karta postaci w systemie BRP - Tworzenie postaci")
     uW = 15  # Universal Width
     create_entry = [None] * 55
@@ -270,19 +269,19 @@ def on_button_createCS_click(postac):
     create_label = [None] * 55
 
     def back():
-        postac.prev_step()
-        on_button_createCS_click(postac)
+        character.prev_step()
+        on_button_createCS_click(character)
 
     # dict = {1: displayIdentity,
     #         2: dispalyCharacteristics}
     # dict[postac.NS]()
-    if postac.NS == 1:
+    if character.NS == 1:
         def save_identity():
-            if postac.save_identity(create_entry) == 0:
-                postac.next_step()
+            if character.save_identity(create_entry) == 0:
+                character.next_step()
             else:
                 messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
-            on_button_createCS_click(postac)
+            on_button_createCS_click(character)
         def display_identity():
             header1 = tk.Label(window, text="DANE BADACZA")
             header1.pack()
@@ -292,8 +291,8 @@ def on_button_createCS_click(postac):
             footer1.pack(side=BOTTOM)
             for x in range(9):
                 create_entry[x] = tk.Entry(table, width=30)
-                create_entry[x].insert(0, postac.IdentityV[x])
-                create_label[x] = tk.Label(table, text=postac.IdentityL[x])
+                create_entry[x].insert(0, character.IdentityV[x])
+                create_label[x] = tk.Label(table, text=character.IdentityL[x])
                 create_label[x].grid(row=x, column=0, padx=10, pady=10, sticky="e")
                 create_entry[x].grid(row=x, column=1, padx=10, pady=10, sticky="w")
             button_next = tk.Button(footer1, text="Dalej", command=save_identity, width=uW)
@@ -303,13 +302,13 @@ def on_button_createCS_click(postac):
 
         clear_main_window()
         display_identity()
-    elif postac.NS == 2:
+    elif character.NS == 2:
         def save_characteristics():
-            if postac.save_characteristics(create_entry) == 0:
-                postac.next_step()
+            if character.save_characteristics(create_entry) == 0:
+                character.next_step()
             else:
                 messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
-            on_button_createCS_click(postac)
+            on_button_createCS_click(character)
 
         def display_characteristics():
             header1 = tk.Label(window, text="CECHY")
@@ -320,8 +319,8 @@ def on_button_createCS_click(postac):
             footer1.pack(side=BOTTOM)
             for x in range(8):
                 create_entry[x] = tk.Entry(table, width=30)
-                create_entry[x].insert(0, postac.CharacteristicsV[x])
-                create_label[x] = tk.Label(table, text=postac.CharacteristicsL[x])
+                create_entry[x].insert(0, character.CharacteristicsV[x])
+                create_label[x] = tk.Label(table, text=character.CharacteristicsL[x])
                 create_label[x].grid(row=x, column=0, padx=10, pady=10, sticky="e")
                 create_entry[x].grid(row=x, column=1, padx=10, pady=10, sticky="e")
             button_next = tk.Button(footer1, text="Dalej", command=save_characteristics, width=uW)
@@ -331,13 +330,13 @@ def on_button_createCS_click(postac):
 
         clear_main_window()
         display_characteristics()
-    elif postac.NS == 3:
+    elif character.NS == 3:
         def save_hitpoints():
-            if postac.save_hitpoints(create_entry) == 0:
-                postac.next_step()
+            if character.save_hitpoints(create_entry) == 0:
+                character.next_step()
             else:
                 messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
-            on_button_createCS_click(postac)
+            on_button_createCS_click(character)
 
         def display_hitpoints():
             header1 = tk.Label(window, text="PUNKTY TRAFIEŃ")
@@ -348,8 +347,8 @@ def on_button_createCS_click(postac):
             footer1.pack(side=BOTTOM)
             for x in range(4):
                 create_entry[x] = tk.Entry(table, width=30)
-                create_entry[x].insert(0, postac.HitpointsV[x])
-                create_label[x] = tk.Label(table, text=postac.HitpointsL[x])
+                create_entry[x].insert(0, character.HitpointsV[x])
+                create_label[x] = tk.Label(table, text=character.HitpointsL[x])
                 create_label[x].grid(row=x, column=0, padx=10, pady=10, sticky="e")
                 create_entry[x].grid(row=x, column=1, padx=10, pady=10, sticky="e")
             button_next = tk.Button(footer1, text="Dalej", command=save_hitpoints, width=uW)
@@ -359,13 +358,13 @@ def on_button_createCS_click(postac):
 
         clear_main_window()
         display_hitpoints()
-    elif postac.NS == 4:
+    elif character.NS == 4:
         def save_skills():
-            if postac.save_skills(create_entry) == 0:
-                postac.next_step()
+            if character.save_skills(create_entry) == 0:
+                character.next_step()
             else:
                 messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
-            on_button_createCS_click(postac)
+            on_button_createCS_click(character)
 
         def display_skills():
             def on_configure(event):
@@ -395,16 +394,16 @@ def on_button_createCS_click(postac):
             footer1.pack(side=BOTTOM)
             for x in range(28):
                 create_entry[(x * 2)] = tk.Entry(table, width=30)
-                create_entry[(x * 2)].insert(0, postac.SkillsV[(x * 2)])
-                create_label[(x * 2)] = tk.Label(table, text=postac.SkillsL[x * 2])
+                create_entry[(x * 2)].insert(0, character.SkillsV[(x * 2)])
+                create_label[(x * 2)] = tk.Label(table, text=character.SkillsL[x * 2])
                 create_label[(x * 2)].grid(row=x, column=1, padx=10, pady=10, sticky="e")
                 create_entry[(x * 2)].grid(row=x, column=2, padx=10, pady=10, sticky="e")
                 if x == 27:
                     continue
                 else:
                     create_entry[(x * 2) + 1] = tk.Entry(table, width=30)
-                    create_entry[(x * 2) + 1].insert(0, postac.SkillsV[(x * 2) + 1])
-                    create_label[(x * 2) + 1] = tk.Label(table, text=postac.SkillsL[(x * 2) + 1])
+                    create_entry[(x * 2) + 1].insert(0, character.SkillsV[(x * 2) + 1])
+                    create_label[(x * 2) + 1] = tk.Label(table, text=character.SkillsL[(x * 2) + 1])
                     create_label[(x * 2) + 1].grid(row=x, column=3, padx=10, pady=10, sticky="e")
                     create_entry[(x * 2) + 1].grid(row=x, column=4, padx=10, pady=10, sticky="e")
 
@@ -417,19 +416,19 @@ def on_button_createCS_click(postac):
 
         clear_main_window()
         display_skills()
-    elif postac.NS == 5:
+    elif character.NS == 5:
         def del_weapon(id):
-            postac.del_weapon(id)
-            on_button_createCS_click(postac)
+            character.del_weapon(id)
+            on_button_createCS_click(character)
 
         def save_weapon():
-            if postac.save_weapon(create_entry) != 0:
+            if character.save_weapon(create_entry) != 0:
                 messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
-            on_button_createCS_click(postac)
+            on_button_createCS_click(character)
 
         def save_weapons():
-            postac.next_step()
-            on_button_createCS_click(postac)
+            character.next_step()
+            on_button_createCS_click(character)
 
         def display_weapons():
             header1 = tk.Label(text="BROŃ")
@@ -439,22 +438,22 @@ def on_button_createCS_click(postac):
             footer1 = tk.Frame()
             footer1.pack(side=BOTTOM)
             for x in range(9):
-                tk.Label(body1, text=postac.WeaponL[x]).grid(row=0, column=x, padx=10, pady=10)
-            for x in range(0, postac.WeaponsNb):
-                tk.Label(body1, text=postac.WeaponsL[x]).grid(row=x + 1, column=0, padx=10, pady=10)
-                tk.Label(body1, text=postac.WeaponsV[x][0]).grid(row=x + 1, column=1, padx=10, pady=10)
-                tk.Label(body1, text=postac.WeaponsV[x][1]).grid(row=x + 1, column=2, padx=10, pady=10)
-                tk.Label(body1, text=postac.WeaponsV[x][2]).grid(row=x + 1, column=3, padx=10, pady=10)
-                tk.Label(body1, text=postac.WeaponsV[x][3]).grid(row=x + 1, column=4, padx=10, pady=10)
-                tk.Label(body1, text=postac.WeaponsV[x][4]).grid(row=x + 1, column=5, padx=10, pady=10)
-                tk.Label(body1, text=postac.WeaponsV[x][5]).grid(row=x + 1, column=6, padx=10, pady=10)
-                tk.Label(body1, text=postac.WeaponsV[x][6]).grid(row=x + 1, column=7, padx=10, pady=10)
-                tk.Label(body1, text=postac.WeaponsV[x][7]).grid(row=x + 1, column=8, padx=10, pady=10)
+                tk.Label(body1, text=character.WeaponL[x]).grid(row=0, column=x, padx=10, pady=10)
+            for x in range(0, character.WeaponsNb):
+                tk.Label(body1, text=character.WeaponsL[x]).grid(row=x + 1, column=0, padx=10, pady=10)
+                tk.Label(body1, text=character.WeaponsV[x][0]).grid(row=x + 1, column=1, padx=10, pady=10)
+                tk.Label(body1, text=character.WeaponsV[x][1]).grid(row=x + 1, column=2, padx=10, pady=10)
+                tk.Label(body1, text=character.WeaponsV[x][2]).grid(row=x + 1, column=3, padx=10, pady=10)
+                tk.Label(body1, text=character.WeaponsV[x][3]).grid(row=x + 1, column=4, padx=10, pady=10)
+                tk.Label(body1, text=character.WeaponsV[x][4]).grid(row=x + 1, column=5, padx=10, pady=10)
+                tk.Label(body1, text=character.WeaponsV[x][5]).grid(row=x + 1, column=6, padx=10, pady=10)
+                tk.Label(body1, text=character.WeaponsV[x][6]).grid(row=x + 1, column=7, padx=10, pady=10)
+                tk.Label(body1, text=character.WeaponsV[x][7]).grid(row=x + 1, column=8, padx=10, pady=10)
                 tk.Button(body1, text="-", command=lambda id=x: del_weapon(id), width=3).grid(row=x + 1, column=9,
                                                                                               padx=10, pady=10,
                                                                                               sticky="w")
-            if postac.WeaponsNb < 5:
-                tk.Label(body1, text=postac.WeaponsL[postac.WeaponsNb]).grid(row=x + 2, column=0, padx=10, pady=10)
+            if character.WeaponsNb < 5:
+                tk.Label(body1, text=character.WeaponsL[character.WeaponsNb]).grid(row=x + 2, column=0, padx=10, pady=10)
                 create_entry[0] = tk.Entry(body1, width=5)
                 create_entry[1] = tk.Entry(body1, width=5)
                 create_entry[2] = tk.Entry(body1, width=5)
@@ -481,13 +480,13 @@ def on_button_createCS_click(postac):
 
         clear_main_window()
         display_weapons()
-    elif postac.NS == 6:
+    elif character.NS == 6:
         def save_armor():
-            if postac.save_armor(create_entry) == 0:
-                postac.next_step()
+            if character.save_armor(create_entry) == 0:
+                character.next_step()
             else:
                 messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
-            on_button_createCS_click(postac)
+            on_button_createCS_click(character)
 
         def display_armor():
             header1 = tk.Label(text="PANCERZ")
@@ -498,8 +497,8 @@ def on_button_createCS_click(postac):
             footer1.pack(side=BOTTOM)
             for x in range(3):
                 create_entry[x] = tk.Entry(body1, width=30)
-                create_entry[x].insert(0, postac.ArmorV[x])
-                create_label[x] = tk.Label(body1, text=postac.ArmorL[x])
+                create_entry[x].insert(0, character.ArmorV[x])
+                create_label[x] = tk.Label(body1, text=character.ArmorL[x])
                 create_label[x].grid(row=0, column=x, padx=10, pady=10)
                 create_entry[x].grid(row=1, column=x, padx=10, pady=10)
             button_next = tk.Button(footer1, text="Dalej", command=save_armor, width=uW)
@@ -509,13 +508,13 @@ def on_button_createCS_click(postac):
 
         clear_main_window()
         display_armor()
-    elif postac.NS == 7:
+    elif character.NS == 7:
         def save_equipment():
-            if postac.save_equipment() == 0:
-                postac.next_step()
+            if character.save_equipment() == 0:
+                character.next_step()
             else:
                 messagebox.showinfo("Uwaga", "Wpisano nieprawidłową wartość!")
-            on_button_createCS_click(postac)
+            on_button_createCS_click(character)
 
         def display_equipment():
             header1 = tk.Label(text="EKWIPUNEK")
@@ -532,16 +531,16 @@ def on_button_createCS_click(postac):
 
         clear_main_window()
         display_equipment()
-    elif postac.NS == 0:
-        postac.NS = 1
+    elif character.NS == 0:
+        character.NS = 1
         if messagebox.askyesno("Wyjście", "Czy na pewno chcesz przerwać tworzenie postaci?"):
             menu()
         else:
-            on_button_createCS_click(postac)
-    elif postac.NS == 8:
+            on_button_createCS_click(character)
+    elif character.NS == 8:
         if messagebox.askyesno("Potwierdzenie", "Czy na pewno chcesz dodać utworzoną postać?") == True:
             path = os.path.join(r'characterSheets')
-            file_name = "{}{}".format(postac.IdentityV[0], ".yaml")
+            file_name = "{}{}".format(character.IdentityV[0], ".yaml")
             files = []
             for f in os.listdir(path):
                 if os.path.isfile(os.path.join(path, f)):
@@ -549,15 +548,15 @@ def on_button_createCS_click(postac):
             if file_name in files:
                 if messagebox.askyesno("Potwierdzenie",
                                        "Już istnieje postać o takiej nazwie, czy chcesz ją nadpisać?") == True:
-                    save_to_yml(os.path.join(path, file_name), postac)
+                    save_to_yml(os.path.join(path, file_name), character)
                 else:
-                    postac.NS = 7
-                    on_button_createCS_click(postac)
+                    character.NS = 7
+                    on_button_createCS_click(character)
             else:
-                save_to_yml(os.path.join(path, file_name), postac)
+                save_to_yml(os.path.join(path, file_name), character)
         else:
-            postac.NS = 7
-            on_button_createCS_click(postac)
+            character.NS = 7
+            on_button_createCS_click(character)
 
 
 
@@ -567,8 +566,10 @@ def on_button_option_click():
     clear_main_window()
     header = tk.Frame()
     header.pack()
+
     body = tk.Frame()
     body.pack()
+
     footer = tk.Frame()
     footer.pack(side=BOTTOM)
 
