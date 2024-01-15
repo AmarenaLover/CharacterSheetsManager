@@ -9,7 +9,7 @@ import Character
 
 
 # from Character import Rekord
-
+# dawid
 
 def display_sheet(character):
     # colors = ["red", "green", "blue", "orange", "purple", "yellow", "pink", "brown", "cyan"]
