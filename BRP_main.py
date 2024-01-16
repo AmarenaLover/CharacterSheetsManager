@@ -60,11 +60,13 @@ def display_sheet(character):
 
     buttonsFrame = tk.Frame(window, background=colors[8])
     buttonsFrame.pack(side=BOTTOM)
-    tk.Button(buttonsFrame, text="Wyjście", command=on_button_displayCS_click, width=15).grid(row=0, column=0, padx=10,
-                                                                                              pady=10)
-    tk.Button(buttonsFrame, text="Rzut kośćmi", command=roll_dice, width=15).grid(row=0, column=1, padx=10, pady=10)
-    tk.Button(buttonsFrame, text="Edycja", command=lambda: on_button_createCS_click(postac, mode=1), width=15).grid(
-        row=0, column=2, padx=10, pady=10)
+    tk.Button(buttonsFrame, text="Wyjście", command=on_button_displayCS_click, width=15).grid(row=0, column=0, padx=10, pady=10)
+
+    global roll_button
+    roll_button = tk.Button(buttonsFrame, text="Rzut kośćmi", command=roll_dice, width=15)
+    roll_button.grid(row=0, column=1, padx=10, pady=10)
+
+    tk.Button(buttonsFrame, text="Edycja", command=lambda: on_button_createCS_click(postac, mode=1), width=15).grid(row=0, column=2, padx=10, pady=10)
     tk.Button(buttonsFrame, text="Usuń", command=lambda name_d=path: delete_character(name=name_d), width=15).grid(
         row=0, column=3, padx=10, pady=10)
 
@@ -185,13 +187,17 @@ def roll_dice():
     roll_window.maxsize(600, 200)
     window.title("Rzut kośćmi")
 
+    roll_button.config(state='disabled')
+
     header = tk.Frame(roll_window)
     header.pack(side=tk.TOP)
     body = tk.Frame(roll_window)
     body.pack(side=tk.TOP)
     footer = tk.Frame(roll_window)
     footer.pack(side=tk.BOTTOM)
-
+    def quit_roll_window():
+        roll_button.config(state='normal')
+        roll_window.destroy()
     def get_randomizer(upper):
         res = "Wynik rzutu: " + str(random.randint(1, upper))
         tk.Label(body, text=res).grid(row=2, column=0, padx=10, pady=10, columnspan=4)
@@ -214,7 +220,7 @@ def roll_dice():
                                                                                             pady=10)
 
     tk.Label(header, text="RZUT KOŚCIĄ").grid(row=0, column=0)
-    tk.Button(footer, text="Zamknij okno", command=roll_window.destroy, width=15).grid(row=0, column=0, padx=10,
+    tk.Button(footer, text="Zamknij okno", command=quit_roll_window, width=15).grid(row=0, column=0, padx=10,
                                                                                        pady=10)
     roll_window.mainloop()
 
