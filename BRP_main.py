@@ -16,6 +16,7 @@ def display_sheet(character):
     # colors = ["red", "green", "blue", "orange", "purple", "yellow", "pink", "brown", "cyan"]
     colors = ["grey"] * 9
     path = os.path.join(r'characterSheets', character)
+
     def parse_yaml_to_class(yaml_file_path, class_type):
         with open(yaml_file_path, 'r') as file:
             data = yaml.safe_load(file)
@@ -60,13 +61,15 @@ def display_sheet(character):
 
     buttonsFrame = tk.Frame(window, background=colors[8])
     buttonsFrame.pack(side=BOTTOM)
-    tk.Button(buttonsFrame, text="Wyjście", command=on_button_displayCS_click, width=15).grid(row=0, column=0, padx=10, pady=10)
+    tk.Button(buttonsFrame, text="Wyjście", command=on_button_displayCS_click, width=15).grid(row=0, column=0, padx=10,
+                                                                                              pady=10)
 
     global roll_button
     roll_button = tk.Button(buttonsFrame, text="Rzut kośćmi", command=roll_dice, width=15)
     roll_button.grid(row=0, column=1, padx=10, pady=10)
 
-    tk.Button(buttonsFrame, text="Edycja", command=lambda: on_button_createCS_click(postac, mode=1), width=15).grid(row=0, column=2, padx=10, pady=10)
+    tk.Button(buttonsFrame, text="Edycja", command=lambda: on_button_createCS_click(postac, mode=1), width=15).grid(
+        row=0, column=2, padx=10, pady=10)
     tk.Button(buttonsFrame, text="Usuń", command=lambda name_d=path: delete_character(name=name_d), width=15).grid(
         row=0, column=3, padx=10, pady=10)
 
@@ -154,7 +157,7 @@ def display_sheet(character):
         tk.Label(equipmentFrame, text="Opis").grid(row=0, column=3, padx=uP, pady=uP)
         for x in range(postac.EquipmentNb):
             for y in range(3):
-                tk.Label(equipmentFrame, text=x+1).grid(row=x + 1, column=0, padx=uP, pady=uP)
+                tk.Label(equipmentFrame, text=x + 1).grid(row=x + 1, column=0, padx=uP, pady=uP)
                 tk.Label(equipmentFrame, text=postac.EquipmentV[x][y]).grid(row=x + 1, column=y + 1, padx=uP, pady=uP)
 
 
@@ -195,9 +198,11 @@ def roll_dice():
     body.pack(side=tk.TOP)
     footer = tk.Frame(roll_window)
     footer.pack(side=tk.BOTTOM)
+
     def quit_roll_window():
         roll_button.config(state='normal')
         roll_window.destroy()
+
     def get_randomizer(upper):
         res = "Wynik rzutu: " + str(random.randint(1, upper))
         tk.Label(body, text=res).grid(row=2, column=0, padx=10, pady=10, columnspan=4)
@@ -221,7 +226,7 @@ def roll_dice():
 
     tk.Label(header, text="RZUT KOŚCIĄ").grid(row=0, column=0)
     tk.Button(footer, text="Zamknij okno", command=quit_roll_window, width=15).grid(row=0, column=0, padx=10,
-                                                                                       pady=10)
+                                                                                    pady=10)
     roll_window.mainloop()
 
 
@@ -486,8 +491,8 @@ def on_button_createCS_click(character, mode):
                 tk.Label(body1, text=character.WeaponsV[x][6]).grid(row=x + 1, column=7, padx=10, pady=10)
                 tk.Label(body1, text=character.WeaponsV[x][7]).grid(row=x + 1, column=8, padx=10, pady=10)
                 tk.Button(body1, text=x, command=lambda id=x: del_weapon(id), width=3).grid(row=x + 1, column=9,
-                                                                                              padx=10, pady=10,
-                                                                                              sticky="w")
+                                                                                            padx=10, pady=10,
+                                                                                            sticky="w")
             if character.WeaponsNb < 5:
                 tk.Label(body1, text=character.WeaponsL[character.WeaponsNb]).grid(row=x + 2, column=0, padx=10,
                                                                                    pady=10)
@@ -507,8 +512,9 @@ def on_button_createCS_click(character, mode):
                 create_entry[5].grid(row=x + 2, column=6, padx=10, pady=10)
                 create_entry[6].grid(row=x + 2, column=7, padx=10, pady=10)
                 create_entry[7].grid(row=x + 2, column=8, padx=10, pady=10)
-                tk.Button(body1, text="+", command=lambda: save_weapon(), width=3).grid(row=x + 2, column=9, padx=10, pady=10,
-                                                                              sticky="w")
+                tk.Button(body1, text="+", command=lambda: save_weapon(), width=3).grid(row=x + 2, column=9, padx=10,
+                                                                                        pady=10,
+                                                                                        sticky="w")
 
             button_next = tk.Button(footer1, text="Dalej", command=save_weapons, width=uW)
             button_prev = tk.Button(footer1, text="Cofnij", command=back, width=uW)
@@ -579,22 +585,27 @@ def on_button_createCS_click(character, mode):
             tk.Label(body1, text="Opis").grid(row=0, column=3, padx=10, pady=10)
 
             for x in range(0, character.EquipmentNb):
-                tk.Label(body1, text=x+1).grid(row=x + 1, column=0, padx=10, pady=10)
+                tk.Label(body1, text=x + 1).grid(row=x + 1, column=0, padx=10, pady=10)
                 tk.Label(body1, text=character.EquipmentV[x][0]).grid(row=x + 1, column=1, padx=10, pady=10)
                 tk.Label(body1, text=character.EquipmentV[x][1]).grid(row=x + 1, column=2, padx=10, pady=10)
                 tk.Label(body1, text=character.EquipmentV[x][2]).grid(row=x + 1, column=3, padx=10, pady=10)
-                tk.Button(body1, text="-", command=lambda id=x: del_equipment(id), width=3).grid(row=x + 1, column=9,padx=10, pady=10,sticky="w")
+                tk.Button(body1, text="-", command=lambda id=x: del_equipment(id), width=3).grid(row=x + 1, column=9,
+                                                                                                 padx=10, pady=10,
+                                                                                                 sticky="w")
             if character.EquipmentNb < 20:
-                tk.Label(body1, text=character.EquipmentNb+1).grid(row=character.EquipmentNb+1, column=0, padx=10,pady=10)
+                tk.Label(body1, text=character.EquipmentNb + 1).grid(row=character.EquipmentNb + 1, column=0, padx=10,
+                                                                     pady=10)
                 create_entry[0] = tk.Entry(body1, width=5)
                 create_entry[1] = tk.Entry(body1, width=5)
                 create_entry[2] = tk.Entry(body1, width=50)
-                create_entry[0].grid(row=character.EquipmentNb+1, column=1, padx=10, pady=10)
-                create_entry[1].grid(row=character.EquipmentNb+1, column=2, padx=10, pady=10)
-                create_entry[2].grid(row=character.EquipmentNb+1, column=3, padx=10, pady=10)
-                tk.Button(body1, text="+", command=save_eq, width=3).grid(row=character.EquipmentNb+1, column=9, padx=10, pady=10, sticky="w")
+                create_entry[0].grid(row=character.EquipmentNb + 1, column=1, padx=10, pady=10)
+                create_entry[1].grid(row=character.EquipmentNb + 1, column=2, padx=10, pady=10)
+                create_entry[2].grid(row=character.EquipmentNb + 1, column=3, padx=10, pady=10)
+                tk.Button(body1, text="+", command=save_eq, width=3).grid(row=character.EquipmentNb + 1, column=9,
+                                                                          padx=10, pady=10, sticky="w")
 
-            button_next = tk.Button(footer1, text=["Zapisz" if mode == 1 else "Dodaj"], command=save_equipment,width=uW)
+            button_next = tk.Button(footer1, text=["Zapisz" if mode == 1 else "Dodaj"], command=save_equipment,
+                                    width=uW)
             button_prev = tk.Button(footer1, text="Cofnij", command=back, width=uW)
             button_next.grid(row=0, column=1, padx=10, pady=10, sticky="w")
             button_prev.grid(row=0, column=0, padx=10, pady=10, sticky="e")

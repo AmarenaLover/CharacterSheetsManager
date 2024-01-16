@@ -1,5 +1,6 @@
 class Record:
-    def __init__(self, NS=None, IdentityV=None, CharacteristicsV=None, HitpointsV=None, SkillsV=None, WeaponsV=None, EquipmentNb=None, EquipmentV=None,
+    def __init__(self, NS=None, IdentityV=None, CharacteristicsV=None, HitpointsV=None, SkillsV=None, WeaponsV=None,
+                 EquipmentNb=None, EquipmentV=None,
                  WeaponsNb=None, ArmorV=None):
         if IdentityV == None:
             self.NS = 1
@@ -129,7 +130,7 @@ class Record:
             self.IdentityV[x] = self.validate_entry_text(data[x].get())
             if self.IdentityV[x] == "":
                 error += 1
-        if self.IdentityV[0]=="Brak danych": error=-1
+        if self.IdentityV[0] == "Brak danych": error = -1
         return error
 
     def save_characteristics(self, data):
@@ -171,7 +172,8 @@ class Record:
         for y in range(8):
             if self.WeaponsV[self.WeaponsNb][y] == "":
                 error += 1
-        if error == 0: self.WeaponsNb += 1
+        if error == 0:
+            self.WeaponsNb += 1
         return error
 
     def del_weapon(self, data):
@@ -235,7 +237,7 @@ class Record:
                 return front_end
             else:
                 number = int(number)
-                if front_end <= number and number <= back_end:
+                if front_end <= number <= back_end:
                     return number
                 else:
                     return ""
