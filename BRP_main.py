@@ -1,6 +1,6 @@
 import random
 import yaml
-import os
+import os, sys
 import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
@@ -87,8 +87,6 @@ def display_sheet(character):
     armorFrame.grid(row=5, column=1, pady=uFP)
     equipmentFrame = tk.Frame(content)
     equipmentFrame.grid(row=6, column=1, pady=uFP)
-
-    # equipmentFrame       = tk.Frame(content, background=colors[6]).grid(row=6, column=1, pady=10)
 
     def get_roll_V(first_V):
         roll_V = "{}{}{}{}{}".format(str(first_V), ' / ', str(int((first_V + 2) / 5)), ' / ',
@@ -231,7 +229,7 @@ def roll_dice():
 
 
 def on_button_displayCS_click():
-    path = r'characterSheets\.'
+    path = os.path.join(os.path.dirname(os.path.realpath(sys.argv[0])), 'characterSheets')
     files = []
     for f in os.listdir(path):
         if os.path.isfile(os.path.join(path, f)):
@@ -272,14 +270,14 @@ def on_button_createCS_click_S():
 
 
 def check_yml_files():
-    # files = []
-    # path = os.path.join(r'characterSheets')
-    # for f in os.listdir(path):
-    #     if os.path.isfile(os.path.join(path, f)):
-    #         files.append(f)
-    # return len(files)
-    return len([f for f in os.listdir(os.path.join(r'characterSheets')) if
-                os.path.isfile(os.path.join(r'characterSheets', f))])
+    files = []
+    path = os.path.join(r'characterSheets')
+    for f in os.listdir(path):
+        if os.path.isfile(os.path.join(path, f)):
+            files.append(f)
+    return len(files)
+    # return len([f for f in os.listdir(os.path.join(r'characterSheets')) if
+    #             os.path.isfile(os.path.join(r'characterSheets', f))])
 
 
 def save_to_yml(file, postac):
