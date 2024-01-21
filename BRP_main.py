@@ -11,7 +11,6 @@ import Character
 # from Character import Rekord
 # dawid
 
-
 def display_sheet(character):
     # colors = ["red", "green", "blue", "orange", "purple", "yellow", "pink", "brown", "cyan"]
     colors = ["grey"] * 9
@@ -35,8 +34,8 @@ def display_sheet(character):
     y = 190
 
     titleFrame = tk.Frame().pack()
-    tk.Label(titleFrame, text=postac.IdentityV[0]).pack()
-    body = tk.Frame(window)
+    tk.Label(titleFrame, text=postac.IdentityV[0], bg=bg_color).pack()
+    body = tk.Frame(window, bg=bg_color)
     body.pack(fill=tk.BOTH, expand=True)
 
     def on_configure(event):
@@ -46,10 +45,10 @@ def display_sheet(character):
 
     content_scrollbar = tk.Canvas(body)
     content_scrollbar.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-    scrollbar = tk.Scrollbar(body, command=content_scrollbar.yview)
+    scrollbar = tk.Scrollbar(body, command=content_scrollbar.yview, bg=bg_color)
     scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
     content_scrollbar.configure(yscrollcommand=scrollbar.set)
-    content = tk.Frame(content_scrollbar)
+    content = tk.Frame(content_scrollbar, bg=bg_color)
     content.columnconfigure(0, weight=1)
     content.columnconfigure(1, weight=0)
     content.columnconfigure(2, weight=1)
@@ -73,19 +72,19 @@ def display_sheet(character):
     tk.Button(buttonsFrame, text="Usuń", command=lambda name_d=path: delete_character(name=name_d), width=15).grid(
         row=0, column=3, padx=10, pady=10)
 
-    identityFrame = tk.Frame(content)
+    identityFrame = tk.Frame(content,bg=bg_color)
     identityFrame.grid(row=0, column=1, pady=uFP)
-    characteristicsFrame = tk.Frame(content)
+    characteristicsFrame = tk.Frame(content,bg=bg_color)
     characteristicsFrame.grid(row=1, column=1, pady=uFP)
-    hitpointsFrame = tk.Frame(content)
+    hitpointsFrame = tk.Frame(content,bg=bg_color)
     hitpointsFrame.grid(row=2, column=1, pady=uFP)
-    skillsFrame = tk.Frame(content)
+    skillsFrame = tk.Frame(content,bg=bg_color)
     skillsFrame.grid(row=3, column=1, pady=uFP)
-    weaponFrame = tk.Frame(content)
+    weaponFrame = tk.Frame(content,bg=bg_color)
     weaponFrame.grid(row=4, column=1, pady=uFP)
-    armorFrame = tk.Frame(content)
+    armorFrame = tk.Frame(content,bg=bg_color)
     armorFrame.grid(row=5, column=1, pady=uFP)
-    equipmentFrame = tk.Frame(content)
+    equipmentFrame = tk.Frame(content,bg=bg_color)
     equipmentFrame.grid(row=6, column=1, pady=uFP)
 
     def get_roll_V(first_V):
@@ -93,70 +92,70 @@ def display_sheet(character):
                                      str(int((first_V + 10) / 20)))
         return roll_V
 
-    header1 = tk.Label(content, text="DANE BADACZA")
+    header1 = tk.Label(content, text="DANE BADACZA",bg=bg_color)
     header1.grid(row=0, column=0, padx=10, pady=10, sticky="NE")
-    header2 = tk.Label(content, text="CECHY")
+    header2 = tk.Label(content, text="CECHY",bg=bg_color)
     header2.grid(row=1, column=0, padx=10, pady=10, sticky="NE")
-    header3 = tk.Label(content, text="PUNKTY TRAFIEŃ")
+    header3 = tk.Label(content, text="PUNKTY TRAFIEŃ",bg=bg_color)
     header3.grid(row=2, column=0, padx=10, pady=10, sticky="NE")
-    header4 = tk.Label(content, text="UMIEJĘTNOŚCI")
+    header4 = tk.Label(content, text="UMIEJĘTNOŚCI",bg=bg_color)
     header4.grid(row=3, column=0, padx=10, pady=10, sticky="NE")
-    header5 = tk.Label(content, text="BROŃ")
+    header5 = tk.Label(content, text="BROŃ",bg=bg_color)
     header5.grid(row=4, column=0, padx=10, pady=10, sticky="NE")
-    header6 = tk.Label(content, text="PANCERZ")
+    header6 = tk.Label(content, text="PANCERZ",bg=bg_color)
     header6.grid(row=5, column=0, padx=10, pady=10, sticky="NE")
-    header7 = tk.Label(content, text="EKWIPUNEK")
+    header7 = tk.Label(content, text="EKWIPUNEK",bg=bg_color)
     header7.grid(row=6, column=0, padx=10, pady=10, sticky="NE")
 
     for x in range(9):
-        tk.Label(identityFrame, text=postac.IdentityL[x]).grid(row=x, column=0, padx=uP, pady=uP, sticky="e")
-        tk.Label(identityFrame, text=postac.IdentityV[x]).grid(row=x, column=1, padx=uP, pady=uP, sticky="w")
+        tk.Label(identityFrame, text=postac.IdentityL[x],bg=bg_color).grid(row=x, column=0, padx=uP, pady=uP, sticky="e")
+        tk.Label(identityFrame, text=postac.IdentityV[x],bg=bg_color).grid(row=x, column=1, padx=uP, pady=uP, sticky="w")
     for x in range(8):
-        tk.Label(characteristicsFrame, text=postac.CharacteristicsL[x]).grid(row=x, column=0, padx=uP, pady=uP,
+        tk.Label(characteristicsFrame, text=postac.CharacteristicsL[x],bg=bg_color).grid(row=x, column=0, padx=uP, pady=uP,
                                                                              sticky="e")
         roll_CH_V = get_roll_V(postac.CharacteristicsV[x] * 5)
-        tk.Label(characteristicsFrame, text=roll_CH_V).grid(row=x, column=1, padx=uP, pady=uP, sticky="e")
+        tk.Label(characteristicsFrame, text=roll_CH_V,bg=bg_color).grid(row=x, column=1, padx=uP, pady=uP, sticky="e")
     for x in range(4):
-        tk.Label(hitpointsFrame, text=postac.HitpointsL[x]).grid(row=x, column=0, padx=uP, pady=uP, sticky="e")
+        tk.Label(hitpointsFrame, text=postac.HitpointsL[x],bg=bg_color).grid(row=x, column=0, padx=uP, pady=uP, sticky="e")
         displayed_hp = "{}{}{}{}".format(postac.HitpointsV[x], ' / ', postac.HitpointsV[x + 4], '(max)')
-        tk.Label(hitpointsFrame, text=displayed_hp).grid(row=x, column=1, padx=uP, pady=uP, sticky="w")
-    tk.Label(skillsFrame, width=20).grid(row=0, column=2)
+        tk.Label(hitpointsFrame, text=displayed_hp,bg=bg_color).grid(row=x, column=1, padx=uP, pady=uP, sticky="w")
+    tk.Label(skillsFrame, width=20, bg=bg_color).grid(row=0, column=2)
     for x in range(28):
-        tk.Label(skillsFrame, text=postac.SkillsL[(x * 2)]).grid(row=x, column=0, padx=uP, pady=uP, sticky="e")
+        tk.Label(skillsFrame, text=postac.SkillsL[(x * 2)],bg=bg_color).grid(row=x, column=0, padx=uP, pady=uP, sticky="e")
         roll_S_V = get_roll_V(postac.SkillsV[(x * 2)])
-        tk.Label(skillsFrame, text=roll_S_V).grid(row=x, column=1, padx=uP, pady=uP, sticky="e")
+        tk.Label(skillsFrame, text=roll_S_V,bg=bg_color).grid(row=x, column=1, padx=uP, pady=uP, sticky="e")
         if x == 27:
-            continue
+            pass
         else:
-            tk.Label(skillsFrame, text=postac.SkillsL[(x * 2) + 1]).grid(row=x, column=3, padx=uP, pady=uP, sticky="e")
+            tk.Label(skillsFrame, text=postac.SkillsL[(x * 2) + 1],bg=bg_color).grid(row=x, column=3, padx=uP, pady=uP, sticky="e")
             roll_S_V = get_roll_V(postac.SkillsV[(x * 2) + 1])
-            tk.Label(skillsFrame, text=roll_S_V).grid(row=x, column=4, padx=uP, pady=uP, sticky="e")
+            tk.Label(skillsFrame, text=roll_S_V,bg=bg_color).grid(row=x, column=4, padx=uP, pady=uP, sticky="e")
     if (postac.WeaponsNb) == 0:
-        tk.Label(weaponFrame, text="Brak broni").grid(row=0, column=y, padx=uP, pady=uP)
+        tk.Label(weaponFrame, text="Brak broni",bg=bg_color).grid(row=0, column=y, padx=uP, pady=uP)
     else:
         for y in range(9):
-            tk.Label(weaponFrame, text=postac.WeaponL[y]).grid(row=0, column=y, padx=uP, pady=uP)
+            tk.Label(weaponFrame, text=postac.WeaponL[y],bg=bg_color).grid(row=0, column=y, padx=uP, pady=uP)
         for x in range(postac.WeaponsNb):
             for y in range(8):
-                tk.Label(weaponFrame, text=postac.WeaponsL[x]).grid(row=x + 1, column=0, padx=uP, pady=uP)
-                tk.Label(weaponFrame, text=postac.WeaponsV[x][y]).grid(row=x + 1, column=y + 1, padx=uP, pady=uP)
+                tk.Label(weaponFrame, text=postac.WeaponsL[x],bg=bg_color).grid(row=x + 1, column=0, padx=uP, pady=uP)
+                tk.Label(weaponFrame, text=postac.WeaponsV[x][y],bg=bg_color).grid(row=x + 1, column=y + 1, padx=uP, pady=uP)
     if (postac.ArmorV[1]) == 0:
-        tk.Label(armorFrame, text="Brak pancerza").grid(row=0, column=y, padx=uP, pady=uP)
+        tk.Label(armorFrame, text="Brak pancerza",bg=bg_color).grid(row=0, column=y, padx=uP, pady=uP)
     else:
         for x in range(3):
-            tk.Label(armorFrame, text=postac.ArmorL[x]).grid(row=0, column=x, padx=uP, pady=uP)
-            tk.Label(armorFrame, text=postac.ArmorV[x]).grid(row=1, column=x, padx=uP, pady=uP)
+            tk.Label(armorFrame, text=postac.ArmorL[x],bg=bg_color).grid(row=0, column=x, padx=uP, pady=uP)
+            tk.Label(armorFrame, text=postac.ArmorV[x],bg=bg_color).grid(row=1, column=x, padx=uP, pady=uP)
     if (postac.EquipmentNb) == 0:
-        tk.Label(equipmentFrame, text="Brak wyposażenia").grid(row=0, column=y, padx=uP, pady=uP)
+        tk.Label(equipmentFrame, text="Brak wyposażenia",bg=bg_color).grid(row=0, column=y, padx=uP, pady=uP)
     else:
-        tk.Label(equipmentFrame, text="ID").grid(row=0, column=0, padx=uP, pady=uP)
-        tk.Label(equipmentFrame, text="Nazwa").grid(row=0, column=1, padx=uP, pady=uP)
-        tk.Label(equipmentFrame, text="Ilość").grid(row=0, column=2, padx=uP, pady=uP)
-        tk.Label(equipmentFrame, text="Opis").grid(row=0, column=3, padx=uP, pady=uP)
+        tk.Label(equipmentFrame, text="ID",bg=bg_color).grid(row=0, column=0, padx=uP, pady=uP)
+        tk.Label(equipmentFrame, text="Nazwa",bg=bg_color).grid(row=0, column=1, padx=uP, pady=uP)
+        tk.Label(equipmentFrame, text="Ilość",bg=bg_color).grid(row=0, column=2, padx=uP, pady=uP)
+        tk.Label(equipmentFrame, text="Opis",bg=bg_color).grid(row=0, column=3, padx=uP, pady=uP)
         for x in range(postac.EquipmentNb):
             for y in range(3):
-                tk.Label(equipmentFrame, text=x + 1).grid(row=x + 1, column=0, padx=uP, pady=uP)
-                tk.Label(equipmentFrame, text=postac.EquipmentV[x][y]).grid(row=x + 1, column=y + 1, padx=uP, pady=uP)
+                tk.Label(equipmentFrame, text=x + 1,bg=bg_color).grid(row=x + 1, column=0, padx=uP, pady=uP)
+                tk.Label(equipmentFrame, text=postac.EquipmentV[x][y],bg=bg_color).grid(row=x + 1, column=y + 1, padx=uP, pady=uP)
 
 
 # titleFrame.grid(row=0, column=0, columnspan=4, rowspan=1)
@@ -184,17 +183,18 @@ def delete_character(name):
 
 def roll_dice():
     roll_window = tk.Toplevel()
+    roll_window.configure(bg=bg_color)
     roll_window.minsize(600, 200)
     roll_window.maxsize(600, 200)
     window.title("Rzut kośćmi")
 
     roll_button.config(state='disabled')
 
-    header = tk.Frame(roll_window)
+    header = tk.Frame(roll_window, bg=bg_color)
     header.pack(side=tk.TOP)
-    body = tk.Frame(roll_window)
+    body = tk.Frame(roll_window, bg=bg_color)
     body.pack(side=tk.TOP)
-    footer = tk.Frame(roll_window)
+    footer = tk.Frame(roll_window, bg=bg_color)
     footer.pack(side=tk.BOTTOM)
 
     def quit_roll_window():
@@ -203,7 +203,7 @@ def roll_dice():
 
     def get_randomizer(upper):
         res = "Wynik rzutu: " + str(random.randint(1, upper))
-        tk.Label(body, text=res).grid(row=2, column=0, padx=10, pady=10, columnspan=4)
+        tk.Label(body, text=res, bg=bg_color).grid(row=2, column=0, padx=10, pady=10, columnspan=4)
 
     tk.Button(body, text="1k2", command=lambda up=2: get_randomizer(up), width=15).grid(row=0, column=0, padx=10,
                                                                                         pady=10)
@@ -222,7 +222,7 @@ def roll_dice():
     tk.Button(body, text="1k100", command=lambda up=100: get_randomizer(up), width=15).grid(row=1, column=3, padx=10,
                                                                                             pady=10)
 
-    tk.Label(header, text="RZUT KOŚCIĄ").grid(row=0, column=0)
+    tk.Label(header, text="RZUT KOŚCIĄ", bg=bg_color).grid(row=0, column=0)
     tk.Button(footer, text="Zamknij okno", command=quit_roll_window, width=15).grid(row=0, column=0, padx=10,
                                                                                     pady=10)
     roll_window.mainloop()
@@ -242,16 +242,16 @@ def on_button_displayCS_click():
             messagebox.showinfo("Uwaga",
                                 "W bazie jest za dużo postaci, nie wszystkie zostaną wyświetlone, skontaktuj się z producentem!")
         clear_main_window()
-        header1 = tk.Label(window, text="DOSTĘPNE POSTACIE")
+        header1 = tk.Label(window, text="DOSTĘPNE POSTACIE",bg=bg_color)
         header1.pack()
-        table = tk.Frame()
+        table = tk.Frame(bg=bg_color)
         table.pack()
-        footer1 = tk.Frame()
+        footer1 = tk.Frame(bg=bg_color)
         footer1.pack(side=BOTTOM)
         for x in enumerate(files):
             if x[0] < 10:
-                label_id = tk.Label(table, text=x[0] + 1).grid(row=x[0], column=0, padx=10, pady=10, sticky="e")
-                character_id = tk.Label(table, text=x[1]).grid(row=x[0], column=1, padx=10, pady=10, sticky="e")
+                label_id = tk.Label(table, text=x[0] + 1, bg=bg_color).grid(row=x[0], column=0, padx=10, pady=10, sticky="e")
+                character_id = tk.Label(table, text=x[1], bg=bg_color).grid(row=x[0], column=1, padx=10, pady=10, sticky="e")
                 tk.Button(table, text="Otwórz", command=lambda name=x[1]: display_sheet(name), width=15).grid(row=x[0],
                                                                                                               column=2,
                                                                                                               padx=10,
@@ -315,16 +315,16 @@ def on_button_createCS_click(character, mode):
             on_button_createCS_click(character, mode)
 
         def display_identity():
-            header1 = tk.Label(window, text="DANE BADACZA")
+            header1 = tk.Label(window, text="DANE BADACZA", bg=bg_color)
             header1.pack()
-            table = tk.Frame()
+            table = tk.Frame(bg=bg_color)
             table.pack()
-            footer1 = tk.Frame()
+            footer1 = tk.Frame(bg=bg_color)
             footer1.pack(side=BOTTOM)
             for x in range(9):
                 create_entry[x] = tk.Entry(table, width=30)
                 create_entry[x].insert(0, character.IdentityV[x])
-                create_label[x] = tk.Label(table, text=character.IdentityL[x])
+                create_label[x] = tk.Label(table, text=character.IdentityL[x], bg=bg_color)
                 create_label[x].grid(row=x, column=0, padx=10, pady=10, sticky="e")
                 create_entry[x].grid(row=x, column=1, padx=10, pady=10, sticky="w")
             button_next = tk.Button(footer1, text="Dalej", command=save_identity, width=uW)
@@ -343,16 +343,16 @@ def on_button_createCS_click(character, mode):
             on_button_createCS_click(character, mode)
 
         def display_characteristics():
-            header1 = tk.Label(window, text="CECHY")
+            header1 = tk.Label(window, text="CECHY", bg=bg_color)
             header1.pack()
-            table = tk.Frame()
+            table = tk.Frame(bg=bg_color)
             table.pack()
-            footer1 = tk.Frame()
+            footer1 = tk.Frame(bg=bg_color)
             footer1.pack(side=BOTTOM)
             for x in range(8):
                 create_entry[x] = tk.Entry(table, width=30)
                 create_entry[x].insert(0, character.CharacteristicsV[x])
-                create_label[x] = tk.Label(table, text=character.CharacteristicsL[x])
+                create_label[x] = tk.Label(table, text=character.CharacteristicsL[x], bg=bg_color)
                 create_label[x].grid(row=x, column=0, padx=10, pady=10, sticky="e")
                 create_entry[x].grid(row=x, column=1, padx=10, pady=10, sticky="e")
             button_next = tk.Button(footer1, text="Dalej", command=save_characteristics, width=uW)
@@ -371,16 +371,16 @@ def on_button_createCS_click(character, mode):
             on_button_createCS_click(character, mode)
 
         def display_hitpoints():
-            header1 = tk.Label(window, text="PUNKTY TRAFIEŃ")
+            header1 = tk.Label(window, text="PUNKTY TRAFIEŃ", bg=bg_color)
             header1.pack()
-            table = tk.Frame()
+            table = tk.Frame(bg=bg_color)
             table.pack()
-            footer1 = tk.Frame()
+            footer1 = tk.Frame(bg=bg_color)
             footer1.pack(side=BOTTOM)
             for x in range(4):
                 create_entry[x] = tk.Entry(table, width=30)
                 create_entry[x].insert(0, character.HitpointsV[x])
-                create_label[x] = tk.Label(table, text=character.HitpointsL[x])
+                create_label[x] = tk.Label(table, text=character.HitpointsL[x], bg=bg_color)
                 create_label[x].grid(row=x, column=0, padx=10, pady=10, sticky="e")
                 create_entry[x].grid(row=x, column=1, padx=10, pady=10, sticky="e")
             button_next = tk.Button(footer1, text="Dalej", command=save_hitpoints, width=uW)
@@ -404,9 +404,9 @@ def on_button_createCS_click(character, mode):
                 tableM.configure(scrollregion=table.bbox("all"))
                 tableM.create_window((0, 0), window=table, width=window.winfo_width(), anchor=tk.NW)
 
-            header1 = tk.Label(text="UMIEJĘTNOŚCI")
+            header1 = tk.Label(text="UMIEJĘTNOŚCI", bg=bg_color)
             header1.pack()
-            body1 = tk.Frame()
+            body1 = tk.Frame(bg=bg_color)
             body1.pack(fill=tk.BOTH, expand=True)
             tableM = tk.Canvas(body1)
             tableM.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
@@ -414,7 +414,7 @@ def on_button_createCS_click(character, mode):
             scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
             tableM.configure(yscrollcommand=scrollbar.set)
 
-            table = tk.Frame(tableM)
+            table = tk.Frame(tableM, bg=bg_color)
             table.columnconfigure(0, weight=1)
             table.columnconfigure(1, weight=0)
             table.columnconfigure(2, weight=0)
@@ -422,12 +422,12 @@ def on_button_createCS_click(character, mode):
             table.columnconfigure(4, weight=0)
             table.columnconfigure(5, weight=1)
 
-            footer1 = tk.Frame()
+            footer1 = tk.Frame(bg=bg_color)
             footer1.pack(side=BOTTOM)
             for x in range(28):
                 create_entry[(x * 2)] = tk.Entry(table, width=30)
                 create_entry[(x * 2)].insert(0, character.SkillsV[(x * 2)])
-                create_label[(x * 2)] = tk.Label(table, text=character.SkillsL[x * 2])
+                create_label[(x * 2)] = tk.Label(table, text=character.SkillsL[x * 2], bg=bg_color)
                 create_label[(x * 2)].grid(row=x, column=1, padx=10, pady=10, sticky="e")
                 create_entry[(x * 2)].grid(row=x, column=2, padx=10, pady=10, sticky="e")
                 if x == 27:
@@ -435,7 +435,7 @@ def on_button_createCS_click(character, mode):
                 else:
                     create_entry[(x * 2) + 1] = tk.Entry(table, width=30)
                     create_entry[(x * 2) + 1].insert(0, character.SkillsV[(x * 2) + 1])
-                    create_label[(x * 2) + 1] = tk.Label(table, text=character.SkillsL[(x * 2) + 1])
+                    create_label[(x * 2) + 1] = tk.Label(table, text=character.SkillsL[(x * 2) + 1], bg=bg_color)
                     create_label[(x * 2) + 1].grid(row=x, column=3, padx=10, pady=10, sticky="e")
                     create_entry[(x * 2) + 1].grid(row=x, column=4, padx=10, pady=10, sticky="e")
 
@@ -470,29 +470,29 @@ def on_button_createCS_click(character, mode):
             print(character.WeaponsV[4])
             print(character.WeaponsNb)
 
-            header1 = tk.Label(text="BROŃ")
+            header1 = tk.Label(text="BROŃ", bg=bg_color)
             header1.pack()
-            body1 = tk.Frame()
+            body1 = tk.Frame(bg=bg_color)
             body1.pack()
-            footer1 = tk.Frame()
+            footer1 = tk.Frame(bg=bg_color)
             footer1.pack(side=BOTTOM)
             for x in range(9):
-                tk.Label(body1, text=character.WeaponL[x]).grid(row=0, column=x, padx=10, pady=10)
+                tk.Label(body1, text=character.WeaponL[x], bg=bg_color).grid(row=0, column=x, padx=10, pady=10)
             for x in range(0, character.WeaponsNb):
-                tk.Label(body1, text=character.WeaponsL[x]).grid(row=x + 1, column=0, padx=10, pady=10)
-                tk.Label(body1, text=character.WeaponsV[x][0]).grid(row=x + 1, column=1, padx=10, pady=10)
-                tk.Label(body1, text=character.WeaponsV[x][1]).grid(row=x + 1, column=2, padx=10, pady=10)
-                tk.Label(body1, text=character.WeaponsV[x][2]).grid(row=x + 1, column=3, padx=10, pady=10)
-                tk.Label(body1, text=character.WeaponsV[x][3]).grid(row=x + 1, column=4, padx=10, pady=10)
-                tk.Label(body1, text=character.WeaponsV[x][4]).grid(row=x + 1, column=5, padx=10, pady=10)
-                tk.Label(body1, text=character.WeaponsV[x][5]).grid(row=x + 1, column=6, padx=10, pady=10)
-                tk.Label(body1, text=character.WeaponsV[x][6]).grid(row=x + 1, column=7, padx=10, pady=10)
-                tk.Label(body1, text=character.WeaponsV[x][7]).grid(row=x + 1, column=8, padx=10, pady=10)
-                tk.Button(body1, text=x, command=lambda id=x: del_weapon(id), width=3).grid(row=x + 1, column=9,
+                tk.Label(body1, text=character.WeaponsL[x], bg=bg_color).grid(row=x + 1, column=0, padx=10, pady=10)
+                tk.Label(body1, text=character.WeaponsV[x][0], bg=bg_color).grid(row=x + 1, column=1, padx=10, pady=10)
+                tk.Label(body1, text=character.WeaponsV[x][1], bg=bg_color).grid(row=x + 1, column=2, padx=10, pady=10)
+                tk.Label(body1, text=character.WeaponsV[x][2], bg=bg_color).grid(row=x + 1, column=3, padx=10, pady=10)
+                tk.Label(body1, text=character.WeaponsV[x][3], bg=bg_color).grid(row=x + 1, column=4, padx=10, pady=10)
+                tk.Label(body1, text=character.WeaponsV[x][4], bg=bg_color).grid(row=x + 1, column=5, padx=10, pady=10)
+                tk.Label(body1, text=character.WeaponsV[x][5], bg=bg_color).grid(row=x + 1, column=6, padx=10, pady=10)
+                tk.Label(body1, text=character.WeaponsV[x][6], bg=bg_color).grid(row=x + 1, column=7, padx=10, pady=10)
+                tk.Label(body1, text=character.WeaponsV[x][7], bg=bg_color).grid(row=x + 1, column=8, padx=10, pady=10)
+                tk.Button(body1, text="-", command=lambda id=x: del_weapon(id), width=3).grid(row=x + 1, column=9,
                                                                                             padx=10, pady=10,
                                                                                             sticky="w")
             if character.WeaponsNb < 5:
-                tk.Label(body1, text=character.WeaponsL[character.WeaponsNb]).grid(row=x + 2, column=0, padx=10,
+                tk.Label(body1, text=character.WeaponsL[character.WeaponsNb], bg=bg_color).grid(row=x + 2, column=0, padx=10,
                                                                                    pady=10)
                 create_entry[0] = tk.Entry(body1, width=5)
                 create_entry[1] = tk.Entry(body1, width=5)
@@ -530,16 +530,16 @@ def on_button_createCS_click(character, mode):
             on_button_createCS_click(character, mode)
 
         def display_armor():
-            header1 = tk.Label(text="PANCERZ")
+            header1 = tk.Label(text="PANCERZ", bg=bg_color)
             header1.pack()
-            body1 = tk.Frame()
+            body1 = tk.Frame(bg=bg_color)
             body1.pack()
-            footer1 = tk.Frame()
+            footer1 = tk.Frame(bg=bg_color)
             footer1.pack(side=BOTTOM)
             for x in range(3):
                 create_entry[x] = tk.Entry(body1, width=30)
                 create_entry[x].insert(0, character.ArmorV[x])
-                create_label[x] = tk.Label(body1, text=character.ArmorL[x])
+                create_label[x] = tk.Label(body1, text=character.ArmorL[x], bg=bg_color)
                 create_label[x].grid(row=0, column=x, padx=10, pady=10)
                 create_entry[x].grid(row=1, column=x, padx=10, pady=10)
             button_next = tk.Button(footer1, text="Dalej", command=save_armor, width=uW)
@@ -571,27 +571,27 @@ def on_button_createCS_click(character, mode):
         #     on_button_createCS_click(character, mode)
 
         def display_equipment():
-            header1 = tk.Label(text="EKWIPUNEK")
+            header1 = tk.Label(text="EKWIPUNEK", bg=bg_color)
             header1.pack()
-            body1 = tk.Frame()
+            body1 = tk.Frame(bg=bg_color)
             body1.pack()
-            footer1 = tk.Frame()
+            footer1 = tk.Frame(bg=bg_color)
             footer1.pack(side=BOTTOM)
-            tk.Label(body1, text="ID").grid(row=0, column=0, padx=10, pady=10)
-            tk.Label(body1, text="Nazwa").grid(row=0, column=1, padx=10, pady=10)
-            tk.Label(body1, text="Ilość").grid(row=0, column=2, padx=10, pady=10)
-            tk.Label(body1, text="Opis").grid(row=0, column=3, padx=10, pady=10)
+            tk.Label(body1, text="ID", bg=bg_color).grid(row=0, column=0, padx=10, pady=10)
+            tk.Label(body1, text="Nazwa", bg=bg_color).grid(row=0, column=1, padx=10, pady=10)
+            tk.Label(body1, text="Ilość", bg=bg_color).grid(row=0, column=2, padx=10, pady=10)
+            tk.Label(body1, text="Opis", bg=bg_color).grid(row=0, column=3, padx=10, pady=10)
 
             for x in range(0, character.EquipmentNb):
-                tk.Label(body1, text=x + 1).grid(row=x + 1, column=0, padx=10, pady=10)
-                tk.Label(body1, text=character.EquipmentV[x][0]).grid(row=x + 1, column=1, padx=10, pady=10)
-                tk.Label(body1, text=character.EquipmentV[x][1]).grid(row=x + 1, column=2, padx=10, pady=10)
-                tk.Label(body1, text=character.EquipmentV[x][2]).grid(row=x + 1, column=3, padx=10, pady=10)
+                tk.Label(body1, text=x + 1, bg=bg_color).grid(row=x + 1, column=0, padx=10, pady=10)
+                tk.Label(body1, text=character.EquipmentV[x][0], bg=bg_color).grid(row=x + 1, column=1, padx=10, pady=10)
+                tk.Label(body1, text=character.EquipmentV[x][1], bg=bg_color).grid(row=x + 1, column=2, padx=10, pady=10)
+                tk.Label(body1, text=character.EquipmentV[x][2], bg=bg_color).grid(row=x + 1, column=3, padx=10, pady=10)
                 tk.Button(body1, text="-", command=lambda id=x: del_equipment(id), width=3).grid(row=x + 1, column=9,
                                                                                                  padx=10, pady=10,
                                                                                                  sticky="w")
             if character.EquipmentNb < 20:
-                tk.Label(body1, text=character.EquipmentNb + 1).grid(row=character.EquipmentNb + 1, column=0, padx=10,
+                tk.Label(body1, text=character.EquipmentNb + 1, bg=bg_color).grid(row=character.EquipmentNb + 1, column=0, padx=10,
                                                                      pady=10)
                 create_entry[0] = tk.Entry(body1, width=5)
                 create_entry[1] = tk.Entry(body1, width=5)
@@ -660,18 +660,17 @@ def on_button_createCS_click(character, mode):
 
 def on_button_option_click():
     window.title("Interaktywna karta postaci w systemie BRP - Opcje")
-
     clear_main_window()
-    header = tk.Frame()
+    header = tk.Frame(bg=bg_color)
     header.pack()
 
-    body = tk.Frame()
+    body = tk.Frame(bg=bg_color)
     body.pack()
 
-    footer = tk.Frame()
+    footer = tk.Frame(bg=bg_color)
     footer.pack(side=BOTTOM)
 
-    tk.Label(header, text="OPCJE").pack()
+    tk.Label(header, text="OPCJE", bg=bg_color).pack()
     tk.Button(body, text="Zmień motyw", command=lambda: change_color(), width=15).grid(row=0, column=0, padx=10,
                                                                                        pady=10, sticky="e")
 
@@ -679,8 +678,10 @@ def on_button_option_click():
 
 
 def change_color():
-    pass
-
+    global bg_color
+    bg_color="grey"
+    window.configure(bg=bg_color)
+    on_button_option_click()
 
 def on_button_exit_click():
     if messagebox.askyesno("Wyjście", "Czy na pewno chcesz wyjść?") == True:
@@ -695,14 +696,14 @@ def clear_main_window():
 def menu():
     window.title("Interaktywna karta postaci w systemie BRP")
     clear_main_window()
-
     uW = 20  # Universal Width - Szerokość dla wszystkich guzików menu
-
-    body = tk.Frame()
+    global bg_color
+    window.configure(bg=bg_color)
+    body = tk.Frame(background=bg_color)
     body.pack()
-    tk.Label(body, text="Interaktywna karta postaci do gier w systemie BRP", font=("", 13, 'bold')).grid(row=0,
+    tk.Label(body, text="Interaktywna karta postaci do gier w systemie BRP", font=("", 13, 'bold'), bg=bg_color).grid(row=0,
                                                                                                          column=0,
-                                                                                                         pady=20)
+                                                                                                         pady=20,)
 
     tk.Button(body, text="Wyświetl kartę postaci", command=on_button_displayCS_click, width=uW).grid(row=1, column=0,
                                                                                                      pady=20)
@@ -711,16 +712,17 @@ def menu():
     tk.Button(body, text="Opcje", command=on_button_option_click, width=uW).grid(row=3, column=0, pady=20)
     tk.Button(body, text="Wyjście", command=on_button_exit_click, width=uW).grid(row=4, column=0, pady=20)
 
-    footer = tk.Frame()
+    footer = tk.Frame(background=bg_color)
     footer.pack(side=tk.BOTTOM, pady=10)
 
     global brp_logo
     try:
         brp_logo = ImageTk.PhotoImage(Image.open(os.path.join("BRP_logo.png")).resize((100, 100)))
-        tk.Label(footer, image=brp_logo).grid(row=0, column=0, padx=10)
+        tk.Label(footer, image=brp_logo, bg=bg_color).grid(row=0, column=0, padx=10)
         bottom_label = tk.Label(footer,
                                 text="To oprogramowanie opiera się na zasadach gry udostępnionych\nprzez Chaosium Inc. zgodnie z licencją BRP Open Game License, Version 1.0.",
-                                font=("Arial", 10))
+                                font=("Arial", 10),
+                                bg=bg_color)
         bottom_label.grid(row=0, column=1, padx=10)
     except Exception:
         print("error during printing image")
@@ -729,6 +731,9 @@ def menu():
 def main():
     global window
     window = tk.Tk()
+    global bg_color
+    bg_color = "white"
+
     window.geometry("800x600")
     window.minsize(800, 600)
     menu()
