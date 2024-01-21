@@ -678,8 +678,11 @@ def on_button_option_click():
 
 
 def change_color():
+    global x
+    x = not x
     global bg_color
-    bg_color="grey"
+    if x==True: bg_color="white"
+    else: bg_color="grey"
     window.configure(bg=bg_color)
     on_button_option_click()
 
@@ -733,6 +736,8 @@ def main():
     window = tk.Tk()
     global bg_color
     bg_color = "white"
+    global x
+    x=True
 
     window.geometry("800x600")
     window.minsize(800, 600)
