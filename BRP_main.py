@@ -286,7 +286,7 @@ def save_to_yml(file, postac):
         file.write(character_data)
     postac.NS = 1
     menu()
-
+# d
 
 def on_button_createCS_click(character, mode):
     window.title("Interaktywna karta postaci w systemie BRP - Tworzenie postaci")
