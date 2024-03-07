@@ -1,11 +1,9 @@
-# import ctypes
-import tkinter
-import webbrowser
 import os
 from PIL import Image
 from Defaults import Defaults
 import customtkinter as ctk
 from tkinter import messagebox
+import Operations
 
 
 class Display:
@@ -22,7 +20,13 @@ class Display:
             self.main_window.destroy()
 
     def change_colors(self):
-        ctk.set_appearance_mode("light")
+        self.clear_main_window()
+        Operations.change_theme()
+        self.display_main_menu()
+
+    def clear_main_window(self):
+        for widget in self.main_window.winfo_children():
+            widget.destroy()
 
     def display_main_menu(self):
         # HEAD PART
@@ -61,8 +65,7 @@ class Display:
 
         CreateMainMenuFooter(foot,
                              img_button_name="BRP_logo.png",
-                             img_button_command=lambda: webbrowser.open_new(
-                                 r"https://www.chaosium.com/content/FreePDFs/BRP/BRP%20SRD%20-%20V1.0.pdf"),
+                             img_button_command=Operations.show_webpage_chaousium,
                              footer_text_color=self.main_window.fg_color,
                              footer_background_color=foot.fg_color).pack()
         # FOOT PART
@@ -112,7 +115,8 @@ class CreateImage(ctk.CTkFrame):
 
 
 class CreateMainMenuFooter(ctk.CTkFrame):
-    def __init__(self, *args, img_button_name, img_button_command=None, footer_text_color, footer_background_color, **kwargs):
+    def __init__(self, *args, img_button_name, img_button_command=None, footer_text_color, footer_background_color,
+                 **kwargs):
         super().__init__(*args, **kwargs)
 
         self.configure(fg_color=footer_background_color)
@@ -132,11 +136,6 @@ class CreateMainMenuFooter(ctk.CTkFrame):
                      text_color=footer_text_color,
                      font=Defaults.default_text_font).pack(expand=True,
                                                            padx=10, pady=5)
-
-
-# def clear_main_window():
-#     for widget in main_window.winfo_children():
-#         widget.destroy()
 
 
 def blank():
