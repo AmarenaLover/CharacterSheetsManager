@@ -1,18 +1,18 @@
 import customtkinter as ctk
 from tkinter import messagebox
 
-from Operations import DefaultParameters
+from Operations import SetDefOperations
 import ViewElements as Ve
+from Defaults import Defaults
 
 
 class View:
     def __init__(self):
         self.main_window = ctk.CTk()
-        self.op = DefaultParameters()
+        self.op = SetDefOperations()
 
         self.main_window.title("BRP")
-        self.main_window.geometry("800x600")
-        self.main_window.minsize(800, 600)
+        self.main_window.minsize(Defaults.Params.window_min_x, Defaults.Params.window_min_y)
         # self.display_test_window()
         self.display_main_menu()
         self.main_window.mainloop()
@@ -68,6 +68,7 @@ class View:
         body.pack(padx=5, pady=5,
                   side=ctk.TOP)
 
+        Ve.CreateCharacterSelectionRow(master=body).pack()
         Ve.CreateCharacterSelectionRow(master=body, character_name="Dawid Grzelka").pack()
         Ve.CreateCharacterSelectionRow(master=body, character_name="Dawid Grzelka Dawid Grzelka").pack()
 

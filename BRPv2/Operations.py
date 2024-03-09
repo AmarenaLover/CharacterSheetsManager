@@ -5,7 +5,7 @@ from Defaults import Defaults
 global color
 
 
-class DefaultParameters:
+class SetDefOperations:
     def __init__(self):
         self.color = True
 

@@ -2,6 +2,10 @@ import os
 
 
 class Defaults:
+    class Params:
+        window_min_x: int = 800
+        window_min_y: int = 600
+
     class Styles:
         header1_font: tuple[str, int, str] = ("Arial", 20)
         header2_font: tuple[str, int, str] = ("Arial", 16)
