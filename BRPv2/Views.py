@@ -1,6 +1,3 @@
-# import os
-# from PIL import Image
-# from Defaults import Defaults
 import customtkinter as ctk
 from tkinter import messagebox
 
@@ -41,11 +38,11 @@ class View:
 
         Ve.CreateButton(body,
                         button_text="Wyświetl postać",
-                        button_command=blank,
+                        button_command=None,
                         button_frame_color=self.main_window.fg_color).pack()
         Ve.CreateButton(body,
                         button_text="Stwórz postać",
-                        button_command=blank,
+                        button_command=None,
                         button_frame_color=self.main_window.fg_color).pack()
         Ve.CreateButton(body,
                         button_text="Zmień motyw",
@@ -69,7 +66,3 @@ class View:
                                 footer_text_color=self.main_window.fg_color,
                                 footer_background_color=foot.fg_color).pack()
         # FOOT PART
-
-
-def blank():
-    pass  # empty function for buttons use
