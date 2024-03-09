@@ -10,16 +10,24 @@ class View:
     def __init__(self):
         self.main_window = ctk.CTk()
         self.op = SetDefOperations()
-
-        self.main_window.title("BRP")
         self.main_window.minsize(Defaults.Params.window_min_x, Defaults.Params.window_min_y)
+        self.main_window.title("BRP")
+
         # self.display_test_window()
         self.display_main_menu()
+
         self.main_window.mainloop()
 
     def display_exit(self):
         if messagebox.askyesno("Wyjście", "Czy na pewno chcesz wyjść?"):
             self.main_window.destroy()
+
+    def display_character_counting_result(self):
+        characters_nr = self.op.count_character_sheets()
+        if characters_nr == 0:
+            messagebox.showinfo("Uwaga", "Nie ma postaci w bazie! Należy stworzyć postać!")
+        else:
+            self.display_character_selection(characters_nr)
 
     def clear_main_window(self):
         for widget in self.main_window.winfo_children():
@@ -38,7 +46,7 @@ class View:
 
         Ve.CreateButton(body,
                         button_text="Wyświetl postać",
-                        button_command=self.display_character_selection)
+                        button_command=self.display_character_counting_result)
         Ve.CreateButton(body,
                         button_text="Stwórz postać",
                         button_command=None)
@@ -55,9 +63,8 @@ class View:
                                 img_button_command=self.op.show_webpage_chaousium)
         # FOOT PART
 
-    def display_character_selection(self):
+    def display_character_selection(self, number):
         self.clear_main_window()
-
         # HEAD PART
         Ve.CreateHeader(self.main_window,
                         head_name="WYBÓR POSTACI").pack()
@@ -67,10 +74,8 @@ class View:
         body = ctk.CTkFrame(self.main_window)
         body.pack(padx=5, pady=5,
                   side=ctk.TOP)
-
-        Ve.CreateCharacterSelectionRow(master=body).pack()
-        Ve.CreateCharacterSelectionRow(master=body, character_name="Dawid Grzelka").pack()
-        Ve.CreateCharacterSelectionRow(master=body, character_name="Dawid Grzelka Dawid Grzelka").pack()
+        for x in range (0, number):
+            Ve.CreateCharacterSelectionRow(master=body, character_name="Dawid Grzelka Dawid Grzelka")
 
         # BODY PART
 

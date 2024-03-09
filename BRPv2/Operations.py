@@ -2,8 +2,6 @@ import customtkinter as ctk
 import webbrowser as wb
 from Defaults import Defaults
 
-global color
-
 
 class SetDefOperations:
     def __init__(self):
@@ -21,5 +19,5 @@ class SetDefOperations:
         wb.open_new(Defaults.Links.webpage_chaousim)
 
     @staticmethod
-    def count_character_sheets():
-        pass
+    def count_character_sheets() -> int:
+        return 5
