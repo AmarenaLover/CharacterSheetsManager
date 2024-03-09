@@ -29,7 +29,6 @@ class CreateButton(ctk.CTkFrame):
                  button_command=None,
                  button_padding_color='transparent',
                  **kwargs):
-
         super().__init__(*args,
                          **kwargs)
 
@@ -45,7 +44,7 @@ class CreateButton(ctk.CTkFrame):
 class CreateImage(ctk.CTkFrame):
     def __init__(self,
                  *args,
-                 img_name,
+                 img_name=None,
                  img_command=None,
                  **kwargs):
         super().__init__(*args, **kwargs)
@@ -94,10 +93,9 @@ class CreateMainMenuFooter(ctk.CTkFrame):
 class CreateCharacterSelectionRow(ctk.CTkFrame):
     def __init__(self,
                  *args,
-                 character_name,
-                 character_file_name, # will be used later to open proper character scheet
+                 character_name="Brak imienia",
+                 character_file_name=None,  # will be used later to open proper character scheet
                  **kwargs):
-
         super().__init__(*args,
                          **kwargs)
 
@@ -106,18 +104,19 @@ class CreateCharacterSelectionRow(ctk.CTkFrame):
                   ipadx=5, ipady=5)
 
         CreateCharacterSelectionRowCharacter(master=self,
-                                             name=character_name,
-                                             background_color=self.fg_color,
-                                             ).pack()
+                                             name=character_name).pack()
 
         CreateButton(self,
                      button_text="Wyświetl",
-                     button_command=None,
-                     button_padding_color=self.fg_color)
+                     button_command=None)
 
 
 class CreateCharacterSelectionRowCharacter(ctk.CTkFrame):
-    def __init__(self, *args, name, background_color, **kwargs):
+    def __init__(self,
+                 *args,
+                 name,
+                 background_color="transparent",
+                 **kwargs):
         super().__init__(*args, **kwargs)
 
         self.configure(fg_color=background_color)

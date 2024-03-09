@@ -82,7 +82,7 @@ class View:
                         button_text="Cofnij do menu",
                         button_command=self.display_main_menu,
                         button_padding_color=foot.fg_color).pack(side=ctk.LEFT,
-                                                               expand=True)
+                                                                 expand=True)
         # FOOT PART
 
     def display_test_window(self):
