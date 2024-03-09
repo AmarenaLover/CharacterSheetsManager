@@ -18,4 +18,8 @@ class DefaultParameters:
 
     @staticmethod
     def show_webpage_chaousium():
-        wb.open_new(Defaults.default_link_webpage_chaousim)
+        wb.open_new(Defaults.Links.webpage_chaousim)
+
+    @staticmethod
+    def count_character_sheets():
+        pass
