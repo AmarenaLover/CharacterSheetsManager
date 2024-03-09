@@ -1,8 +1,8 @@
-from Display import Display
+from Views import View
 
 
 def main():
-    Display()
+    View()
 
 
 if __name__ == "__main__":

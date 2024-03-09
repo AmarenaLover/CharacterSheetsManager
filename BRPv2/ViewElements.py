@@ -1,74 +1,8 @@
+import customtkinter as ctk
+import Defaults
 import os
 from PIL import Image
 from Defaults import Defaults
-import customtkinter as ctk
-from tkinter import messagebox
-import Operations
-
-
-class Display:
-    def __init__(self):
-        self.main_window = ctk.CTk()
-        self.main_window.title("BRP")
-        self.main_window.geometry("800x600")
-        self.main_window.minsize(800, 600)
-        self.display_main_menu()
-        self.main_window.mainloop()
-
-    def display_exit(self):
-        if messagebox.askyesno("Wyjście", "Czy na pewno chcesz wyjść?"):
-            self.main_window.destroy()
-
-    def change_colors(self):
-        self.clear_main_window()
-        Operations.change_theme()
-        self.display_main_menu()
-
-    def clear_main_window(self):
-        for widget in self.main_window.winfo_children():
-            widget.destroy()
-
-    def display_main_menu(self):
-        # HEAD PART
-        CreateHeader(self.main_window,
-                     head_name="INTERAKTYWNA KARTA POSTACI").pack()
-        # HEAD PART
-
-        # BODY PART
-        body = ctk.CTkFrame(self.main_window,
-                            fg_color=self.main_window.fg_color)
-        body.pack()
-
-        CreateButton(body,
-                     button_text="Wyświetl postać",
-                     button_command=blank,
-                     button_frame_color=self.main_window.fg_color).pack()
-        CreateButton(body,
-                     button_text="Stwórz postać",
-                     button_command=blank,
-                     button_frame_color=self.main_window.fg_color).pack()
-        CreateButton(body,
-                     button_text="Zmień motyw",
-                     button_command=self.change_colors,
-                     button_frame_color=self.main_window.fg_color).pack()
-        CreateButton(body,
-                     button_text="Wyjście",
-                     button_command=self.display_exit,
-                     button_frame_color=self.main_window.fg_color).pack()
-        # BODY PART
-
-        # FOOT PART
-        foot = ctk.CTkFrame(self.main_window)
-        foot.pack(fill=ctk.X,
-                  padx=5, pady=5,
-                  side=ctk.BOTTOM)
-
-        CreateMainMenuFooter(foot,
-                             img_button_name="BRP_logo.png",
-                             img_button_command=Operations.show_webpage_chaousium,
-                             footer_text_color=self.main_window.fg_color,
-                             footer_background_color=foot.fg_color).pack()
-        # FOOT PART
 
 
 class CreateHeader(ctk.CTkFrame):
@@ -136,7 +70,3 @@ class CreateMainMenuFooter(ctk.CTkFrame):
                      text_color=footer_text_color,
                      font=Defaults.default_text_font).pack(expand=True,
                                                            padx=10, pady=5)
-
-
-def blank():
-    pass  # empty function for buttons use
