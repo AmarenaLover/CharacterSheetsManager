@@ -59,7 +59,7 @@ class CreateImage(ctk.CTkFrame):
                       image=img,
                       width=10,
                       command=img_command,
-                      fg_color=self.fg_color).pack(ipadx=5, ipady=5)
+                      fg_color=self._fg_color).pack(ipadx=5, ipady=5)
 
 
 class CreateMainMenuFooter(ctk.CTkFrame):
@@ -77,7 +77,7 @@ class CreateMainMenuFooter(ctk.CTkFrame):
                   fill=ctk.X)
 
         CreateImage(self,
-                    fg_color=self.fg_color,
+                    fg_color=self._fg_color,
                     img_name=img_button_name,
                     img_command=img_button_command,
                     ).pack(side=ctk.LEFT)
