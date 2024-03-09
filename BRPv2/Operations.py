@@ -2,10 +2,20 @@ import customtkinter as ctk
 import webbrowser as wb
 from Defaults import Defaults
 
-
-def change_theme():
-    ctk.set_appearance_mode("light")
+global color
 
 
-def show_webpage_chaousium():
-    wb.open_new(Defaults.default_link_webpage_chaousim)
+class DefaultParameters:
+    def __init__(self):
+        self.color = True
+
+    def change_theme(self):
+        self.color = not self.color
+        if self.color:
+            ctk.set_appearance_mode("Dark")
+        else:
+            ctk.set_appearance_mode("Light")
+
+    @staticmethod
+    def show_webpage_chaousium():
+        wb.open_new(Defaults.default_link_webpage_chaousim)

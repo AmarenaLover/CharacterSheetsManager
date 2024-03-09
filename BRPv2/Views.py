@@ -4,13 +4,16 @@
 import customtkinter as ctk
 from tkinter import messagebox
 
-import Operations as Op
+from Operations import DefaultParameters
+
 import ViewElements as Ve
 
 
 class View:
     def __init__(self):
         self.main_window = ctk.CTk()
+        self.op = DefaultParameters()
+
         self.main_window.title("BRP")
         self.main_window.geometry("800x600")
         self.main_window.minsize(800, 600)
@@ -46,7 +49,7 @@ class View:
                         button_frame_color=self.main_window.fg_color).pack()
         Ve.CreateButton(body,
                         button_text="Zmień motyw",
-                        button_command=Op.change_theme,
+                        button_command=self.op.change_theme,
                         button_frame_color=self.main_window.fg_color).pack()
         Ve.CreateButton(body,
                         button_text="Wyjście",
@@ -62,7 +65,7 @@ class View:
 
         Ve.CreateMainMenuFooter(foot,
                                 img_button_name="BRP_logo.png",
-                                img_button_command=Op.show_webpage_chaousium,
+                                img_button_command=self.op.show_webpage_chaousium,
                                 footer_text_color=self.main_window.fg_color,
                                 footer_background_color=foot.fg_color).pack()
         # FOOT PART
