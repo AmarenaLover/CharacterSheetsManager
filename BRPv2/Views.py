@@ -42,7 +42,7 @@ class View:
 
         # BODY PART
         body = ctk.CTkFrame(self.main_window)
-        body.pack(ipadx=5, ipady=0)
+        body.pack()
 
         Ve.CreateButton(body,
                         button_text="Wyświetl postać",
@@ -74,9 +74,7 @@ class View:
         foot = ctk.CTkFrame(self.main_window)
 
         # BODY PART
-        body = ctk.CTkScrollableFrame(self.main_window,
-                                      width=100,
-                                      height=10)
+        body = ctk.CTkScrollableFrame(self.main_window)
         body.pack(side=ctk.TOP,
                   fill=ctk.BOTH,
                   expand=True,
@@ -88,18 +86,20 @@ class View:
         for x in range(0, number):
             Ve.CreateCharacterSelectionRow(master=body,
                                            fg_color=frame_color,
-                                           width=500,
                                            character_name="Dawid Grzelka Dawid Grzelka")
         # BODY PART
 
         # FOOT PART
         foot.pack(padx=5, pady=5,
-                  ipadx=5, ipady=0,
-                  side=ctk.BOTTOM)
-        Ve.CreateButton(foot,
+                  side=ctk.BOTTOM,
+                  fill=ctk.X)
+        foot2 = ctk.CTkFrame(foot,
+                             fg_color=foot.fg_color)
+        foot2.pack()
+        Ve.CreateButton(foot2,
                         button_text="Cofnij do menu",
                         button_command=self.display_main_menu).pack(side=ctk.LEFT)
-        Ve.CreateButton(foot,
+        Ve.CreateButton(foot2,
                         button_text="Sortuj",
                         button_command=None).pack(side=ctk.LEFT)
         # FOOT PART

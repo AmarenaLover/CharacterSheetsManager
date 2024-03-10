@@ -10,8 +10,7 @@ class CreateHeader(ctk.CTkFrame):
                  *args,
                  head_name='Brak nagłówka',
                  **kwargs):
-        super().__init__(*args,
-                         **kwargs)
+        super().__init__(*args, **kwargs)
 
         self.pack(padx=5, pady=5,
                   ipadx=5, ipady=5,
@@ -22,26 +21,25 @@ class CreateHeader(ctk.CTkFrame):
                      font=Defaults.Styles.header1_font).pack(expand=True)
 
 
-class CreateButton(ctk.CTkFrame):
+class CreateButton(ctk.CTkButton):
     def __init__(self,
                  *args,
                  button_text='Brak nazwy',
                  button_command=None,
-                 button_padding_color='transparent',
                  **kwargs):
-        super().__init__(*args,
-                         **kwargs)
+        super().__init__(*args, **kwargs)
 
-        self.configure(fg_color=button_padding_color)
+        self.configure(text=button_text,
+                       command=button_command)
 
-        self.pack(expand=True)
+        self.pack(expand=True,
+                  padx=5,
+                  pady=5,
+                  ipadx=5,
+                  ipady=5)
 
-        ctk.CTkButton(master=self,
-                      text=button_text,
-                      command=button_command).pack(padx=5, pady=5, ipadx=5, ipady=5)
 
-
-class CreateImage(ctk.CTkFrame):
+class CreateImage(ctk.CTkButton):
     def __init__(self,
                  *args,
                  img_name=None,
@@ -49,17 +47,18 @@ class CreateImage(ctk.CTkFrame):
                  **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.pack(padx=5, pady=5, expand=False)
-
         img = ctk.CTkImage(dark_image=Image.open(os.path.join(Defaults.Paths.images, img_name)),
                            size=(90, 90))
 
-        ctk.CTkButton(self,
-                      text="",
-                      image=img,
-                      width=10,
-                      command=img_command,
-                      fg_color=self._fg_color).pack(ipadx=5, ipady=5)
+        self.configure(text="",
+                       image=img,
+                       width=10,
+                       command=img_command,
+                       fg_color=self._fg_color)
+
+        self.pack(padx=5, pady=5,
+                  ipadx=5, ipady=5,
+                  expand=False)
 
 
 class CreateMainMenuFooter(ctk.CTkFrame):
@@ -86,8 +85,7 @@ class CreateMainMenuFooter(ctk.CTkFrame):
                      text='To oprogramowanie opiera się na zasadach gry udostępnionych przez Chaosium Inc. zgodnie z licencją BRP Open Game License, Version 1.0.',
                      wraplength=600,
                      text_color=footer_text_color,
-                     font=Defaults.Styles.text_font).pack(expand=True,
-                                                          padx=10, pady=5)
+                     font=Defaults.Styles.text_font).pack(expand=True)
 
 
 class CreateCharacterSelectionRow(ctk.CTkFrame):
@@ -98,12 +96,11 @@ class CreateCharacterSelectionRow(ctk.CTkFrame):
                  **kwargs):
         super().__init__(*args,
                          **kwargs)
-        # self.configure(fg_color=ctk.CTkFrame(self).cget('fg_color'))
-        self.pack(padx=5, pady=5,
-                  ipadx=5, ipady=5)
+
+        self.pack(padx=5, pady=5)
 
         CreateCharacterSelectionRowCharacter(master=self,
-                                             name=character_name).pack()
+                                             name=character_name)
 
         CreateButton(self,
                      button_text="Wyświetl",
@@ -124,5 +121,4 @@ class CreateCharacterSelectionRowCharacter(ctk.CTkLabel):
                        font=Defaults.Styles.header2_font,
                        text=name,
                        )
-        self.pack(side=ctk.LEFT,
-                  expand=True)
+        self.pack(side=ctk.LEFT)
