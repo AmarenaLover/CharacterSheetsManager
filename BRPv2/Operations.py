@@ -20,4 +20,4 @@ class SetDefOperations:
 
     @staticmethod
     def count_character_sheets() -> int:
-        return 5
+        return 10

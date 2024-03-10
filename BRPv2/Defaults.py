@@ -13,7 +13,7 @@ class Defaults:
 
     class Paths:
         images = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'Images')
-        sheets = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'SheetsOfCharacters')
+        sheets = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'Characters')
 
     class Links:
         webpage_chaousim = r"https://www.chaosium.com/content/FreePDFs/BRP/BRP%20SRD%20-%20V1.0.pdf"

@@ -98,8 +98,7 @@ class CreateCharacterSelectionRow(ctk.CTkFrame):
                  **kwargs):
         super().__init__(*args,
                          **kwargs)
-
-        self.configure(width=500)
+        # self.configure(fg_color=ctk.CTkFrame(self).cget('fg_color'))
         self.pack(padx=5, pady=5,
                   ipadx=5, ipady=5)
 
@@ -111,19 +110,19 @@ class CreateCharacterSelectionRow(ctk.CTkFrame):
                      button_command=None)
 
 
-class CreateCharacterSelectionRowCharacter(ctk.CTkFrame):
+class CreateCharacterSelectionRowCharacter(ctk.CTkLabel):
     def __init__(self,
                  *args,
                  name,
                  background_color="transparent",
                  **kwargs):
-        super().__init__(*args, **kwargs)
+        super().__init__(*args,
+                         **kwargs)
 
-        self.configure(fg_color=background_color)
-        self.pack(side=ctk.LEFT)
-
-        ctk.CTkLabel(master=self,
-                     width=400,
-                     font=Defaults.Styles.header2_font,
-                     fg_color=background_color,
-                     text=name).pack(expand=True)
+        self.configure(fg_color=background_color,
+                       width=400,
+                       font=Defaults.Styles.header2_font,
+                       text=name,
+                       )
+        self.pack(side=ctk.LEFT,
+                  expand=True)
